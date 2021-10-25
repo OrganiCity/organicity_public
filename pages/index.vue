@@ -1,31 +1,23 @@
 <template>
   <v-container>
-    <v-row>
-      <v-col>{{ example }}</v-col>
+    <v-row v-for="(example, index) in examples" :key="index">
       <v-col>
-        <v-btn
-          @click="
-            $toast.success('Test')
-          "
-        >
-          Show Toast
-        </v-btn>
+        {{ example }}
       </v-col>
     </v-row>
   </v-container>
 </template>
 
 <script>
+import axios from "axios"
 export default {
   data() {
     return {
-      example: "",
+      examples: [],
     };
   },
   mounted() {
-    this.$api("getTodos", 7).then(({ data }) => {
-      this.example = data;
-    });
+    this.$api("getFeatured").then(({ data }) => { this.examples = data.map((e) => e.firstName + e.lastName) })
   },
 };
 </script>
