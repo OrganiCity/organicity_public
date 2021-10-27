@@ -39,6 +39,8 @@ export default {
 
   // Global CSS: https://go.nuxtjs.dev/config-css
   css: [
+    "~/assets/css/main.css",
+    "~/assets/fonts/logo-font.css",
   ],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
@@ -73,15 +75,15 @@ export default {
     theme: {
       dark: true,
       themes: {
-        // light: {
-        //   primary: "#c71015",
-        //   secondary: "#eeeeed",
-        //   accent: "#ff5722",
-        //   error: "#ff9800",
-        //   warning: "#ffeb3b",
-        //   info: "#03a9f4",
-        //   success: "#4caf50"
-        // }
+        light: {
+          primary: "#2DBD9C",
+          //   secondary: "#eeeeed",
+          //   accent: "#ff5722",
+          //   error: "#ff9800",
+          //   warning: "#ffeb3b",
+          //   info: "#03a9f4",
+          //   success: "#4caf50"
+        }
         // dark: {
         //   primary: colors.blue.darken2,
         //   accent: colors.grey.darken3,
