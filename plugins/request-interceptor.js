@@ -1,9 +1,11 @@
 import axios from "axios"
 
 import * as example from "@/api/example"
+import * as mainPage from "~/api/main-page"
 
 const apis = {
     ...example,
+    ...mainPage
 }
 
 export default function ({ store }, inject) {
