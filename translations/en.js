@@ -3,4 +3,5 @@ export default {
     sign_in: 'Log In',
     sign_up: 'Register',
     close: 'Close',
+    organicity: 'OrganiCity'
 }
