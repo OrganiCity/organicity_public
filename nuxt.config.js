@@ -16,8 +16,7 @@ export default {
   ],
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
-    titleTemplate: '%s - tkd365',
-    title: 'tkd365',
+    title: 'OrganiCity',
     htmlAttrs: {
       lang: 'en'
     },
@@ -83,16 +82,16 @@ export default {
           //   warning: "#ffeb3b",
           //   info: "#03a9f4",
           //   success: "#4caf50"
+        },
+        dark: {
+          primary: "#2DBD9C",
+          //   accent: colors.grey.darken3,
+          //   secondary: colors.amber.darken3,
+          //   info: colors.teal.lighten1,
+          //   warning: colors.amber.base,
+          //   error: colors.deepOrange.accent4,
+          //   success: colors.green.accent3
         }
-        // dark: {
-        //   primary: colors.blue.darken2,
-        //   accent: colors.grey.darken3,
-        //   secondary: colors.amber.darken3,
-        //   info: colors.teal.lighten1,
-        //   warning: colors.amber.base,
-        //   error: colors.deepOrange.accent4,
-        //   success: colors.green.accent3
-        // }
       }
     }
   },
