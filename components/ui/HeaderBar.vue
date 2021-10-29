@@ -8,6 +8,7 @@
     }"
   >
     <v-app-bar-nav-icon v-if="$vuetify.breakpoint.smAndDown" />
+    <!-- Desktop -->
     <div
       v-if="$vuetify.breakpoint.mdAndUp"
       style="width: 100%"
@@ -45,13 +46,16 @@
       </v-btn>
       <AccessabilityMenu />
     </div>
+    <!-- Mobile -->
     <div
       v-else
       style="width: 100%"
-      class="d-flex align-center justify-space-between"
+      class="d-flex align-center"
     >
-      <img src="/logos/header-logo.png" height="30" />
-      <h3 class="logo-font primary--text mr-4">{{ $i18n("organicity") }}</h3>
+      <div class="d-flex mx-auto">
+        <img src="/logos/header-logo.png" height="30" />
+        <h3 class="logo-font primary--text mr-4">{{ $i18n("organicity") }}</h3>
+      </div>
       <div class="d-flex">
         <v-btn color="primary" icon large>
           <v-icon>shopping_cart</v-icon>
