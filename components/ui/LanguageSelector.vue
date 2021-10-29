@@ -1,6 +1,8 @@
 <template>
   <div style="width: 90px">
     <v-select
+    dense
+      hide-details
       prepend-icon="language"
       class="select"
       v-model="language"
@@ -26,9 +28,6 @@ export default {
 </script>
 
 <style scoped>
-.select {
-  margin-top: 22px !important;
-}
 .select >>> .v-input__slot::before {
   border-style: none !important;
 }
