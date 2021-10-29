@@ -5,46 +5,38 @@
         {{ example }}
       </v-col>
     </v-row>
-         <v-col>
-          <v-carousel v-model="model">
-      <v-carousel-item
-        v-for="(color, i) in colors"
-        :key="color"
-      >
-        <v-sheet
-          :color="color"
-          height="100%"
-          tile
-        >
-          <v-row
-            class="fill-height"
-            align="center"
-            justify="center"
-          >
-            <div class="text-h2">
-              Slide {{ i + 1 }}
-            </div>
-          </v-row>
-        </v-sheet>
-      </v-carousel-item>
-    </v-carousel>
+    <v-row justify-content="left">
+      <v-col lg="3" md-4 >
+        <CategoryMenu/>
       </v-col>
+      <v-col lg="6" md="8" xs="12">
+        <CarouselSlider/>
+      </v-col>
+      <v-col lg="3">
+
+      </v-col>
+    </v-row>
+    
   </v-container>
 </template>
 
 <script>
 import axios from "axios"
-
+import CarouselSlider from "~/components/main-page/CarouselSlider.vue";
+import CategoryMenu from "~/components/main-page/CategoryMenu.vue";
 export default {
   data() {
     return {
       examples: [],
-      colors: ["red", "green", "blue"],
     };
   },
   mounted() {
     this.$api("getFeatured").then(({ data }) => { this.examples = data.map((e) => e.firstName + e.lastName) })
   },
+  components: {
+    CarouselSlider,
+    CategoryMenu,
+  }
  
 };
 </script>

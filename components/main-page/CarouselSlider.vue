@@ -6,26 +6,32 @@ The v-carousel component is used to display large numbers of visual content on a
 The v-carousel component expands upon v-window by providing additional features targeted at displaying images.
 
 <template>
-  <v-carousel v-model="model">
+<v-card elevation="0">
+  <v-carousel cycle height="auto" v-model="model"> <!--  You can control carousel with model. + - -->
     <v-carousel-item
-      v-for="(color, i) in colors"
-      :key="color"
-    >
-      <v-sheet
-        :color="color"
-        height="100%"
-        tile
+      v-for="(item,i) in items"
+      :key="i"
+      :src = item.src
+      :to="item.route"
       >
-        <v-row
-          class="fill-height"
-          align="center"
-          justify="center"
-        >
-          <div class="text-h2">
-            Slide {{ i + 1 }}
-          </div>
-        </v-row>
-      </v-sheet>
     </v-carousel-item>
   </v-carousel>
+
+
+</v-card>
+    
 </template>
+
+
+<script>
+export default {
+  data() {
+    return {
+      items: [],
+    };
+  },
+   mounted() {
+    this.$api("getFeaturedImages").then(({ data }) => { this.items = data })
+  },  
+};
+</script>
