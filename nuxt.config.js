@@ -16,8 +16,7 @@ export default {
   ],
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
-    titleTemplate: '%s - tkd365',
-    title: 'tkd365',
+    title: 'OrganiCity',
     htmlAttrs: {
       lang: 'en'
     },
@@ -39,6 +38,8 @@ export default {
 
   // Global CSS: https://go.nuxtjs.dev/config-css
   css: [
+    "~/assets/css/main.css",
+    "~/assets/fonts/logo-font.css",
   ],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
@@ -73,24 +74,24 @@ export default {
     theme: {
       dark: true,
       themes: {
-        // light: {
-        //   primary: "#c71015",
-        //   secondary: "#eeeeed",
-        //   accent: "#ff5722",
-        //   error: "#ff9800",
-        //   warning: "#ffeb3b",
-        //   info: "#03a9f4",
-        //   success: "#4caf50"
-        // }
-        // dark: {
-        //   primary: colors.blue.darken2,
-        //   accent: colors.grey.darken3,
-        //   secondary: colors.amber.darken3,
-        //   info: colors.teal.lighten1,
-        //   warning: colors.amber.base,
-        //   error: colors.deepOrange.accent4,
-        //   success: colors.green.accent3
-        // }
+        light: {
+          primary: "#2DBD9C",
+          //   secondary: "#eeeeed",
+          //   accent: "#ff5722",
+          //   error: "#ff9800",
+          //   warning: "#ffeb3b",
+          //   info: "#03a9f4",
+          //   success: "#4caf50"
+        },
+        dark: {
+          primary: "#2DBD9C",
+          //   accent: colors.grey.darken3,
+          //   secondary: colors.amber.darken3,
+          //   info: colors.teal.lighten1,
+          //   warning: colors.amber.base,
+          //   error: colors.deepOrange.accent4,
+          //   success: colors.green.accent3
+        }
       }
     }
   },
