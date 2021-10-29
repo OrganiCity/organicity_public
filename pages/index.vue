@@ -6,8 +6,8 @@
       </v-col>
     </v-row>
     <v-row justify-content="left">
-      <v-col lg="3" md-4 >
-        <CategoryMenu/>
+      <v-col lg="3">
+
       </v-col>
       <v-col lg="6" md="8" xs="12">
         <CarouselSlider/>
@@ -23,7 +23,6 @@
 <script>
 import axios from "axios"
 import CarouselSlider from "~/components/main-page/CarouselSlider.vue";
-import CategoryMenu from "~/components/main-page/CategoryMenu.vue";
 export default {
   data() {
     return {
@@ -35,7 +34,6 @@ export default {
   },
   components: {
     CarouselSlider,
-    CategoryMenu,
   }
  
 };
