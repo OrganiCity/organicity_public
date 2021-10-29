@@ -7,6 +7,7 @@ var mysql = require('mysql');
 // JS Imports
 import { getFeatured } from "./services/main-page";
 
+
 // Database Pool
 var pool = mysql.createPool({
     // connectionLimit: 10,
@@ -20,6 +21,7 @@ var pool = mysql.createPool({
 
 // Endpoints
 app.get("/featured", getFeatured)
+
 
 export { pool }
 export default app
