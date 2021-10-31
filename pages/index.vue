@@ -6,13 +6,13 @@
       </v-col>
     </v-row>
     <v-row justify-content="left">
-      <v-col lg="3">
-
+      <v-col lg="3" md="4">
+        <CategoryBar v-if="$vuetify.breakpoint.mdAndUp"/>
       </v-col>
       <v-col lg="6" md="8" xs="12">
         <CarouselSlider/>
       </v-col>
-      <v-col lg="3">
+      <v-col lg="3" hidden-md-and-down>
 
       </v-col>
     </v-row>
@@ -23,6 +23,7 @@
 <script>
 import axios from "axios"
 import CarouselSlider from "~/components/main-page/CarouselSlider.vue";
+import CategoryBar from "~/components/ui/CategoryBar.vue";
 export default {
   data() {
     return {
@@ -34,6 +35,7 @@ export default {
   },
   components: {
     CarouselSlider,
+    CategoryBar
   }
  
 };
