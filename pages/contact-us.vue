@@ -43,7 +43,8 @@
           label="Message"
           required outlined
           ></v-textarea>
-          <v-btn block color="primary">Send</v-btn>
+
+          <v-btn block large color="primary">Send</v-btn>
         </v-form>
       </v-col>
       <v-col md="3" class="text-center">
