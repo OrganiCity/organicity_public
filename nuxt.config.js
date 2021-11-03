@@ -8,11 +8,11 @@ export default {
     baseURL:
       process.env.NODE_ENV === 'development'
         ? 'http://localhost:3000/api'
-        : 'https://terziapp.herokuapp.com/api'
+        : 'https://organicity.herokuapp.com/api'
   },
   // Backend Node Server
   serverMiddleware: [
-    { path: "/api", handler: "~/server-middleware/controller.js" },
+    { path: "/api", handler: "~/backend/controller.js" },
   ],
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
