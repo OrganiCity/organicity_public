@@ -26,5 +26,6 @@ export default {
     ScrollToTop,
   },
   middleware: "preferences",
+  head() { return { titleTemplate: `${this.$i18n("organicity")}` } }
 };
 </script>
