@@ -30,9 +30,9 @@
     return {
       links: [
         {name: this.$i18n("home"), route: ""},
-        {name: this.$i18n("about_us"), route: "/about_us"},
+        {name: this.$i18n("about_us"), route: "/about-us"},
         {name: this.$i18n("team"), route: "/team"},
-        {name: this.$i18n("contact_us"), route: "/contact_us"},
+        {name: this.$i18n("contact_us"), route: "/contact-us"},
       ]
     }
   }
