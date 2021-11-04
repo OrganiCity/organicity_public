@@ -50,12 +50,13 @@
       <v-col md="3" class="text-center">
         <h3 class="primary--text">Customer Hotline</h3>
         <h1 class="font-weight-regular">444 4 444</h1>
-        <v-divider class="ma-6"/>
+        <v-divider class="my-6"/>
 
-        <h3 class="primary--text mb-3">Organicity Inc.</h3>
-        <p>Address here...</p>
-        <v-divider class="ma-6"/>
-        <h3 class="primary--text mb-3">Working Hours</h3>
+        <h3 class="primary--text my-3">Organicity Inc.</h3>
+        <p>Silicon Valley, San Francisco, CA</p>
+        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d202844.3766965533!2d-122.18118130154869!3d37.40299366475079!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x808fb68ad0cfc739%3A0x7eb356b66bd4b50e!2sSilikon%20Vadisi%2C%20Kaliforniya%2C%20Amerika%20Birle%C5%9Fik%20Devletleri!5e0!3m2!1str!2str!4v1636031113522!5m2!1str!2str" width="400" height="300" style="border:0;" allowfullscreen="" loading="lazy"></iframe>        <v-divider class="my-6"/>
+        
+        <h3 class="primary--text my-3">Working Hours</h3>
         <p>Weekdays: 08:00 - 18:00</p>
         <p>Weekends: 09:00 - 16:00</p>
       </v-col>
