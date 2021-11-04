@@ -14,11 +14,11 @@
     </template>
     <v-list width="200">
       <v-list-item class="d-flex align-space-between">
-        <v-list-item-title>Dil</v-list-item-title>
+        <v-list-item-title>{{$i18n("language")}}</v-list-item-title>
         <LanguageSelector />
       </v-list-item>
       <v-list-item>
-        <v-list-item-title>Tema</v-list-item-title>
+        <v-list-item-title>{{$i18n("theme")}}</v-list-item-title>
         <DarkThemeSwitch />
       </v-list-item>
     </v-list>

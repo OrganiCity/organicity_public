@@ -7,5 +7,7 @@ export default {
     home : 'Home',
     about_us : 'About Us',
     team : 'Team',
-    contact_us : 'Contact Us'
+    contact_us : 'Contact Us',
+    language: "Language",
+    theme: "Theme"
 }
