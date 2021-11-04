@@ -7,5 +7,7 @@ export default {
     home : 'Ana Sayfa',
     about_us : 'Hakkımızda',
     team : 'Ekibimiz',
-    contact_us : 'Bize Ulaşın'
+    contact_us : 'Bize Ulaşın',
+    language: "Dil",
+    theme: "Tema"
 }
