@@ -14,8 +14,8 @@
       style="width: 100%"
       class="d-flex align-center"
     >
-      <img src="/logos/header-logo.png" height="40" />
-      <h2 class="logo-font primary--text mr-4">{{ $i18n("organicity") }}</h2>
+      <router-link to="/"> <img src="/logos/header-logo.png" height="40" /> </router-link>
+      <router-link to="/" class="text-decoration-none"> <h2 class="logo-font primary--text mr-4">{{ $i18n("organicity") }}</h2> </router-link>
       <v-text-field
         v-model="searchString"
         @focus="focusedSearch = true"
