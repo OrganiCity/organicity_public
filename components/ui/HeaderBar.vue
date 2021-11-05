@@ -25,7 +25,7 @@
         :background-color="focusedSearch ? '#dfdfdf' : '#eee'"
         color="primary"
         dense
-        height="45"
+        height="44"
         class="search-field rounded-lg rounded-r-0"
         clearable
         hide-details
