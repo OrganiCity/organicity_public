@@ -4,34 +4,45 @@
       justify="center"
       no-gutters
     >
-      <v-btn
+      <v-hover
+        v-slot="{ hover }"
         v-for="link in links"
         :key="link.route"
-        :to="link.route"
-        text
-        rounded
-        class="my-2"
       >
-        {{ link.name }}
-      </v-btn>
+        <v-btn
+          @click="$router.push(link.route)"
+          text
+          rounded
+          :color="hover?'primary':''"
+          class="my-2"
+        >
+          {{ link.name }}
+        </v-btn>
+      </v-hover>
     </v-row>
 
     <v-col
       class="py-1 text-center"
       cols="12">
+      <v-hover
+        v-slot="{ hover }"
+        v-for="icon in icons"
+        :key="icon.route"
+      >
       <v-btn
-          v-for="icon in icons"
-          :key="icon.route"
           class="mx-4"
           :href="icon.route"
           target="_blank"
+          :color="hover?'primary':''"
           icon>
         <v-icon size="24px"> {{ icon.icon }} </v-icon>
       </v-btn>
+    </v-hover>
+
     </v-col>
 
       <v-col
-        class="py-2 text-center"
+        class="py-2 text-center primary--text"
         cols="12">
         {{ new Date().getFullYear() }} — <strong>{{$i18n("organicity")}}</strong>
         
