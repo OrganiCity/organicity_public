@@ -8,7 +8,7 @@ export default {
     baseURL:
       process.env.NODE_ENV === 'development'
         ? 'http://localhost:3000/api'
-        : 'https://terziapp.herokuapp.com/api'
+        : 'https://organicity.herokuapp.com/api'
   },
   // Backend Node Server
   serverMiddleware: [
