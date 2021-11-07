@@ -49,7 +49,7 @@ export default {
       if (!this.validate()) return;
       this.$store.commit("auth/setUserToken", "falanfilan");
       this.$store.commit("auth/setUserInfo", { fullName: "Deneme DENEME" });
-      this.$store.commit("auth/setSignedIn", true);
+      this.$store.commit("auth/setLoggedIn", true);
       this.$toast.success("Giriş Yapıldı")
       this.$emit("close");
     }

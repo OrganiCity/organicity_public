@@ -47,7 +47,7 @@
 
     <v-text-field
       v-model="repassword"
-      autocomplete="off"
+      autocomplete="new-password"
       :rules="[...repasswordRules, passwordsMatch]"
       label="Tekrardan şifre"
       required
