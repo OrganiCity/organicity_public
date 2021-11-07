@@ -39,8 +39,8 @@
       >
         Ara
       </v-btn>
-      <v-btn color="primary" text large>{{ $i18n("sign_in") }}</v-btn>
-      <v-btn color="primary" text large>{{ $i18n("sign_up") }}</v-btn>
+      <v-btn  @click="setAuthTab(0); authModalShown=true" color="primary" text large>{{ $i18n("sign_in") }}</v-btn>
+      <v-btn  @click="setAuthTab(1); authModalShown=true" color="primary" text large>{{ $i18n("sign_up") }}</v-btn>
       <v-btn color="primary" icon large>
         <v-icon>shopping_cart</v-icon>
       </v-btn>
@@ -90,15 +90,23 @@
         </v-btn>
       </div>
     </template>
+
+    <AuthModal 
+      :value="authModalShown"
+      :open-tab="defaultAuthTab"
+      @tab-change="setAuthTab"
+      @input="authModalShown = false"
+      />
   </v-app-bar>
 </template>
 
 <script>
+import AuthModal from '../display/AuthModal.vue';
 import AccessabilityMenu from './AccessabilityMenu.vue';
 import DarkThemeSwitch from "./DarkThemeSwitch.vue";
 import LanguageSelector from './LanguageSelector.vue';
 export default {
-  components: { DarkThemeSwitch, LanguageSelector, AccessabilityMenu },
+  components: { DarkThemeSwitch, LanguageSelector, AccessabilityMenu, AuthModal },
   computed: {
     paddingX() {
       let screenWidth = this.$vuetify.breakpoint.width
@@ -111,8 +119,15 @@ export default {
   data() {
     return {
       focusedSearch: false,
-      searchString: ""
+      searchString: "",
+      authModalShown: false,
+      defaultAuthTab: 0,
     }
+  },
+  methods: {
+      setAuthTab(e){
+          this.defaultAuthTab = e
+      }
   }
 };
 </script>
@@ -124,6 +139,5 @@ export default {
 .app-bar {
   z-index: 1;
 }
-.search-field >>> .v-input__control .v-input__slot {
-}
+
 </style>
