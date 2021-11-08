@@ -5,6 +5,7 @@ app.use(express.json());
 var mysql = require('mysql');
 
 // JS Imports
+import { loginUser, meUser, registerUser } from "./services/auth";
 import { getFeatured } from "./services/main-page";
 
 
@@ -21,6 +22,17 @@ var pool = mysql.createPool({
 
 // Endpoints
 app.get("/featured", getFeatured)
+
+/***********
+----Auth----
+************/
+
+// Registration
+app.post('/auth/register', registerUser)
+// User Me
+app.get('/auth/me', meUser)
+// Login
+app.post('/auth/login', loginUser)
 
 
 export { pool }
