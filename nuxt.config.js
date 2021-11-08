@@ -12,7 +12,7 @@ export default {
   },
   // Backend Node Server
   serverMiddleware: [
-    { path: "/api", handler: "~/server-middleware/controller.js" },
+    { path: "/api", handler: "~/backend/controller.js" },
   ],
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
