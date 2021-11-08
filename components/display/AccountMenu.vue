@@ -9,7 +9,7 @@
           </v-clamp>
         </div> -->
           <v-icon size="25" left>account_circle</v-icon>
-          <h5>Ahmet Berk</h5>
+          <h5>{{ $store.getters["auth/userInfo"].firstName }}</h5>
           <v-icon large right>expand_more</v-icon>
         </v-btn>
       </template>
