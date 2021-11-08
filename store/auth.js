@@ -16,6 +16,7 @@ export const mutations = {
 }
 
 export const getters = {
+    loggedIn: (state) => { return state.loggedIn },
     userInfo: (state) => { return state.userInfo },
     userToken: (state) => { return state.userToken },
 }

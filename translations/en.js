@@ -3,5 +3,12 @@ export default {
     sign_in: 'Log In',
     sign_up: 'Register',
     close: 'Close',
-    organicity: 'OrganiCity'
+    organicity: 'OrganiCity',
+    home : 'Home',
+    about_us : 'About Us',
+    team : 'Team',
+    contact_us : 'Contact Us',
+    language: "Language",
+    theme: "Theme",
+    special_deals: "Special Deals"
 }

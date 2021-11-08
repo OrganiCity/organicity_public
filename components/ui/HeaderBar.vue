@@ -9,13 +9,11 @@
   >
     <v-app-bar-nav-icon v-if="$vuetify.breakpoint.smAndDown" />
     <!-- Desktop -->
-    <div
-      v-if="$vuetify.breakpoint.mdAndUp"
-      style="width: 100%"
-      class="d-flex align-center"
-    >
-      <img src="/logos/header-logo.png" height="40" />
-      <h2 class="logo-font primary--text mr-4">{{ $i18n("organicity") }}</h2>
+    <div v-if="$vuetify.breakpoint.mdAndUp" style="width: 100%" class="d-flex align-center">
+      <router-link to="/"><img src="/logos/header-logo.png" height="40" /></router-link>
+      <router-link to="/" class="text-decoration-none">
+        <h2 class="logo-font primary--text mr-4">{{ $i18n("organicity") }}</h2>
+      </router-link>
       <v-text-field
         v-model="searchString"
         @focus="focusedSearch = true"
@@ -31,27 +29,42 @@
         hide-details
         prepend-inner-icon="search"
       />
-      <v-btn
-        large
-        depressed
-        :disabled="!focusedSearch && !searchString"
-        class="rounded-l-0 primary"
-      >
-        Ara
-      </v-btn>
-      <v-btn color="primary" text large>{{ $i18n("sign_in") }}</v-btn>
-      <v-btn color="primary" text large>{{ $i18n("sign_up") }}</v-btn>
+      <v-btn large depressed :disabled="!focusedSearch && !searchString" class="rounded-l-0 primary">Ara</v-btn>
+
+      <template v-if="$store.getters['auth/loggedIn']">
+        <AccountMenu />
+      </template>
+      <template v-else>
+        <v-btn
+          @click="
+            setAuthTab(0);
+            authModalShown = true;
+          "
+          color="primary"
+          text
+          large
+        >
+          {{ $i18n("sign_in") }}
+        </v-btn>
+        <v-btn
+          @click="
+            setAuthTab(1);
+            authModalShown = true;
+          "
+          color="primary"
+          text
+          large
+        >
+          {{ $i18n("sign_up") }}
+        </v-btn>
+      </template>
       <v-btn color="primary" icon large>
         <v-icon>shopping_cart</v-icon>
       </v-btn>
       <AccessabilityMenu />
     </div>
     <!-- Mobile -->
-    <div
-      v-else
-      style="width: 100%"
-      class="d-flex align-center"
-    >
+    <div v-else style="width: 100%" class="d-flex align-center">
       <div class="d-flex mx-auto">
         <img src="/logos/header-logo.png" height="30" />
         <h3 class="logo-font primary--text mr-4">{{ $i18n("organicity") }}</h3>
@@ -80,25 +93,22 @@
           hide-details
           prepend-inner-icon="search"
         />
-        <v-btn
-          large
-          depressed
-          :disabled="!focusedSearch && !searchString"
-          class="rounded-l-0 primary"
-        >
-          Ara
-        </v-btn>
+        <v-btn large depressed :disabled="!focusedSearch && !searchString" class="rounded-l-0 primary">Ara</v-btn>
       </div>
     </template>
+
+    <AuthModal :value="authModalShown" :open-tab="defaultAuthTab" @tab-change="setAuthTab" @input="authModalShown = false" />
   </v-app-bar>
 </template>
 
 <script>
+import AccountMenu from '../display/AccountMenu.vue';
+import AuthModal from '../display/AuthModal.vue';
 import AccessabilityMenu from './AccessabilityMenu.vue';
 import DarkThemeSwitch from "./DarkThemeSwitch.vue";
 import LanguageSelector from './LanguageSelector.vue';
 export default {
-  components: { DarkThemeSwitch, LanguageSelector, AccessabilityMenu },
+  components: { DarkThemeSwitch, LanguageSelector, AccessabilityMenu, AuthModal, AccountMenu },
   computed: {
     paddingX() {
       let screenWidth = this.$vuetify.breakpoint.width
@@ -111,7 +121,14 @@ export default {
   data() {
     return {
       focusedSearch: false,
-      searchString: ""
+      searchString: "",
+      authModalShown: false,
+      defaultAuthTab: 0,
+    }
+  },
+  methods: {
+    setAuthTab(e) {
+      this.defaultAuthTab = e
     }
   }
 };
@@ -123,7 +140,5 @@ export default {
 } */
 .app-bar {
   z-index: 1;
-}
-.search-field >>> .v-input__control .v-input__slot {
 }
 </style>
