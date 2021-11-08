@@ -9,5 +9,6 @@ export default {
     team : 'Ekibimiz',
     contact_us : 'Bize Ulaşın',
     language: "Dil",
-    theme: "Tema"
+    theme: "Tema",
+    special_deals: "Özel Fırsatlar"
 }
