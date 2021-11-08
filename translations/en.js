@@ -9,5 +9,6 @@ export default {
     team : 'Team',
     contact_us : 'Contact Us',
     language: "Language",
-    theme: "Theme"
+    theme: "Theme",
+    special_deals: "Special Deals"
 }
