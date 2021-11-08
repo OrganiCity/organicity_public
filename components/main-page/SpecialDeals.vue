@@ -1,15 +1,14 @@
 
 <template>
   <v-card elevation="0">
-    <v-row class="text-h5" align="center" justify="center">
-      <p>Günün Fırsatları</p>
+    <v-row class="text-h6 font-weight-bold" align="center" justify="center">
+      <p>{{ $i18n("special_deals") }}</p>
     </v-row>
     <v-row class="pb-4" justify="center">
-      <v-btn @click="model==0 ? model=items.length-1 : model--" color="primary" icon>
+      <v-btn @click="model == 0 ? (model = items.length - 1) : model--" color="primary" icon>
         <v-icon>expand_less</v-icon>
       </v-btn>
     </v-row>
-    <v-divider></v-divider>
     <v-carousel
       vertical
       progress
@@ -23,11 +22,12 @@
     >
       <v-carousel-item v-for="(item, i) in items" :key="i" :to="item.route">
         <v-img :aspect-ratio="1" :src="item.src"></v-img>
-        <v-row class="pt-4 text-h5" align="center" justify="center">
-          <p>Pickle Rick</p>
+        <v-row  class="pt-4 font-weight-medium" align="center" justify="center">
+          <p style="width: 150px; text-align: center" v-if="$store.getters['preferences/language'] === 'TR'">{{ item.nameTR }}</p>
+          <p style="width: 150px; text-align: center" v-else>{{ item.nameEN }}</p>
         </v-row>
-        <v-row class="pb-2 text-h7" align="center" justify="center">
-          <p>Just For: 9.99</p>
+        <v-row class="pb-2 font-weight-bold primary--text"  justify="center">
+          <p style="text-align: center">{{ item.price }} TL</p>
         </v-row>
       </v-carousel-item>
     </v-carousel>
