@@ -22,9 +22,7 @@
       @click:append="showPassword = !showPassword"
     ></v-text-field>
 
-    <v-btn  :disabled="!valid" color="primary" class="mr-4" @click="login">
-      Giriş Yap
-    </v-btn>
+    <v-btn :disabled="!valid" color="primary" class="mr-4" @click="login">Giriş Yap</v-btn>
   </v-form>
 </template>
 
@@ -47,11 +45,20 @@ export default {
     },
     login() {
       if (!this.validate()) return;
-      this.$store.commit("auth/setUserToken", "falanfilan");
-      this.$store.commit("auth/setUserInfo", { fullName: "Deneme DENEME" });
-      this.$store.commit("auth/setLoggedIn", true);
-      this.$toast.success("Giriş Yapıldı")
-      this.$emit("close");
+      this.$api("userLogin", { email: this.email, password: this.password })
+        .then(({ data }) => {
+          this.$store.commit("auth/setUserToken", data);
+          this.$api("userMe").then(({ data }) => {
+            this.$store.commit("auth/setUserInfo", data);
+            this.$store.commit("auth/setLoggedIn", true);
+            this.$toast.success("Hoş Geldin, " + data.firstName)
+            this.$emit("close");
+          })
+        })
+        .catch(({ response: { status } }) => {
+          if (status === 500) this.$toast.error("Bilinmeyen hata")
+          else this.$toast.error("Yanlış giriş bilgileri")
+        })
     }
   }
 };

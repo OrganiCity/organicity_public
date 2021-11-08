@@ -1,6 +1,5 @@
 <template>
   <v-form ref="form" v-model="valid" lazy-validation class="ma-3 pa-7">
-
     <div class="d-flex">
       <v-text-field
         class="mr-2"
@@ -58,16 +57,12 @@
 
     <v-checkbox
       v-model="checkbox"
-      :rules="[
-        v => !!v || 'Kayıt olmak için üyeli sözleşmesini kabul etmeniz lazım!!'
-      ]"
+      :rules="[(v) => !!v || 'Kayıt olmak için üyeli sözleşmesini kabul etmeniz lazım!!']"
       label="Üyelik sözleşmesini kabul ediyorum."
       required
     ></v-checkbox>
 
-    <v-btn :disabled="!valid" color="primary" class="mr-4" @click="validate">
-      Kayıt Ol
-    </v-btn>
+    <v-btn :disabled="!valid" color="primary" class="mr-4" @click="register">Kayıt Ol</v-btn>
   </v-form>
 </template>
 
@@ -98,7 +93,19 @@ export default {
       return v == this.password || "Şifreler uyuşmuyor!";
     },
     validate() {
-      this.$refs.form.validate();
+      return this.$refs.form.validate();
+    },
+    register() {
+      if (!this.validate()) return;
+      this.$api("userRegister", { email: this.email, firstName: this.name, lastName: this.surname, password: this.password })
+        .then(({ data }) => {
+          this.$toast.success("Kayıt Başarılı")
+          this.$emit("close");
+        })
+        .catch(({ response: { status } }) => {
+          if (status === 500) this.$toast.error("Bilinmeyen hata")
+          else this.$toast.error("Bu email ile bir kullanıcı zaten mevcut")
+        })
     }
   }
 };
