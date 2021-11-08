@@ -7,7 +7,7 @@ export async function userMe({ instance }) {
 }
 
 export async function userRegister({ instance }, { email, password, firstName, lastName }) {
-    return await instance.post("/auth/login", {
+    return await instance.post("/auth/register", {
         email: email,
         password: password,
         firstName: firstName,
