@@ -48,7 +48,6 @@ export default {
     '~/plugins/persisted-state.js',
     '~/plugins/internationalization.js',
     '~/plugins/util.js',
-    '~/plugins/toaster.js'
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
@@ -62,6 +61,7 @@ export default {
 
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
+    "@nuxtjs/toast"
   ],
 
   // Vuetify module configuration: https://go.nuxtjs.dev/config-vuetify
@@ -76,7 +76,7 @@ export default {
       themes: {
         light: {
           primary: "#2DBD9C",
-          secondary: "#D0EBE4", 
+          secondary: "#D0EBE4",
           //   accent: "#ff5722",
           //   error: "#ff9800",
           //   warning: "#ffeb3b",
@@ -86,7 +86,7 @@ export default {
         dark: {
           primary: "#2DBD9C",
           //   accent: colors.grey.darken3,
-           secondary: "#314B45",
+          secondary: "#314B45",
           //   info: colors.teal.lighten1,
           //   warning: colors.amber.base,
           //   error: colors.deepOrange.accent4,
@@ -94,6 +94,17 @@ export default {
         }
       }
     }
+  },
+
+  toast: {
+    position: "bottom-center",
+    duration: 3000,
+    action: {
+      icon: "close",
+      onClick: (e, toastObject) => {
+        toastObject.goAway(0);
+      }
+    },
   },
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
