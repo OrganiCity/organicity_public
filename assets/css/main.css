@@ -1,3 +1,21 @@
+/* General */
+
 .logo-font {
     font-family: 'Paytone One', 'sans-serif';
+}
+
+/* Toasts */
+
+.toasted {
+    font-family: 'Roboto' !important;
+    font-weight: 500 !important;
+}
+
+.toasted .action {
+    color: white !important;
+}
+
+.toasted .action:hover {
+    color: lightgrey !important;
+    text-decoration: none !important;
 }
