@@ -2,10 +2,12 @@ import axios from "axios"
 
 import * as example from "@/api/example"
 import * as mainPage from "~/api/main-page"
+import * as auth from "~/api/auth"
 
 const apis = {
     ...example,
-    ...mainPage
+    ...mainPage,
+    ...auth,
 }
 
 export default function ({ store }, inject) {
@@ -16,11 +18,15 @@ export default function ({ store }, inject) {
                 baseURL: process.env.baseURL,
                 headers: {
                     Authorization: "Bearer " + token,
+                    'Content-Type': 'application/json'
                 },
             })
             :
             axios.create({
                 baseURL: process.env.baseURL,
+                headers: {
+                    'Content-Type': 'application/json'
+                }
             })
         return apis[apiToCall]({ instance, store }, payload)
     }
