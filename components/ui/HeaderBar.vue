@@ -14,23 +14,7 @@
       <router-link to="/" class="text-decoration-none">
         <h2 class="logo-font primary--text mr-4">{{ $i18n("organicity") }}</h2>
       </router-link>
-      <v-text-field
-        v-model="searchString"
-        @focus="focusedSearch = true"
-        @blur="focusedSearch = false"
-        solo
-        flat
-        :background-color="focusedSearch ? '#dfdfdf' : '#eee'"
-        color="primary"
-        dense
-        height="44"
-        class="search-field rounded-lg rounded-r-0"
-        clearable
-        hide-details
-        prepend-inner-icon="search"
-      />
-      <v-btn large depressed :disabled="!focusedSearch && !searchString" class="rounded-l-0 primary">Ara</v-btn>
-
+      <SearchField />
       <template v-if="$store.getters['auth/loggedIn']">
         <AccountMenu />
       </template>
@@ -78,25 +62,9 @@
     </div>
     <template v-if="$vuetify.breakpoint.smAndDown" slot="extension">
       <div class="d-flex mb-2" style="width: 100%">
-        <v-text-field
-          v-model="searchString"
-          @focus="focusedSearch = true"
-          @blur="focusedSearch = false"
-          solo
-          flat
-          :background-color="focusedSearch ? '#dfdfdf' : '#eee'"
-          color="primary"
-          dense
-          height="45"
-          class="search-field rounded-lg rounded-r-0"
-          clearable
-          hide-details
-          prepend-inner-icon="search"
-        />
-        <v-btn large depressed :disabled="!focusedSearch && !searchString" class="rounded-l-0 primary">Ara</v-btn>
+        <SearchField />
       </div>
     </template>
-
     <AuthModal :value="authModalShown" :open-tab="defaultAuthTab" @tab-change="setAuthTab" @input="authModalShown = false" />
   </v-app-bar>
 </template>
@@ -107,8 +75,9 @@ import AuthModal from '../display/AuthModal.vue';
 import AccessabilityMenu from './AccessabilityMenu.vue';
 import DarkThemeSwitch from "./DarkThemeSwitch.vue";
 import LanguageSelector from './LanguageSelector.vue';
+import SearchField from './SearchField.vue';
 export default {
-  components: { DarkThemeSwitch, LanguageSelector, AccessabilityMenu, AuthModal, AccountMenu },
+  components: { DarkThemeSwitch, LanguageSelector, AccessabilityMenu, AuthModal, AccountMenu, SearchField },
   computed: {
     paddingX() {
       let screenWidth = this.$vuetify.breakpoint.width
@@ -120,8 +89,6 @@ export default {
   },
   data() {
     return {
-      focusedSearch: false,
-      searchString: "",
       authModalShown: false,
       defaultAuthTab: 0,
     }
