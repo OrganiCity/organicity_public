@@ -12,11 +12,11 @@ import { getFeatured } from "./services/main-page";
 // Database Pool
 var pool = mysql.createPool({
     // connectionLimit: 10,
-    host: 'sql11.freemysqlhosting.net',
+    host: 'database-1.crxfrzrrelwp.eu-central-1.rds.amazonaws.com',
     port: 3306,
-    user: 'sql11443134',
-    password: 'iXU8RS92ue',
-    database: 'sql11443134'
+    user: 'admin',
+    password: 'Organicity!',
+    database: 'organicity'
 });
 
 
