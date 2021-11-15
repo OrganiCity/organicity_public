@@ -1,21 +1,19 @@
 <template>
   <v-container>
-    <p>
-      <span class="grey--text text--lighten text-caption">Anasayfa &emsp;</span>
-      <v-icon size="20">keyboard_arrow_right</v-icon>
-      <span class="grey--text text--lighten text-caption">&emsp; Meyve, Sebze &emsp;</span>
-      <v-icon size="20">keyboard_arrow_right</v-icon>
-      <span class="grey--text text--lighten text-caption">&emsp; Sebze &emsp;</span>
-      <v-icon size="20">keyboard_arrow_right</v-icon>
-      <span class="font-weight-medium text-caption">&emsp; Taze Sebzeler</span>
-    </p>
+    <v-slide-group class="mb-4">
+      <v-slide-item v-for="item in items" :key="item">
+        <span :class="item.child ? 'font-weight-medium text-caption' : 'grey--text text--lighten text-caption'">
+          {{ item.text }}
+          <v-icon class="mx-1 mr-2" v-if="!item.child" size="18">keyboard_arrow_right</v-icon>
+        </span>
+      </v-slide-item>
+    </v-slide-group>
 
     <v-row>
+      <!-- Images -->
       <v-col :class="$vuetify.breakpoint.smAndDown ? 'd-flex justify-center' : ''" cols="12" md="6">
         <div>
           <v-img aspect-ratio="1" width="350px" :src="images[page]"></v-img>
-
-          <!-- Images -->
 
           <v-item-group mandatory>
             <div class="d-flex align-center">
@@ -39,8 +37,8 @@
           </v-item-group>
         </div>
       </v-col>
-      <!-- Title -->
 
+      <!-- Title -->
       <v-col cols="12" md="6" :class="$vuetify.breakpoint.mdAndUp ? 'pr-10' : ''">
         <span class="mr-4"><a style="text-decoration: none" href="/">Bizim Çiftlik</a></span>
         <p class="text-h4">Organik Çanakkale Domates</p>
@@ -59,29 +57,62 @@
         <a class="text-caption" href="#tabs">Yorumları oku</a>
         <span class="text-caption">(8)</span>
 
-        <div class="d-flex justify-space-around mt-5 mb-5">
-          <v-tooltip color="primary" right>
+        <!-- Certificates -->
+        <div class="d-flex flex-wrap justify-space-around mt-5 mb-5">
+          <!-- Dialog Certificate -->
+          <v-dialog v-model="dialog" max-width="600">
             <template v-slot:activator="{ on, attrs }">
-              <v-icon v-on="on" v-bind="attrs" size="40">settings_backup_restore</v-icon>
+              <div v-on="on" v-bind="attrs">
+                <v-hover v-slot="{ hover }">
+                  <div :class="hover ? 'primary--text mx-2' : 'mx-2'">
+                    <v-icon :color="hover ? 'primary' : ''" size="40">settings_backup_restore</v-icon>
+                    <span>Organik Ürün</span>
+                  </div>
+                </v-hover>
+              </div>
             </template>
 
-            <span class="white--text">Organik ürün</span>
-          </v-tooltip>
+            <v-card height="auto">
+              <div class="d-flex justify-end">
+                <v-btn class="mt-2 mr-2" x-large icon @click="dialog = false">
+                  <v-icon>mdi-close</v-icon>
+                </v-btn>
+              </div>
+
+              <div class="d-flex justify-center">
+                <v-icon size="90">settings_backup_restore</v-icon>
+              </div>
+              <p class="d-flex justify-center mb-5 mt-1 text-h5">Organik Ürün</p>
+
+              <v-card-text :class="$vuetify.breakpoint.mdAndUp ? 'px-12' : ''">
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore
+                magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+                consequat
+              </v-card-text>
+              <v-card-actions></v-card-actions>
+            </v-card>
+          </v-dialog>
 
           <v-hover v-slot="{ hover }">
-            <div :class="hover ? 'primary--text' : ''">
+            <div :class="hover ? 'primary--text mx-2' : 'mx-2'">
               <v-icon :color="hover ? 'primary' : ''" size="40">download_done</v-icon>
-              TOB Onaylı
+              <span>TOB Onaylı</span>
             </div>
           </v-hover>
-          <v-icon size="40">pest_control</v-icon>
+
+          <v-hover v-slot="{ hover }">
+            <div :class="hover ? 'primary--text mx-2' : 'mx-2'">
+              <v-icon :color="hover ? 'primary' : ''" size="40">pest_control</v-icon>
+              <span>Pestisit Analizli</span>
+            </div>
+          </v-hover>
         </div>
-        <v-sheet outlined rounded="" class="pa-2 mb-4 text-body-2">
+        <v-sheet outlined rounded class="pa-2 mb-4 text-body-2">
           Yeni bir yıl, yeni bir heyecan ve yeni hayaller demektir. Yeni yıla girerken her insan bir söz verir kendisine,
           gerçekleştirmek istedikleri için... Koku duyusu ise insanın en güçlü duyularından birisidir; bir yerin, bir anın kokusu
           senelerce unutulmaz, işte o değerli
         </v-sheet>
-        <div class="d-flex justify-space-around align-center">
+        <div class="d-flex flex-wrap justify-space-around align-center">
           <span class="primary--text font-weight-medium text-h5">
             9,85 TL
             <span class="grey--text text-h6">/kg</span>
@@ -99,6 +130,7 @@
       </v-col>
     </v-row>
 
+    <!-- Tabs -->
     <v-row id="tabs">
       <v-tabs show-arrows class="mt-8" slider-size="3" color="yellow darken-2">
         <v-tab :ripple="false">Ek Bilgiler</v-tab>
@@ -107,7 +139,7 @@
         <v-tab :ripple="false">Nasıl saklanmalı?</v-tab>
       </v-tabs>
 
-      <v-divider class="pa-0 mr-1 yellow darken-2"></v-divider>
+      <v-divider class="px-1 yellow darken-2"></v-divider>
     </v-row>
   </v-container>
 </template>
@@ -126,6 +158,29 @@ export default {
       page: 0,
       rating: 3.0,
       favorited: false,
+      dialog: false,
+      items: [
+        {
+          text: "Anasayfa",
+          href: "/",
+          child: false,
+        },
+        {
+          text: "Meyve, Sebze",
+          href: "/",
+          child: false,
+        },
+        {
+          text: "Meyve",
+          href: "/",
+          child: false,
+        },
+        {
+          text: "Taze Meyveler",
+          href: "/",
+          child: true,
+        },
+      ],
     };
   },
 };
