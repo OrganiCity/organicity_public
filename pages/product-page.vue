@@ -10,9 +10,8 @@
       <span class="font-weight-medium text-caption">&emsp; Taze Sebzeler</span>
     </p>
 
-    <v-row >
-
-      <v-col :class="$vuetify.breakpoint.smAndDown ? 'd-flex justify-center': ''" cols="12" md="6">
+    <v-row>
+      <v-col :class="$vuetify.breakpoint.smAndDown ? 'd-flex justify-center' : ''" cols="12" md="6">
         <div>
           <v-img aspect-ratio="1" width="350px" :src="images[page]"></v-img>
 
@@ -42,7 +41,7 @@
       </v-col>
       <!-- Title -->
 
-      <v-col cols="12" md="6" :class="$vuetify.breakpoint.mdAndUp ?  'pr-10' :''">
+      <v-col cols="12" md="6" :class="$vuetify.breakpoint.mdAndUp ? 'pr-10' : ''">
         <span class="mr-4"><a style="text-decoration: none" href="/">Bizim Çiftlik</a></span>
         <p class="text-h4">Organik Çanakkale Domates</p>
 
@@ -77,7 +76,7 @@
           </v-hover>
           <v-icon size="40">pest_control</v-icon>
         </div>
-        <v-sheet outlined rounded="" class=" pa-2 mb-4 text-body-2">
+        <v-sheet outlined rounded="" class="pa-2 mb-4 text-body-2">
           Yeni bir yıl, yeni bir heyecan ve yeni hayaller demektir. Yeni yıla girerken her insan bir söz verir kendisine,
           gerçekleştirmek istedikleri için... Koku duyusu ise insanın en güçlü duyularından birisidir; bir yerin, bir anın kokusu
           senelerce unutulmaz, işte o değerli
@@ -101,14 +100,14 @@
     </v-row>
 
     <v-row id="tabs">
-      <v-tabs light class="mt-8" slider-size="3" color="yellow accent-4" background-color="white">
+      <v-tabs show-arrows class="mt-8" slider-size="3" color="yellow darken-2">
         <v-tab :ripple="false">Ek Bilgiler</v-tab>
         <v-tab :ripple="false">Besin Değerleri</v-tab>
         <v-tab :ripple="false">İçindekiler</v-tab>
         <v-tab :ripple="false">Nasıl saklanmalı?</v-tab>
       </v-tabs>
 
-      <v-divider class="pa-0 mr-1 yellow accent-4"></v-divider>
+      <v-divider class="pa-0 mr-1 yellow darken-2"></v-divider>
     </v-row>
   </v-container>
 </template>
