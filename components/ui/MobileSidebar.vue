@@ -1,5 +1,5 @@
 <template>
-  <v-navigation-drawer class="sidebar" @input="$emit('input', $event)" :value="value">
+  <v-navigation-drawer app class="sidebar" @input="$emit('input', $event)" :value="value">
     <AuthModal :value="authModalShown" :open-tab="defaultAuthTab" @tab-change="setAuthTab" @input="authModalShown = false" />
     <v-list-item>
       <v-list-item-content>
