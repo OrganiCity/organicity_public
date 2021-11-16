@@ -1,9 +1,11 @@
 <template>
   <v-container>
-    <v-slide-group class="mb-4">
+    <v-slide-group class="mb-5">
       <v-slide-item v-for="item in items" :key="item">
-        <span :class="item.child ? 'font-weight-medium text-caption' : 'grey--text text--lighten text-caption'">
-          {{ item.text }}
+        <span>
+          <a :href="item.href" :class="item.child ? 'font-weight-medium text-caption' : 'grey--text text--lighten text-caption'">
+            {{ item.text }}
+          </a>
           <v-icon class="mx-1 mr-2" v-if="!item.child" size="18">keyboard_arrow_right</v-icon>
         </span>
       </v-slide-item>
@@ -167,17 +169,17 @@ export default {
         },
         {
           text: "Meyve, Sebze",
-          href: "/",
+          href: "/taze20",
           child: false,
         },
         {
           text: "Meyve",
-          href: "/",
+          href: "/kombu15",
           child: false,
         },
         {
           text: "Taze Meyveler",
-          href: "/",
+          href: "/egri15",
           child: true,
         },
       ],
@@ -187,4 +189,7 @@ export default {
 </script>
 
 <style scoped>
+a {
+  text-decoration: none;
+}
 </style>
