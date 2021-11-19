@@ -4,13 +4,8 @@
     <HeaderBar @openSideBar="sideBarActive = true" />
     <MobileSidebar v-if="$vuetify.breakpoint.xsOnly" v-model="sideBarActive" />
     <v-main>
-      <v-container class="d-flex">
-        <div>
-          <CategoryBar v-if="$vuetify.breakpoint.smAndUp" />
-          <SpecialDeals v-if="$vuetify.breakpoint.md" />
-        </div>
+      <v-container fluid>
         <Nuxt />
-        <SpecialDeals v-if="$vuetify.breakpoint.lgAndUp" />
       </v-container>
     </v-main>
     <Footer />
@@ -18,8 +13,6 @@
 </template>
 
 <script>
-import SpecialDeals from '~/components/main-page/SpecialDeals.vue';
-import CategoryBar from '~/components/ui/CategoryBar.vue';
 import DarkThemeSwitch from "~/components/ui/DarkThemeSwitch.vue";
 import Footer from "~/components/ui/Footer.vue";
 import HeaderBar from "~/components/ui/HeaderBar.vue";
@@ -34,8 +27,6 @@ export default {
     Footer,
     ScrollToTop,
     MobileSidebar,
-    CategoryBar,
-    SpecialDeals,
   },
   middleware: "preferences",
   head() { return { titleTemplate: `${this.$i18n("organicity")}` } },

@@ -2,12 +2,13 @@
   <v-app-bar
     class="app-bar"
     app
+    clipped-left
     :style="{
       paddingLeft: paddingX,
       paddingRight: paddingX,
     }"
   >
-    <v-app-bar-nav-icon v-if="$vuetify.breakpoint.smAndDown" />
+    <v-app-bar-nav-icon v-if="$vuetify.breakpoint.smAndDown" @click="$emit('openSideBar')" />
     <!-- Desktop -->
     <div v-if="$vuetify.breakpoint.mdAndUp" style="width: 100%" class="d-flex align-center">
       <router-link to="/"><img src="/logos/header-logo.png" height="40" /></router-link>

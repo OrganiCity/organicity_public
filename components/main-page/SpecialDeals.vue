@@ -1,6 +1,6 @@
 
 <template>
-  <v-card elevation="0">
+  <v-card elevation="0" width="300px">
     <v-container class="pb-1">
       <p class="text-h6 my-0 font-weight-bold text-center">{{ $i18n("special_deals") }}</p>
       <div class="d-flex justify-center mb-2">

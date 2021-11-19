@@ -1,5 +1,6 @@
 <template>
   <v-container>
+
     <v-slide-group class="mb-5">
       <v-slide-item v-for="item in items" :key="item">
         <span>
@@ -13,6 +14,7 @@
 
     <v-row>
       <!-- Images -->
+      
       <v-col :class="$vuetify.breakpoint.smAndDown ? 'd-flex justify-center' : ''" cols="12" md="6">
         <div>
           <v-img aspect-ratio="1" width="350px" :src="images[page]"></v-img>
@@ -41,6 +43,7 @@
       </v-col>
 
       <!-- Title -->
+      
       <v-col cols="12" md="6" :class="$vuetify.breakpoint.mdAndUp ? 'pr-10' : ''">
         <span class="mr-4"><a style="text-decoration: none" href="/">Bizim Çiftlik</a></span>
         <p class="text-h4">Organik Çanakkale Domates</p>
@@ -150,6 +153,7 @@
 
 <script>
 export default {
+  layout: "product",
   data() {
     return {
       images: [
