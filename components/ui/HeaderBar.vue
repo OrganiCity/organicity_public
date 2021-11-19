@@ -6,6 +6,7 @@
     :style="{
       paddingLeft: paddingX,
       paddingRight: paddingX,
+      zIndex: 2
     }"
   >
     <v-app-bar-nav-icon v-if="$vuetify.breakpoint.smAndDown" @click="$emit('openSideBar')" />
