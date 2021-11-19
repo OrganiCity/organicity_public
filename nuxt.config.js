@@ -76,7 +76,9 @@ export default {
       themes: {
         light: {
           primary: "#2DBD9C",
-          secondary: "#E6F7F2", 
+          secondary: "#E6F7F2",
+          contrast: "#FFFFFF",
+          "inv-contrast": "#333333",
           //   accent: "#ff5722",
           //   error: "#ff9800",
           //   warning: "#ffeb3b",
@@ -85,8 +87,11 @@ export default {
         },
         dark: {
           primary: "#2DBD9C",
-          //   accent: colors.grey.darken3,
           secondary: "#314B45",
+          contrast: "#333333",
+          "inv-contrast": "#FFFFFF"
+
+          //   accent: colors.grey.darken3,
           //   info: colors.teal.lighten1,
           //   warning: colors.amber.base,
           //   error: colors.deepOrange.accent4,
