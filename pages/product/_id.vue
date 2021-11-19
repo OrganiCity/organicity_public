@@ -1,8 +1,9 @@
 <template>
   <v-container>
+    <!-- BreadCrumbs -->
 
     <v-slide-group class="mb-5">
-      <v-slide-item v-for="item in items" :key="item">
+      <v-slide-item v-for="item in breadcrumbs" :key="item.text">
         <span>
           <a :href="item.href" :class="item.child ? 'font-weight-medium text-caption' : 'grey--text text--lighten text-caption'">
             {{ item.text }}
@@ -14,14 +15,14 @@
 
     <v-row>
       <!-- Images -->
-      
+
       <v-col :class="$vuetify.breakpoint.smAndDown ? 'd-flex justify-center' : ''" cols="12" md="6">
         <div>
-          <v-img aspect-ratio="1" width="350px" :src="images[page]"></v-img>
+          <v-img aspect-ratio="1" width="350px" :src="product.images[page]"></v-img>
 
           <v-item-group mandatory>
             <div class="d-flex align-center">
-              <v-item v-for="(image, n) in images" :key="n" v-slot="{ active, toggle }">
+              <v-item v-for="(image, n) in product.images" :key="n" v-slot="{ active, toggle }">
                 <v-card
                   v-ripple="{ class: 'yellow--text' }"
                   elevation="0"
@@ -43,10 +44,12 @@
       </v-col>
 
       <!-- Title -->
-      
+
       <v-col cols="12" md="6" :class="$vuetify.breakpoint.mdAndUp ? 'pr-10' : ''">
-        <span class="mr-4"><a style="text-decoration: none" href="/">Bizim Çiftlik</a></span>
-        <p class="text-h4">Organik Çanakkale Domates</p>
+        <span class="mr-4">
+          <a style="text-decoration: none" href="/">{{ product.companyName }}</a>
+        </span>
+        <p class="text-h4">{{ product.productName }}</p>
 
         <v-rating
           class="d-inline"
@@ -113,9 +116,7 @@
           </v-hover>
         </div>
         <v-sheet outlined rounded class="pa-2 mb-4 text-body-2">
-          Yeni bir yıl, yeni bir heyecan ve yeni hayaller demektir. Yeni yıla girerken her insan bir söz verir kendisine,
-          gerçekleştirmek istedikleri için... Koku duyusu ise insanın en güçlü duyularından birisidir; bir yerin, bir anın kokusu
-          senelerce unutulmaz, işte o değerli
+          {{product.description}}
         </v-sheet>
         <div class="d-flex flex-wrap justify-space-around align-center">
           <span class="primary--text font-weight-medium text-h5">
@@ -136,6 +137,7 @@
     </v-row>
 
     <!-- Tabs -->
+
     <v-row id="tabs">
       <v-tabs show-arrows class="mt-8" slider-size="3" color="yellow darken-2">
         <v-tab :ripple="false">Ek Bilgiler</v-tab>
@@ -156,16 +158,14 @@ export default {
   layout: "product",
   data() {
     return {
-      images: [
-        "https://i.ibb.co/rmqHkL6/Pickle-rick-transparent-edgetrimmed.png",
-        "https://www.greenada.com/Uploads/UrunResimleri/buyuk/greenadadomates-1-kg-e162.jpg",
-        "https://5.imimg.com/data5/HM/KG/MY-42588315/fresh-orange-500x500.jpg",
-      ],
+      product: {
+        images: [],
+      },
       page: 0,
       rating: 3.0,
       favorited: false,
       dialog: false,
-      items: [
+      breadcrumbs: [
         {
           text: "Anasayfa",
           href: "/",
@@ -189,6 +189,16 @@ export default {
       ],
     };
   },
+  methods: {
+    getProductInfo() {
+      this.$api("getProductByID", this.$route.params.id).then(({ data }) => { this.product = data }).catch(() => {
+        this.$router.push("/product")
+      })
+    }
+  },
+  mounted() {
+    this.getProductInfo();
+  }
 };
 </script>
 

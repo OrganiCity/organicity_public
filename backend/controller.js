@@ -7,6 +7,7 @@ var mysql = require('mysql');
 // JS Imports
 import { loginUser, meUser, registerUser } from "./services/auth";
 import { getFeatured } from "./services/main-page";
+import { getProductByID } from "./services/product";
 
 
 // Database Pool
@@ -33,6 +34,13 @@ app.post('/auth/register', registerUser)
 app.get('/auth/me', meUser)
 // Login
 app.post('/auth/login', loginUser)
+
+/***************
+----Services----
+****************/
+
+// Get Product by ID
+app.get('/services/product/:id', getProductByID)
 
 
 export { pool }
