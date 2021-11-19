@@ -1,13 +1,17 @@
 <template>
   <v-card elevation="0" outlined class="pa-1">
     <div class="d-flex justify-end">
-      <v-btn absolute elevation="0" color="" x-small fab @click="favorited = !favorited">
+      <v-btn  elevation="0" color="" x-small fab @click="favorited = !favorited">
         <v-icon :color="favorited ? 'error' : ''" size="20px">{{ favorited ? "favorite" : "favorite_border" }}</v-icon>
       </v-btn>
     </div>
-    <div class="d-flex justify-center ma-2">
-      <v-img height="140px" :src="image"></v-img>
-    </div>
+    
+
+    <a href="product-page">
+      <div class="d-flex justify-center ma-2">
+        <v-img height="140px" :src="image"></v-img>
+      </div>
+    </a>
 
     <p style="text-align: center" class="ma-0">Organik Çanakkale Domates</p>
     <p style="text-align: center" class="text-caption"><a class="" href="">Bizim Çiftlik</a></p>
@@ -55,14 +59,14 @@
       v-if="itemsInBasket"
       class="d-flex justify-space-between align-center"
     >
-      <div style="border-radius: 4px; background-color: #deeee9">
-        <v-btn class="rounded-r-0" elevation="0" height="27" @click="itemsInBasket--" x-small color="#DEEEE9">
+      <div>
+        <v-btn class="rounded-r-0 secondary" elevation="0" height="30" @click="itemsInBasket--" x-small>
           <v-icon color="primary" size="20">{{ itemsInBasket == 1 ? "delete_outline" : "remove" }}</v-icon>
         </v-btn>
       </div>
       <span>{{ itemsInBasket }}</span>
-      <div style="border-radius: 4px; background-color: #deeee9">
-        <v-btn class="rounded-l-0" elevation="0" height="27" @click="itemsInBasket++" x-small color="#DEEEE9">
+      <div>
+        <v-btn class="rounded-l-0 secondary" elevation="0" height="30" @click="itemsInBasket++" x-small>
           <v-icon color="primary" size="20">add</v-icon>
         </v-btn>
       </div>
