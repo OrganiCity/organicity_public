@@ -18,7 +18,7 @@
 
       <v-col :class="$vuetify.breakpoint.smAndDown ? 'd-flex justify-center' : ''" cols="12" md="6">
         <div>
-          <v-img aspect-ratio="1" width="350px" :src="product.images[page]"></v-img>
+          <v-img aspect-ratio="1.4" max-width="450px" :src="product.images[page]"></v-img>
 
           <v-item-group mandatory>
             <div class="d-flex align-center">
@@ -116,12 +116,12 @@
           </v-hover>
         </div>
         <v-sheet outlined rounded class="pa-2 mb-4 text-body-2">
-          {{product.description}}
+          {{ product.description }}
         </v-sheet>
         <div class="d-flex flex-wrap justify-space-around align-center">
           <span class="primary--text font-weight-medium text-h5">
-            9,85 TL
-            <span class="grey--text text-h6">/kg</span>
+            {{product.pricePerUnit}} TL
+            <span class="grey--text text-h6">/{{product.unitType}}</span>
           </span>
           <div>
             <v-btn width="190px" color="primary">
@@ -138,15 +138,40 @@
 
     <!-- Tabs -->
 
-    <v-row id="tabs">
-      <v-tabs show-arrows class="mt-8" slider-size="3" color="yellow darken-2">
-        <v-tab :ripple="false">Ek Bilgiler</v-tab>
-        <v-tab :ripple="false">Besin Değerleri</v-tab>
-        <v-tab :ripple="false">İçindekiler</v-tab>
-        <v-tab :ripple="false">Nasıl saklanmalı?</v-tab>
+    <v-row class="mt-16"  id="tabs">
+      <v-tabs style="border-bottom: 1px solid #ffd600" v-model="tabs" show-arrows slider-size="3" color="yellow darken-2">
+        <v-tab v-if="product.extraInfo" :ripple="false">{{ $i18n("extraInfo") }}</v-tab>
+        <v-tab v-if="product.nutritionalValues" :ripple="false">{{ $i18n("nutritionalValues") }}</v-tab>
+        <v-tab v-if="product.ingredients" :ripple="false">{{ $i18n("ingredients") }}</v-tab>
+        <v-tab v-if="product.howToPreserve" :ripple="false">{{ $i18n("howToPreserve") }}</v-tab>
       </v-tabs>
 
-      <v-divider class="px-1 yellow darken-2"></v-divider>
+      <v-tabs-items v-model="tabs">
+        <v-tab-item  v-if="product.extraInfo">
+          <v-card flat>
+            <v-card-text>{{product.extraInfo}}</v-card-text>
+          </v-card>
+        </v-tab-item>
+
+        <v-tab-item v-if="product.nutritionalValues"> 
+          <v-card flat>
+            <v-card-text> {{product.nutritionalValues}} </v-card-text>
+          </v-card>
+        </v-tab-item>
+
+        <v-tab-item v-if="product.ingredients"> 
+          <v-card flat>
+            <v-card-text> {{product.ingredients}} </v-card-text>
+          </v-card>
+        </v-tab-item>
+
+         <v-tab-item v-if="product.howToPreserve"> 
+          <v-card flat>
+            <v-card-text> {{product.howToPreserve}} </v-card-text>
+          </v-card>
+        </v-tab-item>
+  
+      </v-tabs-items>
     </v-row>
   </v-container>
 </template>
@@ -162,8 +187,10 @@ export default {
         images: [],
       },
       page: 0,
-      rating: 3.0,
+      rating: 5.0,
       favorited: false,
+      tabs: null,
+      tabTitles: ["extraInfo", "nutritionalValues", "ingredients", "howToPreserve"],
       dialog: false,
       breadcrumbs: [
         {
@@ -191,14 +218,18 @@ export default {
   },
   methods: {
     getProductInfo() {
-      this.$api("getProductByID", this.$route.params.id).then(({ data }) => { this.product = data }).catch(() => {
-        this.$router.push("/product")
-      })
-    }
+      this.$api("getProductByID", this.$route.params.id)
+        .then(({ data }) => {
+          this.product = data;
+        })
+        .catch(() => {
+          this.$router.push("/product");
+        });
+    },
   },
   mounted() {
     this.getProductInfo();
-  }
+  },
 };
 </script>
 
