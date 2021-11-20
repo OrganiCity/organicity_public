@@ -1,6 +1,5 @@
 <template>
   <v-container>
-
     <v-slide-group class="mb-5">
       <v-slide-item v-for="item in items" :key="item.text">
         <span>
@@ -14,7 +13,7 @@
 
     <v-row>
       <!-- Images -->
-      
+
       <v-col :class="$vuetify.breakpoint.smAndDown ? 'd-flex justify-center' : ''" cols="12" md="6">
         <div>
           <v-img aspect-ratio="1" width="350px" :src="images[page]"></v-img>
@@ -43,11 +42,10 @@
       </v-col>
 
       <!-- Title -->
-      
+
       <v-col cols="12" md="6" :class="$vuetify.breakpoint.mdAndUp ? 'pr-10' : ''">
         <span class="mr-4"><a style="text-decoration: none" href="/">Bizim Çiftlik</a></span>
-        <p class="text-h4">Organik Çanakkale Domates 600 g </p>
-       
+        <p class="text-h4">Organik Çanakkale Domates 600 g</p>
 
         <v-rating
           class="d-inline"
@@ -128,7 +126,14 @@
               <v-icon size="20" left>shopping_cart</v-icon>
               Sepete Ekle
             </v-btn>
-            <v-btn :outlined="favorited ? false : true" class="ml-4" icon large  :color="favorited ? 'error' : ''" @click="favorited = !favorited">
+            <v-btn
+              :outlined="favorited ? false : true"
+              class="ml-4"
+              icon
+              large
+              :color="favorited ? 'error' : ''"
+              @click="favorited = !favorited"
+            >
               <v-icon>{{ favorited ? "favorite" : "favorite_border" }}</v-icon>
             </v-btn>
           </div>
