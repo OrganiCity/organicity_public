@@ -1,11 +1,11 @@
 <template>
   <v-container>
-    <v-row justify-content="center">
+    <v-row>
       <!-- <v-col lg="3" md="4" v-if="$vuetify.breakpoint.mdAndUp">
         <CategoryBar/>
         <SpecialDeals class="mx-8 my-8" v-if="$vuetify.breakpoint.md"/>
       </v-col> -->
-      <v-col class="d-flex justify-center">
+      <v-col>
         <CarouselSlider/>
         <v-row class="mt-2">  
           <v-col v-for="i in 5" :key="i" cols="6" sm="4"><ProductPreview/></v-col>

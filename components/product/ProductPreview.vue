@@ -1,17 +1,17 @@
 <template>
   <v-card elevation="0" outlined class="pa-1">
-    <div class="d-flex justify-end">
-      <v-btn  elevation="0" color="" x-small fab @click="favorited = !favorited">
+    <div  class="d-flex justify-end">
+      <v-btn style="z-index: 1" class="contrast" icon small  absolute @click="favorited = !favorited">
         <v-icon :color="favorited ? 'error' : ''" size="20px">{{ favorited ? "favorite" : "favorite_border" }}</v-icon>
       </v-btn>
     </div>
     
 
-    <a href="product-page">
-      <div class="d-flex justify-center ma-2">
-        <v-img height="140px" :src="image"></v-img>
-      </div>
-    </a>
+    
+    <div class="d-flex justify-center ma-2">
+      <v-img aspect-ratio="1.4" height="140px" :src="image"></v-img>
+    </div>
+    
 
     <p style="text-align: center" class="ma-0">Organik Çanakkale Domates</p>
     <p style="text-align: center" class="text-caption"><a class="" href="">Bizim Çiftlik</a></p>
