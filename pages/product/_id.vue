@@ -3,43 +3,82 @@
     <!-- BreadCrumbs -->
 
     <v-slide-group class="mb-5">
-      <v-slide-item v-for="item in breadcrumbs" :key="item.text">
+      <!-- <v-slide-item v-for="item in breadcrumbs" :key="item.text">
         <span>
           <a :href="item.href" :class="item.child ? 'font-weight-medium text-caption' : 'grey--text text--lighten text-caption'">
             {{ item.text }}
           </a>
           <v-icon class="mx-1 mr-2" v-if="!item.child" size="18">keyboard_arrow_right</v-icon>
         </span>
-      </v-slide-item>
+      </v-slide-item> -->
+      <v-breadcrumbs :items="breadcrumbs" class="pa-1">
+        <template v-slot:item="{ item }">
+          <v-breadcrumbs-item :href="item.href">
+            <span :class="item.child ? 'font-weight-medium text-caption' : 'inv_contrast--text text--lighten text-caption'">
+              {{ item.text }}
+            </span>
+          </v-breadcrumbs-item>
+        </template>
+        <template v-slot:divider>
+          <v-icon>mdi-chevron-right</v-icon>
+        </template>
+      </v-breadcrumbs>
     </v-slide-group>
 
     <v-row>
       <!-- Images -->
 
-      <v-col :class="$vuetify.breakpoint.smAndDown ? 'd-flex justify-center' : ''" cols="12" md="6">
+      <v-col cols="12" md="6">
         <div>
-          <v-img aspect-ratio="1.4" max-width="450px" :src="product.images[page]"></v-img>
-
-          <v-item-group mandatory>
-            <div class="d-flex align-center">
-              <v-item v-for="(image, n) in product.images" :key="n" v-slot="{ active, toggle }">
-                <v-card
-                  v-ripple="{ class: 'yellow--text' }"
-                  elevation="0"
-                  background-color=" white"
-                  light
-                  class="mt-6 mx-2"
-                  :style="active ? 'border: 3px solid #ffd600;' : 'border: 1px solid #e5e5e5;'"
-                  @click="
-                    toggle();
-                    page = n;
-                  "
-                >
-                  <v-img aspect-ratio="1.4" :width="active ? '84px' : '98px'" :src="image"></v-img>
-                </v-card>
-              </v-item>
+          <!-- mdAndUp -->
+          <template v-if="$vuetify.breakpoint.mdAndUp">
+            <div class="d-flex justify-center">
+              <v-responsive style="aspect-ratio: 1.4" class="d-flex align-center" max-width="450px">
+                <zoom-on-hover :img-normal="product.images[page]"></zoom-on-hover>
+              </v-responsive>
             </div>
-          </v-item-group>
+
+            <div class="d-flex justify-center">
+              <v-slide-group center-active show-arrows mandatory v-model="page">
+                <v-slide-item v-for="(image, n) in product.images" :key="n" v-slot="{ active }">
+                  <div class="d-flex align-center">
+                    <v-card
+                      v-ripple="{ class: 'yellow--text' }"
+                      elevation="0"
+                      background-color=" white"
+                      light
+                      class="mt-6 mx-2"
+                      :style="active ? 'border: 3px solid #ffd600;' : 'border: 1px solid #e5e5e5;'"
+                      @click="page = n"
+                    >
+                      <v-img aspect-ratio="1.4" :width="active ? '88px' : '96px'" :src="image"></v-img>
+                    </v-card>
+                  </div>
+                </v-slide-item>
+              </v-slide-group>
+            </div>
+          </template>
+
+          <!-- Mobile -->
+          <template v-else>
+            <v-carousel height="auto" hide-delimiters :show-arrows="false" v-model="page">
+              <v-carousel-item v-for="image in product.images" :key="image">
+                <div class="d-flex justify-center">
+                  <v-img :src="image" aspect-ratio="1.4" max-width="350px"></v-img>
+                </div>
+              </v-carousel-item>
+            </v-carousel>
+
+            <div class="d-flex justify-center" style="height: 16px">
+              <v-slide-group style="position: relative; bottom: 28px; z-index: 1" mandatory v-model="page">
+                <v-slide-item v-for="n in product.images.length" :key="n" v-slot="{ active }">
+                  <v-btn x-small @click="page = n - 1" :color="active ? 'primary' : 'secondary'" icon>
+                    <v-icon x-small>circle</v-icon>
+                  </v-btn>
+                </v-slide-item>
+              </v-slide-group>
+            </div>
+          </template>
         </div>
       </v-col>
 
@@ -120,8 +159,8 @@
         </v-sheet>
         <div class="d-flex flex-wrap justify-space-around align-center">
           <span class="primary--text font-weight-medium text-h5">
-            {{product.pricePerUnit}} TL
-            <span class="grey--text text-h6">/{{product.unitType}}</span>
+            {{ product.pricePerUnit }} TL
+            <span class="grey--text text-h6">/{{ product.unitType }}</span>
           </span>
           <div>
             <v-btn width="190px" color="primary">
@@ -138,7 +177,7 @@
 
     <!-- Tabs -->
 
-    <v-row class="mt-16"  id="tabs">
+    <v-row class="mt-16" id="tabs">
       <v-tabs style="border-bottom: 1px solid #ffd600" v-model="tabs" show-arrows slider-size="3" color="yellow darken-2">
         <v-tab v-if="product.extraInfo" :ripple="false">{{ $i18n("extraInfo") }}</v-tab>
         <v-tab v-if="product.nutritionalValues" :ripple="false">{{ $i18n("nutritionalValues") }}</v-tab>
@@ -147,30 +186,29 @@
       </v-tabs>
 
       <v-tabs-items v-model="tabs">
-        <v-tab-item  v-if="product.extraInfo">
+        <v-tab-item v-if="product.extraInfo">
           <v-card flat>
-            <v-card-text>{{product.extraInfo}}</v-card-text>
+            <v-card-text>{{ product.extraInfo }}</v-card-text>
           </v-card>
         </v-tab-item>
 
-        <v-tab-item v-if="product.nutritionalValues"> 
+        <v-tab-item v-if="product.nutritionalValues">
           <v-card flat>
-            <v-card-text> {{product.nutritionalValues}} </v-card-text>
+            <v-card-text>{{ product.nutritionalValues }}</v-card-text>
           </v-card>
         </v-tab-item>
 
-        <v-tab-item v-if="product.ingredients"> 
+        <v-tab-item v-if="product.ingredients">
           <v-card flat>
-            <v-card-text> {{product.ingredients}} </v-card-text>
+            <v-card-text>{{ product.ingredients }}</v-card-text>
           </v-card>
         </v-tab-item>
 
-         <v-tab-item v-if="product.howToPreserve"> 
+        <v-tab-item v-if="product.howToPreserve">
           <v-card flat>
-            <v-card-text> {{product.howToPreserve}} </v-card-text>
+            <v-card-text>{{ product.howToPreserve }}</v-card-text>
           </v-card>
         </v-tab-item>
-  
       </v-tabs-items>
     </v-row>
   </v-container>
