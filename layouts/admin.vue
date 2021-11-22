@@ -5,12 +5,12 @@
     <v-main>
       <v-container>
         <v-row>
-          <v-col lg="3" md="4">
+          <!-- <v-col lg="3" md="4">
             <CategoryBar />
           </v-col>
-          <v-col lg="7" md="8" cols="12">
+          <v-col lg="7" md="8" cols="12"> -->
             <Nuxt />
-          </v-col>
+          <!-- </v-col> -->
         </v-row>
       </v-container>
     </v-main>

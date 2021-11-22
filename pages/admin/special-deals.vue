@@ -1,12 +1,12 @@
 <template>
-  <SpecialDealsManager/>
+  <SlideManager/>
 </template>
 
 <script>
-import SpecialDealsManager from '~/components/admin/SpecialDealsManager.vue'
+import SpecialDealsManager from '~/components/admin/SlideManager.vue'
 export default {
   layout: "admin",
-  components: { SpecialDealsManager },
+  components: { SlideManager },
 
 }
 </script>
