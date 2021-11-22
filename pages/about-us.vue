@@ -12,6 +12,7 @@
         <p>You can reach us from the "Contact Us" page with filling the form or by calling 444 4 444. We evaluate your comments and suggestions as soon as possible and get back to you.</p>
       </v-col>
     </v-row>
+    
   </v-container>
 </template>
 
