@@ -27,7 +27,6 @@
     </v-dialog>
 
     <v-container>
-      <h1 class="primary--text">Special Deals Management</h1>
       
       <draggable class="d-flex" v-model="slides" group="slides" @start="drag=true" @end="drag=false">
        <v-card v-for="(element, i) in slides" :key="element.name"
@@ -51,6 +50,7 @@ import draggable from "vuedraggable";
 
 export default {
   components: { draggable },
+  props: ["getSlidesFunction"],
   data() {
     return {
       slides: [],
@@ -73,7 +73,8 @@ export default {
     }
   },
   mounted() {
-    this.$api("getFeaturedImages").then(({ data }) => {
+    console.log(this.props);
+    this.$api(this.getSlidesFunction).then(({ data }) => {
       this.slides = data;
       console.log(data);
     });
@@ -90,6 +91,6 @@ export default {
           return "500px";
       }
     }
-  }
+  },
 };
 </script>
