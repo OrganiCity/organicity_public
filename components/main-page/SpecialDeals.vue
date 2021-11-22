@@ -19,7 +19,7 @@
         height="auto"
         :show-arrows="false"
       >
-        <v-carousel-item v-for="(item, i) in items" :key="i" :to="item.route">
+        <v-carousel-item v-for="(item, i) in items" :key="i" to="product-page">
           <v-img :aspect-ratio="1" :src="item.src"></v-img>
           <p class="font-weight-medium mt-2" style="text-align: center">
             {{ $store.getters['preferences/language'] === 'TR' ? item.nameTR : item.nameEN }}
