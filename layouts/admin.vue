@@ -3,8 +3,15 @@
     <ScrollToTop />
     <HeaderBar @openSideBar="sideBarActive = true" />
     <v-main>
-      <v-container fluid>
-        <Nuxt />
+      <v-container>
+        <v-row>
+          <v-col lg="3" md="4">
+            <CategoryBar />
+          </v-col>
+          <v-col lg="7" md="8" cols="12">
+            <Nuxt />
+          </v-col>
+        </v-row>
       </v-container>
     </v-main>
     <Footer />
@@ -14,6 +21,7 @@
 <script>
 import DarkThemeSwitch from "~/components/ui/DarkThemeSwitch.vue";
 import Footer from "~/components/ui/Footer.vue";
+import CategoryBar from '~/components/ui/CategoryBar.vue';
 import HeaderBar from "~/components/ui/HeaderBar.vue";
 import LanguageSelector from "~/components/ui/LanguageSelector.vue";
 import ScrollToTop from "~/components/ui/ScrollToTop.vue";
@@ -24,7 +32,7 @@ export default {
     HeaderBar,
     Footer,
     ScrollToTop,
-    MobileSidebar,
+    CategoryBar,
   },
   middleware: "preferences",
   head() { return { titleTemplate: `${this.$i18n("organicity")}` } },
