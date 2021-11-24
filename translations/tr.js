@@ -10,5 +10,10 @@ export default {
     contact_us : 'Bize Ulaşın',
     language: "Dil",
     theme: "Tema",
-    special_deals: "Özel Fırsatlar"
+    special_deals: "Özel Fırsatlar",
+    extraInfo: "Ek Bilgiler",
+    nutritionalValues: "Besin Değerleri",
+    ingredients: "İçindekiler",
+    howToPreserve: "Nasıl Saklanmalı?"
+
 }
