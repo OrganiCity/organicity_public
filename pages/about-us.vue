@@ -15,3 +15,9 @@
     
   </v-container>
 </template>
+
+<script>
+export default {
+  layout: "product",
+}
+</script>

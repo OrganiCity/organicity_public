@@ -3,14 +3,6 @@
     <!-- BreadCrumbs -->
 
     <v-slide-group class="mb-5">
-      <!-- <v-slide-item v-for="item in breadcrumbs" :key="item.text">
-        <span>
-          <a :href="item.href" :class="item.child ? 'font-weight-medium text-caption' : 'grey--text text--lighten text-caption'">
-            {{ item.text }}
-          </a>
-          <v-icon class="mx-1 mr-2" v-if="!item.child" size="18">keyboard_arrow_right</v-icon>
-        </span>
-      </v-slide-item> -->
       <v-breadcrumbs :items="breadcrumbs" class="pa-1">
         <template v-slot:item="{ item }">
           <v-breadcrumbs-item :href="item.href">
@@ -39,7 +31,7 @@
             </div>
 
             <div class="d-flex justify-center">
-              <v-slide-group center-active  :show-arrows="product.images.length > 4 ? 'always' : 'desktop'" v-model="page">
+              <v-slide-group center-active :show-arrows="product.images.length > 4 ? 'always' : 'desktop'" v-model="page">
                 <v-slide-item v-for="(image, n) in product.images" :key="n" v-slot="{ active }">
                   <div class="d-flex align-center">
                     <v-card
@@ -60,7 +52,7 @@
           </template>
 
           <!-- Mobile -->
-          
+
           <template v-else>
             <v-carousel height="auto" hide-delimiters :show-arrows="false" v-model="page">
               <v-carousel-item v-for="image in product.images" :key="image">
