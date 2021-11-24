@@ -39,7 +39,7 @@
             </div>
 
             <div class="d-flex justify-center">
-              <v-slide-group center-active show-arrows mandatory v-model="page">
+              <v-slide-group center-active  :show-arrows="product.images.length > 4 ? 'always' : 'desktop'" v-model="page">
                 <v-slide-item v-for="(image, n) in product.images" :key="n" v-slot="{ active }">
                   <div class="d-flex align-center">
                     <v-card
@@ -51,7 +51,7 @@
                       :style="active ? 'border: 3px solid #ffd600;' : 'border: 1px solid #e5e5e5;'"
                       @click="page = n"
                     >
-                      <v-img aspect-ratio="1.4" :width="active ? '88px' : '96px'" :src="image"></v-img>
+                      <v-img aspect-ratio="1.4" :width="active ? '88px  ' : '96px'" :src="image"></v-img>
                     </v-card>
                   </div>
                 </v-slide-item>
@@ -60,6 +60,7 @@
           </template>
 
           <!-- Mobile -->
+          
           <template v-else>
             <v-carousel height="auto" hide-delimiters :show-arrows="false" v-model="page">
               <v-carousel-item v-for="image in product.images" :key="image">
@@ -69,7 +70,7 @@
               </v-carousel-item>
             </v-carousel>
 
-            <div class="d-flex justify-center" style="height: 16px">
+            <div class="d-flex justify-center" style="height: 20px">
               <v-slide-group style="position: relative; bottom: 28px; z-index: 1" mandatory v-model="page">
                 <v-slide-item v-for="n in product.images.length" :key="n" v-slot="{ active }">
                   <v-btn x-small @click="page = n - 1" :color="active ? 'primary' : 'secondary'" icon>
