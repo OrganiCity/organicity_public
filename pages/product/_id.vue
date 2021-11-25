@@ -3,11 +3,17 @@
     <!-- BreadCrumbs -->
 
     <v-slide-group class="mb-5">
-      <v-breadcrumbs :items="breadcrumbs" class="pa-1">
+      <v-breadcrumbs :items="product.breadcrumbs" class="pa-1">
         <template v-slot:item="{ item }">
-          <v-breadcrumbs-item :href="item.href">
-            <span :class="item.child ? 'font-weight-medium text-caption' : 'inv_contrast--text text--lighten text-caption'">
-              {{ item.text }}
+          <v-breadcrumbs-item to="/">
+            <span
+              :class="
+                product.breadcrumbs.indexOf(item) == product.breadcrumbs.length - 1
+                  ? 'font-weight-medium text-caption'
+                  : 'inv_contrast--text text--lighten text-caption'
+              "
+            >
+              {{ item.name }}
             </span>
           </v-breadcrumbs-item>
         </template>
@@ -31,7 +37,7 @@
             </div>
 
             <div class="d-flex justify-center">
-              <v-slide-group center-active :show-arrows="product.images.length > 4 ? 'always' : 'desktop'" v-model="page">
+              <v-slide-group center-active :show-arrows="product.images.length > 4 ? 'always' : ''" v-model="page">
                 <v-slide-item v-for="(image, n) in product.images" :key="n" v-slot="{ active }">
                   <div class="d-flex align-center">
                     <v-card
@@ -227,22 +233,18 @@ export default {
         {
           text: "Anasayfa",
           href: "/",
-          child: false,
         },
         {
           text: "Meyve, Sebze",
           href: "/taze20",
-          child: false,
         },
         {
           text: "Meyve",
           href: "/kombu15",
-          child: false,
         },
         {
           text: "Taze Meyveler",
           href: "/egri15",
-          child: true,
         },
       ],
     };
@@ -257,6 +259,7 @@ export default {
           this.$router.push("/product");
         });
     },
+   
   },
   mounted() {
     this.getProductInfo();
