@@ -30,7 +30,17 @@ export function getProductByID(req, res) {
                         breadcrumbData.shift()
                         data.breadcrumbs.unshift({categoryID: 0,
                                                   name: "Anasayfa"})
-                        res.status(200).send(data)
+                        
+                        pool.query(
+                            `SELECT c.cName, c.description, c.iconTag 
+                            FROM certificates c, productCertificates pc
+                            WHERE c.cID = pc.cID AND pc.approved = 1  AND pc.productID = ?`, [id], (err, cData) =>
+                            {
+                                if (err) return res.status(500).send(err)
+                                data.certificates = cData
+                                res.status(200).send(data)
+                            })
+                   
                     })
 
             })
