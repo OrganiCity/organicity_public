@@ -27,6 +27,7 @@ export function getProductByID(req, res) {
                     (err, breadcrumbData) => {
                         if (err) return res.status(500).send(err)
                         data.breadcrumbs = breadcrumbData
+                        breadcrumbData.shift()
                         data.breadcrumbs.unshift({categoryID: 0,
                                                   name: "Anasayfa"})
                         res.status(200).send(data)
