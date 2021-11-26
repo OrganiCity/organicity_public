@@ -6,14 +6,15 @@
     <v-main>
       <v-container>
         <v-row>
-          <v-col class="mt-2" lg="3" md="4" v-if="$vuetify.breakpoint.mdAndUp">
-
-              <!-- List -->
+          <v-col class="mt-6" lg="3" md="4" v-if="$vuetify.breakpoint.mdAndUp">
+            <!-- List -->
             <v-card elevation="0" outlined>
               <div class="d-flex justify-center mt-2">
                 <v-icon size="60">account_circle</v-icon>
               </div>
-              <p class="text-h6" style="text-align: center"> {{$store.getters["auth/userInfo"].firstName}}  {{$store.getters["auth/userInfo"].lastName}} </p>
+              <p class="text-h6" style="text-align: center">
+                {{ $store.getters["auth/userInfo"].firstName }} {{ $store.getters["auth/userInfo"].lastName }}
+              </p>
 
               <v-divider></v-divider>
               <v-list flat>
@@ -40,16 +41,24 @@
                   </v-hover>
 
                   <v-hover v-slot="{ hover }">
+                    <v-list-item :class="hover ? 'primary--text' : ''" to="/account/my-addresses">
+                      <v-icon :color="hover ? 'primary' : ''" left>library_books</v-icon>
+                      <v-list-item-title class="ml-2">Adreslerim</v-list-item-title>
+                    </v-list-item>
+                  </v-hover>
+
+                  <v-hover v-slot="{ hover }">
                     <v-list-item :class="hover ? 'primary--text' : ''" to="/account/my-account">
                       <v-icon :color="hover ? 'primary' : ''" left>manage_accounts</v-icon>
                       <v-list-item-title class="ml-2">Hesabım</v-list-item-title>
                     </v-list-item>
                   </v-hover>
 
+                  
                   <v-hover v-slot="{ hover }">
-                    <v-list-item :class="hover ? 'primary--text' : ''" to="/account/my-addresses">
-                      <v-icon :color="hover ? 'primary' : ''" left>library_books</v-icon>
-                      <v-list-item-title class="ml-2">Adreslerim</v-list-item-title>
+                    <v-list-item :class="hover ? 'primary--text' : ''" to="/account/create-store">
+                      <v-icon :color="hover ? 'primary' : ''" left>add_business</v-icon>
+                      <v-list-item-title class="ml-2">Mağaza Aboneliği</v-list-item-title>
                     </v-list-item>
                   </v-hover>
 
@@ -78,7 +87,6 @@
           <v-col lg="9" md="8">
             <Nuxt />
           </v-col>
-     
         </v-row>
       </v-container>
     </v-main>
