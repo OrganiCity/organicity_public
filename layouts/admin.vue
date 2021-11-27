@@ -5,10 +5,10 @@
     <v-main>
       <v-container>
         <v-row>
-          <v-col lg="3" md="4">
+          <!-- <v-col lg="3" md="4">
             <AdminSidebar />
-          </v-col>
-          <v-col lg="7" md="8" cols="12">
+          </v-col> -->
+          <v-col>
             <Nuxt />
           </v-col>
         </v-row>

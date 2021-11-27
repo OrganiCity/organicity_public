@@ -34,6 +34,9 @@ app.get('/auth/me', meUser)
 // Login
 app.post('/auth/login', loginUser)
 
-
+/***********
+----Admin----
+************/
+app.post('/admin/setMainCarousel')
 export { pool }
 export default app
