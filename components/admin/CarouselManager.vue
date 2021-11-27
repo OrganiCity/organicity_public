@@ -55,6 +55,7 @@ export default {
       drag: false,
       addModalShown: false,
       newSlide: {
+        idx: 0,
         route: "",
         src: ""
       }
@@ -65,10 +66,17 @@ export default {
       this.slides.splice(idx,1);
     },
     addSlide () {
-      this.$api("addCarouselSlide", this.newSlide);
-      this.slides.push(this.newSlide);
-      this.addModalShown=false;
-      this.newSlide = {};
+      this.$api("addCarouselSlide", {...this.newSlide, idx:this.slides.length}).then((res) => {
+        if(res.status!=200)
+          console.log(res.status);
+        else {
+          this.slides.push(this.newSlide);
+          this.$toast.success("Slide added successfully!");
+        }
+        this.newSlide = {};
+        this.addModalShown=false;
+      });
+      console.log(this.slides);
     }
   },
   mounted() {
