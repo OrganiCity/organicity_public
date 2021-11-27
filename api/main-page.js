@@ -10,3 +10,7 @@ export async function getSpecialDeals({ instance }) {
     return await instance.get("https://gist.githubusercontent.com/dogkansaracedu/ffe0ae6cf3791cd99dfd533b4e3f5118/raw/a8638d88445a8b16848ed061a26462eefd03a6a7/SpecialDeals.json")
 }
 
+export async function getCategories({ instance }) {
+    return await instance.get("/categories")
+}
+
