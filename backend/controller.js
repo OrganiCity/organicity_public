@@ -8,7 +8,7 @@ var mysql = require('mysql');
 // JS Imports
 import { loginUser, meUser, registerUser } from "./services/auth";
 import { getFeatured } from "./services/main-page";
-import { addCarouselSlide} from "./services/admin";
+import { addCarouselSlide, removeCarouselSlide} from "./services/admin";
 import { getCategories } from "./services/main-page";
 import { getProductByID } from "./services/product";
 
@@ -19,7 +19,7 @@ var pool = mysql.createPool({
     port: 3306,
     user: 'admin',
     password: 'Organicity!',
-    database: 'organicity'
+    database: 'organicity',
 });
 
 
@@ -41,6 +41,7 @@ app.post('/auth/login', loginUser)
 ----Admin----
 ************/
 app.post('/admin/addCarouselSlide', addCarouselSlide)
+app.post('/admin/removeCarouselSlide', removeCarouselSlide)
 /***************
 ----Services----
 ****************/

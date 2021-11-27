@@ -28,22 +28,21 @@ export function addCarouselSlide(req, res) {
 }
 
 
-export function addCarouselSlide(req, res) {
+export function removeCarouselSlide(req, res) {
   //if(!checkAdmin(req.headers.authorization))
   //  return res.status(401).send("Failed to authanticate as admin.");
   let slideIdx = req.body.idx;
 
-  const queryText = "UPDATE carouselSlides"
-  const queryValues = [slideIdx, slideURL, slideImg];
+  let queryText = "DELETE FROM carouselSlides WHERE idx=?;";
+  let queryValues = [slideIdx];
   pool.query(queryText, queryValues, (err, data) => {
-    if (err) {
-      console.log(err)
+    if (err)
       return res.status(500).send("Internal Server Error")
-    }
-    res.status(200).send()
+    queryText = "UPDATE carouselSlides SET idx=idx-1 WHERE idx > ?;";
+    pool.query(queryText, queryValues, (err, data) => {
+      if (err)
+        return res.status(500).send("Internal Server Error")
+      res.status(200).send()
+    })
   })
-}
-
-export function removeCarouselSlide(req, res) {
-
 }
