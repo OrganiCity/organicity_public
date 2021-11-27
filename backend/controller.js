@@ -26,6 +26,7 @@ var pool = mysql.createPool({
 // Endpoints
 app.get("/featured", getFeatured)
 app.get("/getCarouselSlides", getCarouselSlides)
+app.get("/getSpecialDeals", getSpecialDeals)
 
 /***********
 ----Auth----
