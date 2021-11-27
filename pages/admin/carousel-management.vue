@@ -28,11 +28,11 @@
 
     <v-container>
     <h1 class="primary--text">Main Carousel Management</h1>
-      <draggable class="d-flex" v-model="slides" group="slides" @start="drag=true" @end="drag=false">
+      <draggable style="overflow-x:auto;" class="d-flex" v-model="slides" group="slides">
        <v-card v-for="(element, i) in slides" :key="element.name"
             class="ma-4"
           >
-          <v-img width="350" :src="element.src"></v-img>
+          <v-img width="300" :src="element.src"></v-img>
           <v-btn @click="removeSlide(i)" absolute top right icon small class="contrast"><v-icon color="primary" >close</v-icon></v-btn>
     
     
@@ -44,7 +44,10 @@
 </template>
 
 <script>
+import draggable from 'vuedraggable'
+
 export default {
+  components: {draggable},
   layout: "admin",
   data() {
     return {

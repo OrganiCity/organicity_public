@@ -7,8 +7,16 @@
           <h2 class="primary--text mb-3">Add a New Slide</h2>
           <v-text-field
             autocomplete="off"
-            v-model="newSlide.route"
-            label="Product ID"
+            v-model="newSlide.src"
+            label="Product URL"
+            required
+            outlined
+          ></v-text-field>
+
+          <v-text-field
+            autocomplete="off"
+            v-model="newSlide.src"
+            label="Product Image URL"
             required
             outlined
           ></v-text-field>
@@ -17,10 +25,10 @@
         </v-form>
       </v-card>
     </v-dialog>
-
+    
     <v-container>
     <h1 class="primary--text">Special Deals Management</h1>
-      <draggable class="d-flex" v-model="slides" group="slides" @start="drag=true" @end="drag=false">
+      <draggable style="overflow-x:auto;" class="d-flex" v-model="slides" group="slides" @start="drag=true" @end="drag=false">
        <v-card v-for="(element, i) in slides" :key="element.name"
             class="ma-4"
           >
@@ -34,7 +42,10 @@
 </template>
 
 <script>
+import draggable from 'vuedraggable'
+
 export default {
+  components: {draggable},
   layout: "admin",
   data() {
     return {
