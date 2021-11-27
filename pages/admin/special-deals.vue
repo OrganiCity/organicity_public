@@ -7,7 +7,7 @@
           <h2 class="primary--text mb-3">Add a New Slide</h2>
           <v-text-field
             autocomplete="off"
-            v-model="newSlide.src"
+            v-model="newSlide.title"
             label="Product URL"
             required
             outlined
@@ -32,7 +32,7 @@
        <v-card v-for="(element, i) in slides" :key="element.name"
             class="ma-4"
           >
-          <v-img width="200" :src="element.src"></v-img>
+          <v-img width="180" :src="element.src"></v-img>
           <v-btn @click="removeSlide(i)" absolute top right icon small class="contrast"><v-icon color="primary" >close</v-icon></v-btn>
         </v-card>
       </draggable>
