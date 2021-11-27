@@ -4,10 +4,13 @@ const app = express();
 app.use(express.json());
 var mysql = require('mysql');
 
+
 // JS Imports
 import { loginUser, meUser, registerUser } from "./services/auth";
 import { getFeatured } from "./services/main-page";
-import { addCarouselSlide} from "./services/admin"
+import { addCarouselSlide} from "./services/admin";
+import { getCategories } from "./services/main-page";
+import { getProductByID } from "./services/product";
 
 // Database Pool
 var pool = mysql.createPool({
@@ -38,5 +41,13 @@ app.post('/auth/login', loginUser)
 ----Admin----
 ************/
 app.post('/admin/addCarouselSlide', addCarouselSlide)
+/***************
+----Services----
+****************/
+
+// Get Product by ID
+app.get('/services/product/:id', getProductByID)
+app.get('/categories', getCategories)
+
 export { pool }
 export default app

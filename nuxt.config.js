@@ -48,6 +48,7 @@ export default {
     '~/plugins/persisted-state.js',
     '~/plugins/internationalization.js',
     '~/plugins/util.js',
+    '~/plugins/zoom-on-hover.js'
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
@@ -76,9 +77,9 @@ export default {
       themes: {
         light: {
           primary: "#2DBD9C",
-          secondary: "#E6F7F2",
-          contrast: "#FFFFFF",
-          "inv-contrast": "#333333",
+          secondary: "#E6F7F2", 
+          contrast: "#F5F5F5",
+          inv_contrast: "#333333"
           //   accent: "#ff5722",
           //   error: "#ff9800",
           //   warning: "#ffeb3b",
@@ -87,6 +88,9 @@ export default {
         },
         dark: {
           primary: "#2DBD9C",
+          contrast: "#333333",
+          inv_contrast: "#FFFFFF",
+          //   accent: colors.grey.darken3,
           secondary: "#314B45",
           contrast: "#333333",
           "inv-contrast": "#FFFFFF"

@@ -6,8 +6,8 @@
     <v-main>
       <v-container>
         <v-row>
-          <v-col lg="3" md="4" v-if="$vuetify.breakpoint.mdAndUp">
-            <CategoryBar />
+          <v-col class="mt-2" lg="3" md="4" v-if="$vuetify.breakpoint.mdAndUp">
+            <CategoryBar/>
             <SpecialDeals class="mx-8 my-8" v-if="$vuetify.breakpoint.md" />
           </v-col>
           <v-col lg="7" md="8" cols="12">
@@ -18,18 +18,6 @@
           </v-col>
         </v-row>
       </v-container>
-      <!-- <v-row justify-content="left">
-      <v-col lg="3" md="4" v-if="$vuetify.breakpoint.mdAndUp">
-        <CategoryBar/>
-        <SpecialDeals class="mx-8 my-8" v-if="$vuetify.breakpoint.md"/>
-      </v-col>
-      <v-col lg="7" md="8" xs="12">
-        <CarouselSlider/>
-      </v-col>
-      <v-col class="pt-5" cols="2" v-if="$vuetify.breakpoint.lgAndUp">
-          <SpecialDeals/>
-      </v-col>
-    </v-row> -->
     </v-main>
     <Footer />
   </v-app>

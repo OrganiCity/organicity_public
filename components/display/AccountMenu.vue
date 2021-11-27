@@ -2,7 +2,7 @@
   <div>
     <v-menu bottom offset-y left transition="slide-y-transition">
       <template v-slot:activator="{ on, attrs }">
-        <v-btn v-bind="attrs" v-on="on" text large class="user-btn pl-5 pr-3 mx-3">
+        <v-btn  @click="check = !check"  v-bind="attrs" v-on="on" text large class="user-btn pl-5 pr-3 mx-3">
           <!-- <div style="max-width: 80px" class="text-capitalize">
           <v-clamp :max-lines="2">
             {{ $store.getters["user/info"].fullName }}
@@ -10,31 +10,55 @@
         </div> -->
           <v-icon size="25" left>account_circle</v-icon>
           <h5>{{ $store.getters["auth/userInfo"].firstName }}</h5>
-          <v-icon large right>expand_more</v-icon>
+
+          <v-icon v-if="check" large right>expand_more</v-icon>
+
+          <v-icon v-else large right>expand_less</v-icon>
         </v-btn>
       </template>
-      <v-list>
-        <v-list-item @click="openFollowers = true">
-          <v-list-item-title>Hesabım</v-list-item-title>
-          <v-icon right>settings</v-icon>
-        </v-list-item>
-        <v-list-item @click="openFollowers = true">
-          <v-list-item-title>Siparişlerim</v-list-item-title>
-          <v-icon right>mdi-shopping-outline</v-icon>
-        </v-list-item>
-        <v-list-item @click="openFollowers = true">
-          <v-list-item-title>Favorilerim</v-list-item-title>
-          <v-icon right>favorite</v-icon>
-        </v-list-item>
-        <v-list-item
-          @click="
-            $store.commit('auth/logout');
-            $toast.info('Çıkış Yapıldı');
-          "
-        >
-          <v-list-item-title>Çıkış Yap</v-list-item-title>
-          <v-icon right>mdi-logout</v-icon>
-        </v-list-item>
+      <v-list flat>
+        <v-list-item-group color="primary">
+          <v-hover v-slot="{ hover }">
+            <v-list-item :class="hover ? 'primary--text' : ''" href="/account/my-orders">
+              <v-icon :color="hover ? 'primary' : ''" left>mdi-shopping-outline</v-icon>
+              <v-list-item-title class="ml-2">Siparişlerim</v-list-item-title>
+            </v-list-item>
+          </v-hover>
+
+          <v-hover v-slot="{ hover }">
+            <v-list-item :class="hover ? 'primary--text' : ''" href="/account/my-favorites">
+              <v-icon :color="hover ? 'primary' : ''" left>favorite</v-icon>
+              <v-list-item-title class="ml-2">Favorilerim</v-list-item-title>
+            </v-list-item>
+          </v-hover>
+
+          <v-hover v-slot="{ hover }">
+            <v-list-item :class="hover ? 'primary--text' : ''" href="/account/my-reviews">
+              <v-icon :color="hover ? 'primary' : ''" left>rate_review</v-icon>
+              <v-list-item-title class="ml-2">Yorumlarım</v-list-item-title>
+            </v-list-item>
+          </v-hover>
+
+          <v-hover v-slot="{ hover }">
+            <v-list-item :class="hover ? 'primary--text' : ''" href="/account/my-account">
+              <v-icon :color="hover ? 'primary' : ''" left>manage_accounts</v-icon>
+              <v-list-item-title class="ml-2">Hesabım</v-list-item-title>
+            </v-list-item>
+          </v-hover>
+
+          <v-hover v-slot="{ hover }">
+            <v-list-item
+              :class="hover ? 'primary--text' : ''"
+              @click="
+                $store.commit('auth/logout');
+                $toast.info('Çıkış Yapıldı');
+              "
+            >
+              <v-icon :color="hover ? 'primary' : ''" left>mdi-logout</v-icon>
+              <v-list-item-title class="ml-2">Çıkış Yap</v-list-item-title>
+            </v-list-item>
+          </v-hover>
+        </v-list-item-group>
       </v-list>
     </v-menu>
     <!-- <ChangePassword
@@ -43,3 +67,13 @@
     /> -->
   </div>
 </template>
+
+<script>
+export default {
+  data() {
+    return {
+      check: true,
+    };
+  },
+};
+</script>
