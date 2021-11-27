@@ -7,7 +7,7 @@ var mysql = require('mysql');
 // JS Imports
 import { loginUser, meUser, registerUser } from "./services/auth";
 import { getFeatured } from "./services/main-page";
-
+import { addCarouselSlide} from "./services/admin"
 
 // Database Pool
 var pool = mysql.createPool({
@@ -37,6 +37,6 @@ app.post('/auth/login', loginUser)
 /***********
 ----Admin----
 ************/
-app.post('/admin/setMainCarousel')
+app.post('/admin/addCarouselSlide', addCarouselSlide)
 export { pool }
 export default app
