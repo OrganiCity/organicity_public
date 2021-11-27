@@ -63,7 +63,15 @@ export default {
   },
   methods: {
     removeSlide (idx) {
-      this.slides.splice(idx,1);
+      this.$api("removeCarouselSlide", {idx: idx}).then((res) => {
+        if(res.status!=200)
+          console.log(res.status);
+        else {
+          this.slides.splice(idx, 1);
+          this.$toast.success("Slide removed successfully!");
+        }
+      });
+      console.log(this.slides);
     },
     addSlide () {
       this.$api("addCarouselSlide", {...this.newSlide, idx:this.slides.length}).then((res) => {
