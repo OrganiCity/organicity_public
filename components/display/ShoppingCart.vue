@@ -6,7 +6,7 @@
       </v-btn>
     </template>
     <v-card class="px-2" width="400">
-      <v-card class="d-flex pa-2">
+      <v-card v-for="(cartItem, cartItemID) in cartItems" :key="cartItemID" class="d-flex pa-2">
         <img
           style="border: solid black"
           height="72"
@@ -14,13 +14,17 @@
           src="https://www.greenada.com/Uploads/UrunResimleri/buyuk/greenadadomates-1-kg-e162.jpg"
         />
         <div style="width: 100%" class="ml-2 d-flex flex-column justify-space-between">
-          <div class="subtitle">Deneme</div>
+          <div class="subtitle">{{ cartItem.name }}</div>
           <div class="d-flex justify-space-between">
-            <AddButtonWithCounter v-model="counter" />
-            <span class="title">144.05 ₺</span>
+            <AddButtonWithCounter v-model="cartItems[cartItemID].count" />
+            <span class="title">{{ cartItem.price }} ₺</span>
           </div>
         </div>
       </v-card>
+      <div>
+        <span class="title">Toplam:</span>
+        <span>{{ $store.getters["cart/totalPrice"] }}</span>
+      </div>
     </v-card>
   </v-menu>
 </template>
@@ -31,14 +35,20 @@ export default {
   components: { AddButtonWithCounter },
   data() {
     return {
-      counter: 0
+      cartItems: JSON.parse(JSON.stringify(this.$store.state['cart'].items))
     }
   },
   methods: {
   },
   watch: {
-    counter: function (e) {
-      if (!e) console.log("sil")
+    cartItems: {
+      handler(value) {
+        for (var key in value) {
+          if (value[key].count <= 0) delete value[key]
+        }
+        this.$store.commit("cart/updateCart", value)
+      },
+      deep: true
     }
   }
 
