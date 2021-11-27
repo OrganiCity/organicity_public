@@ -1,9 +1,9 @@
 //Main Carousel
-export async function setMainCarousel({ instance }, data) {
-  return await instance.post("/admin/setMainCarousel", data)
+export async function addCarouselSlide({ instance }, data) {
+  return await instance.post("/admin/addCarouselSlide", data)
 }
 
-//Special Deals
-export async function setMainCarousel({ instance }, data) {
-  return await instance.post("/admin/setMainCarousel", data)
+export async function removeCarouselSlide({ instance }, data) {
+  return await instance.post("/admin/removeCarouselSlide", data)
 }
+//Special Deals

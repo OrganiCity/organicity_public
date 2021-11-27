@@ -65,13 +65,13 @@ export default {
       this.slides.splice(idx,1);
     },
     addSlide () {
+      this.$api("addCarouselSlide", this.newSlide);
       this.slides.push(this.newSlide);
       this.addModalShown=false;
       this.newSlide = {};
     }
   },
   mounted() {
-    console.log(this.props);
     this.$api("getFeaturedImages").then(({ data }) => {
       this.slides = data;
       console.log(data);
