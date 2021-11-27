@@ -1,5 +1,5 @@
 <template>
-  <v-menu :close-on-content-click="false" bottom offset-y nudge-bottom="15" left transition="slide-y-transition">
+  <v-menu :close-on-content-click="false" bottom offset-y nudge-bottom="15" nudge-right="45" left transition="slide-y-transition">
     <template v-slot:activator="{ on, attrs }">
       <v-btn color="primary" icon large v-bind="attrs" v-on="on">
         <v-icon>shopping_cart</v-icon>
@@ -51,7 +51,6 @@ export default {
       deep: true
     }
   }
-
 }
 </script>
 
