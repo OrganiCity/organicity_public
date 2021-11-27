@@ -3,11 +3,17 @@
     <!-- BreadCrumbs -->
 
     <v-slide-group class="mb-5">
-      <v-breadcrumbs :items="breadcrumbs" class="pa-1">
+      <v-breadcrumbs :items="product.breadcrumbs" class="pa-1">
         <template v-slot:item="{ item }">
-          <v-breadcrumbs-item :href="item.href">
-            <span :class="item.child ? 'font-weight-medium text-caption' : 'inv_contrast--text text--lighten text-caption'">
-              {{ item.text }}
+          <v-breadcrumbs-item to="/">
+            <span
+              :class="
+                product.breadcrumbs.indexOf(item) == product.breadcrumbs.length - 1
+                  ? 'font-weight-medium text-caption'
+                  : 'inv_contrast--text text--lighten text-caption'
+              "
+            >
+              {{ item.name }}
             </span>
           </v-breadcrumbs-item>
         </template>
@@ -21,58 +27,56 @@
       <!-- Images -->
 
       <v-col cols="12" md="6">
-        <div>
-          <!-- mdAndUp -->
-          <template v-if="$vuetify.breakpoint.mdAndUp">
-            <div class="d-flex justify-center">
-              <v-responsive style="aspect-ratio: 1.4" class="d-flex align-center" max-width="450px">
-                <zoom-on-hover :img-normal="product.images[page]"></zoom-on-hover>
-              </v-responsive>
-            </div>
+        <!-- mdAndUp -->
+        <template v-if="$vuetify.breakpoint.mdAndUp">
+          <div class="d-flex justify-center">
+            <v-responsive style="aspect-ratio: 1.4" class="d-flex align-center" max-width="450px">
+              <zoom-on-hover style="cursor: zoom-in" :img-normal="product.images[page]"></zoom-on-hover>
+            </v-responsive>
+          </div>
 
-            <div class="d-flex justify-center">
-              <v-slide-group center-active :show-arrows="product.images.length > 4 ? 'always' : 'desktop'" v-model="page">
-                <v-slide-item v-for="(image, n) in product.images" :key="n" v-slot="{ active }">
-                  <div class="d-flex align-center">
-                    <v-card
-                      v-ripple="{ class: 'yellow--text' }"
-                      elevation="0"
-                      background-color=" white"
-                      light
-                      class="mt-6 mx-2"
-                      :style="active ? 'border: 3px solid #ffd600;' : 'border: 1px solid #e5e5e5;'"
-                      @click="page = n"
-                    >
-                      <v-img aspect-ratio="1.4" :width="active ? '88px  ' : '96px'" :src="image"></v-img>
-                    </v-card>
-                  </div>
-                </v-slide-item>
-              </v-slide-group>
-            </div>
-          </template>
-
-          <!-- Mobile -->
-
-          <template v-else>
-            <v-carousel height="auto" hide-delimiters :show-arrows="false" v-model="page">
-              <v-carousel-item v-for="image in product.images" :key="image">
-                <div class="d-flex justify-center">
-                  <v-img :src="image" aspect-ratio="1.4" max-width="350px"></v-img>
+          <div v-if="product.images.length > 1" class="d-flex justify-center mt-6">
+            <v-slide-group center-active :show-arrows="product.images.length > 4 ? 'always' : ''" v-model="page">
+              <v-slide-item v-for="(image, n) in product.images" :key="n" v-slot="{ active }">
+                <div class="d-flex align-center">
+                  <v-card
+                    v-ripple="{ class: 'yellow--text' }"
+                    elevation="0"
+                    background-color=" white"
+                    light
+                    class=" mx-2"
+                    :style="active ? 'border: 3px solid #ffd600;' : 'border: 1px solid #e5e5e5;'"
+                    @click="page = n"
+                  >
+                    <v-img aspect-ratio="1.4" :width="active ? '88px  ' : '96px'" :src="image"></v-img>
+                  </v-card>
                 </div>
-              </v-carousel-item>
-            </v-carousel>
+              </v-slide-item>
+            </v-slide-group>
+          </div>
+        </template>
 
-            <div class="d-flex justify-center" style="height: 20px">
-              <v-slide-group style="position: relative; bottom: 28px; z-index: 1" mandatory v-model="page">
-                <v-slide-item v-for="n in product.images.length" :key="n" v-slot="{ active }">
-                  <v-btn x-small @click="page = n - 1" :color="active ? 'primary' : 'secondary'" icon>
-                    <v-icon x-small>circle</v-icon>
-                  </v-btn>
-                </v-slide-item>
-              </v-slide-group>
-            </div>
-          </template>
-        </div>
+        <!-- Mobile -->
+
+        <template v-else>
+          <v-carousel height="auto" hide-delimiters :show-arrows="false" v-model="page">
+            <v-carousel-item v-for="image in product.images" :key="image">
+              <div class="d-flex justify-center">
+                <v-img :src="image" aspect-ratio="1.4" max-width="350px"></v-img>
+              </div>
+            </v-carousel-item>
+          </v-carousel>
+
+          <div class="d-flex justify-center" style="height: 20px">
+            <v-slide-group style="position: relative; bottom: 28px; z-index: 1" mandatory v-model="page">
+              <v-slide-item v-for="n in product.images.length" :key="n" v-slot="{ active }">
+                <v-btn x-small @click="page = n - 1" :color="active ? 'primary' : 'secondary'" icon>
+                  <v-icon x-small>circle</v-icon>
+                </v-btn>
+              </v-slide-item>
+            </v-slide-group>
+          </div>
+        </template>
       </v-col>
 
       <!-- Title -->
@@ -98,54 +102,36 @@
         <span class="text-caption">(8)</span>
 
         <!-- Certificates -->
-        <div class="d-flex flex-wrap justify-space-around mt-5 mb-5">
+        <div class="d-flex flex-wrap justify-space-around mb-5">
           <!-- Dialog Certificate -->
-          <v-dialog v-model="dialog" max-width="600">
-            <template v-slot:activator="{ on, attrs }">
-              <div v-on="on" v-bind="attrs">
-                <v-hover v-slot="{ hover }">
-                  <div :class="hover ? 'primary--text mx-2' : 'mx-2'">
-                    <v-icon :color="hover ? 'primary' : ''" size="40">settings_backup_restore</v-icon>
-                    <span>Organik Ürün</span>
-                  </div>
-                </v-hover>
+          <div
+            v-for="(certificate, index) in product.certificates"
+            :key="index"
+            @click="setCurrentCertificate(index)"
+            @click.stop="dialog = true"
+            style="cursor: pointer"
+          >
+            <v-hover v-slot="{ hover }">
+              <div :class="hover ? 'primary--text mx-2 mt-5' : 'mx-2 mt-5'">
+                <v-icon :color="hover ? 'primary' : ''" size="40">{{ certificate.iconTag }}</v-icon>
+                <span>{{ certificate.cName }}</span>
               </div>
-            </template>
-
+            </v-hover>
+          </div>
+          <v-dialog v-model="dialog" max-width="600" overlay-color="secondary">
             <v-card height="auto">
               <div class="d-flex justify-end">
                 <v-btn class="mt-2 mr-2" x-large icon @click="dialog = false">
                   <v-icon>mdi-close</v-icon>
                 </v-btn>
               </div>
-
               <div class="d-flex justify-center">
-                <v-icon size="90">settings_backup_restore</v-icon>
+                <v-icon size="90">{{ getCertificateIconTag() }}</v-icon>
               </div>
-              <p class="d-flex justify-center mb-5 mt-1 text-h5">Organik Ürün</p>
-
-              <v-card-text :class="$vuetify.breakpoint.mdAndUp ? 'px-12' : ''">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore
-                magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-                consequat
-              </v-card-text>
-              <v-card-actions></v-card-actions>
+              <p class="d-flex justify-center mb-5 mt-1 text-h5">{{ getCertificateName() }}</p>
+              <v-card-text :class="$vuetify.breakpoint.mdAndUp ? 'px-12' : ''">{{ getCertificateDescription() }}</v-card-text>
             </v-card>
           </v-dialog>
-
-          <v-hover v-slot="{ hover }">
-            <div :class="hover ? 'primary--text mx-2' : 'mx-2'">
-              <v-icon :color="hover ? 'primary' : ''" size="40">download_done</v-icon>
-              <span>TOB Onaylı</span>
-            </div>
-          </v-hover>
-
-          <v-hover v-slot="{ hover }">
-            <div :class="hover ? 'primary--text mx-2' : 'mx-2'">
-              <v-icon :color="hover ? 'primary' : ''" size="40">pest_control</v-icon>
-              <span>Pestisit Analizli</span>
-            </div>
-          </v-hover>
         </div>
         <v-sheet outlined rounded class="pa-2 mb-4 text-body-2">
           {{ product.description }}
@@ -214,40 +200,33 @@ export default {
   layout: "product",
   data() {
     return {
+      dialog: false,
+      currentCertificate: 0,
       product: {
         images: [],
+        certificates: [],
       },
       page: 0,
       rating: 5.0,
       favorited: false,
       tabs: null,
       tabTitles: ["extraInfo", "nutritionalValues", "ingredients", "howToPreserve"],
-      dialog: false,
-      breadcrumbs: [
-        {
-          text: "Anasayfa",
-          href: "/",
-          child: false,
-        },
-        {
-          text: "Meyve, Sebze",
-          href: "/taze20",
-          child: false,
-        },
-        {
-          text: "Meyve",
-          href: "/kombu15",
-          child: false,
-        },
-        {
-          text: "Taze Meyveler",
-          href: "/egri15",
-          child: true,
-        },
-      ],
+      breadcrumbs: [],
     };
   },
   methods: {
+    setCurrentCertificate(index) {
+      this.currentCertificate = index;
+    },
+    getCertificateIconTag() {
+      return this.product.certificates[this.currentCertificate]?.iconTag;
+    },
+    getCertificateName() {
+      return this.product.certificates[this.currentCertificate]?.cName;
+    },
+    getCertificateDescription() {
+      return this.product.certificates[this.currentCertificate]?.description;
+    },
     getProductInfo() {
       this.$api("getProductByID", this.$route.params.id)
         .then(({ data }) => {

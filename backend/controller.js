@@ -4,9 +4,11 @@ const app = express();
 app.use(express.json());
 var mysql = require('mysql');
 
+
 // JS Imports
 import { loginUser, meUser, registerUser } from "./services/auth";
 import { getFeatured } from "./services/main-page";
+import { getCategories } from "./services/main-page";
 import { getProductByID } from "./services/product";
 
 
@@ -41,7 +43,7 @@ app.post('/auth/login', loginUser)
 
 // Get Product by ID
 app.get('/services/product/:id', getProductByID)
-
+app.get('/categories', getCategories)
 
 export { pool }
 export default app

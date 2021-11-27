@@ -6,7 +6,7 @@ export function getProductByID(req, res) {
     if (!isProvided(id)) return res.status(400).send("Id not defined")
     pool.query(
         `select p.*,s.companyName from products p, sellers s where p.productID = ?`,
-        [id, id],
+        [id],
         (err, data) => {
             if (err) return res.status(500).send(err)
             else if (!data.length) return res.status(404).send("No product found with this id")
@@ -15,7 +15,36 @@ export function getProductByID(req, res) {
                 else if (!imageData.length) return res.status(404).send(err)
                 data = data[0]
                 data.images = imageData.map(e => e.imgURL)
-                res.status(200).send(data)
+
+                pool.query(
+                   `SELECT parent.categoryID, parent.name
+                    FROM products p, 
+                        nested_category node,
+                        nested_category parent
+                    WHERE node.lft BETWEEN parent.lft AND parent.rgt
+                          AND node.categoryID = p.categoryID AND p.productID = ?`,
+                    [id],
+                    (err, breadcrumbData) => {
+                        if (err) return res.status(500).send(err)
+                        data.breadcrumbs = breadcrumbData
+                        breadcrumbData.shift()
+                        data.breadcrumbs.unshift({categoryID: 0,
+                                                  name: "Anasayfa"})
+                        
+                        pool.query(
+                            `SELECT c.cName, c.description, c.iconTag 
+                            FROM certificates c, productCertificates pc
+                            WHERE c.cID = pc.cID AND pc.approved = 1  AND pc.productID = ?`, [id], (err, cData) =>
+                            {
+                                if (err) return res.status(500).send(err)
+                                data.certificates = cData
+                                res.status(200).send(data)
+                            })
+                   
+                    })
+
             })
+
         })
 }
+
