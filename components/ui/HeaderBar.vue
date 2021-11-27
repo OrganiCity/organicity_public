@@ -44,9 +44,7 @@
           {{ $i18n("sign_up") }}
         </v-btn>
       </template>
-      <v-btn color="primary" icon large>
-        <v-icon>shopping_cart</v-icon>
-      </v-btn>
+      <ShoppingCart />
       <AccessabilityMenu />
     </div>
     <!-- Mobile -->
@@ -58,9 +56,7 @@
         </router-link>
       </div>
       <div class="d-flex">
-        <v-btn color="primary" icon large>
-          <v-icon>shopping_cart</v-icon>
-        </v-btn>
+        <ShoppingCart />
         <AccessabilityMenu />
       </div>
     </div>
@@ -76,12 +72,13 @@
 <script>
 import AccountMenu from "../display/AccountMenu.vue";
 import AuthModal from "../display/AuthModal.vue";
+import ShoppingCart from '../display/ShoppingCart.vue';
 import AccessabilityMenu from "./AccessabilityMenu.vue";
 import DarkThemeSwitch from "./DarkThemeSwitch.vue";
 import LanguageSelector from "./LanguageSelector.vue";
 import SearchField from "./SearchField.vue";
 export default {
-  components: { DarkThemeSwitch, LanguageSelector, AccessabilityMenu, AuthModal, AccountMenu, SearchField },
+  components: { DarkThemeSwitch, LanguageSelector, AccessabilityMenu, AuthModal, AccountMenu, SearchField, ShoppingCart },
   computed: {
     paddingX() {
       let screenWidth = this.$vuetify.breakpoint.width;
