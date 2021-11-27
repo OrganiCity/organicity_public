@@ -12,18 +12,36 @@ function checkAdmin(token) {
 export function addCarouselSlide(req, res) {
   //if(!checkAdmin(req.headers.authorization))
   //  return res.status(401).send("Failed to authanticate as admin.");
+  let slideIdx = req.body.idx;
   let slideURL = req.body.route;
   let slideImg = req.body.src;
 
-  const queryText = "INSERT INTO carouselSlides (route, src) VALUES (?, ?);"
-  const queryValues = [slideURL, slideImg];
-
+  const queryText = "INSERT INTO carouselSlides (idx, route, src) VALUES (?, ?, ?);"
+  const queryValues = [slideIdx, slideURL, slideImg];
   pool.query(queryText, queryValues, (err, data) => {
-    if (err) return res.status(500).send("Internal Server Error")
-      res.status(200).send()
+    if (err) {
+      console.log(err)
+      return res.status(500).send("Internal Server Error")
+    }
+    res.status(200).send()
   })
+}
 
 
+export function addCarouselSlide(req, res) {
+  //if(!checkAdmin(req.headers.authorization))
+  //  return res.status(401).send("Failed to authanticate as admin.");
+  let slideIdx = req.body.idx;
+
+  const queryText = "UPDATE carouselSlides"
+  const queryValues = [slideIdx, slideURL, slideImg];
+  pool.query(queryText, queryValues, (err, data) => {
+    if (err) {
+      console.log(err)
+      return res.status(500).send("Internal Server Error")
+    }
+    res.status(200).send()
+  })
 }
 
 export function removeCarouselSlide(req, res) {
