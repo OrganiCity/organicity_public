@@ -1,5 +1,5 @@
 export const state = () => ({
-    items: { '1': { id: 1, name: 'oley', count: 2, price: 12.35 },'2': { id: 1, name: 'oley2', count: 2, price: 1.25 } },
+    items: { '0': { count: 2, price: 12.35 }, '1': { count: 2, price: 1.25 } },
 })
 
 export const mutations = {
