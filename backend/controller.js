@@ -7,10 +7,9 @@ var mysql = require('mysql');
 
 // JS Imports
 import { loginUser, meUser, registerUser } from "./services/auth";
-import { getFeatured, getCarouselSlides } from "./services/main-page";
-import { getCategories } from "./services/main-page";
+import { addCarouselSlide, removeCarouselSlide, addSpecialDeal, removeSpecialDeal, checkAdmin} from "./services/admin";
+import { getFeatured, getCarouselSlides, getSpecialDeals, getCategories } from "./services/main-page";
 import { getProductByID } from "./services/product";
-
 
 // Database Pool
 var pool = mysql.createPool({
@@ -19,13 +18,14 @@ var pool = mysql.createPool({
     port: 3306,
     user: 'admin',
     password: 'Organicity!',
-    database: 'organicity'
+    database: 'organicity',
 });
 
 
 // Endpoints
 app.get("/featured", getFeatured)
 app.get("/getCarouselSlides", getCarouselSlides)
+app.get("/getSpecialDeals", getSpecialDeals)
 
 /***********
 ----Auth----
@@ -38,6 +38,14 @@ app.get('/auth/me', meUser)
 // Login
 app.post('/auth/login', loginUser)
 
+/***********
+----Admin----
+************/
+app.post('/admin/addCarouselSlide', checkAdmin, addCarouselSlide)
+app.post('/admin/removeCarouselSlide', checkAdmin, removeCarouselSlide)
+
+app.post('/admin/addSpecialDeal', checkAdmin, addSpecialDeal)
+app.post('/admin/removeSpecialDeal', checkAdmin, removeSpecialDeal)
 /***************
 ----Services----
 ****************/

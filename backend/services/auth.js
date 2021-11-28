@@ -44,7 +44,8 @@ export function loginUser(req, res) {
             firstName: user.firstName,
             lastName: user.lastName,
             email: user.email,
-            userID: user.userID
+            userID: user.userID,
+            isAdmin: user.isAdmin
         },
             secrets.jwt_secret,
             {

@@ -92,6 +92,9 @@ export default {
           inv_contrast: "#FFFFFF",
           //   accent: colors.grey.darken3,
           secondary: "#314B45",
+          contrast: "#333333",
+          "inv-contrast": "#FFFFFF"
+
           //   accent: colors.grey.darken3,
           //   info: colors.teal.lighten1,
           //   warning: colors.amber.base,
