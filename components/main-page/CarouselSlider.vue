@@ -27,7 +27,7 @@ export default {
     };
   },
   mounted() {
-    this.$api("getFeaturedImages").then(({ data }) => {
+    this.$api("getCarouselSlides").then(({ data }) => {
       this.items = data;
     });
   },
