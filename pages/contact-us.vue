@@ -7,19 +7,19 @@
       <v-col cols="12" sm="10" md="6">
         <v-form>
           <h3 class="primary--text pr-8">Contact Form</h3>
-          <v-text-field v-model="firstname" label="First Name" required outlined></v-text-field>
+          <v-text-field v-model="formData.firstname" label="First Name" required outlined></v-text-field>
 
-          <v-text-field v-model="lastname" label="Last Name" required outlined></v-text-field>
+          <v-text-field v-model="formData.lastname" label="Last Name" required outlined></v-text-field>
 
-          <v-text-field v-model="email" label="E-mail" required outlined></v-text-field>
+          <v-text-field v-model="formData.email" label="E-mail" required outlined></v-text-field>
 
-          <v-text-field v-model="phone" label="Phone Number" required outlined></v-text-field>
+          <v-text-field v-model="formData.phone" label="Phone Number" required outlined></v-text-field>
 
-          <v-select v-model="topic" :items="topics" label="Topic" required outlined></v-select>
+          <v-select v-model="formData.topic" :items="topics" label="Topic" required outlined></v-select>
 
-          <v-textarea v-model="message" label="Message" required outlined></v-textarea>
+          <v-textarea v-model="formData.message" label="Message" required outlined></v-textarea>
 
-          <v-btn block large color="primary">Send</v-btn>
+          <v-btn block large color="primary" @click="submitForm">Send</v-btn>
         </v-form>
       </v-col>
       <v-col cols="12" sm="10" md="6" class="text-center">
@@ -52,15 +52,26 @@ export default {
   layout: "product",
   data() {
     return {
-      firstname: "",
-      lastname: "",
-      email: "",
-      phone: "",
-      topic: "",
-      message: "",
+      formData: {
+        firstname: "",
+        lastname: "",
+        email: "",
+        phone: "",
+        topic: "",
+        message: ""
+      },
       topics: ["Product request", "Product Complaint", "Order Complaint", "Payment Problem", "Other"],
     };
   },
+  methods: {
+    submitForm () {
+      this.$api("submitForm", this.formData).then(res=>{
+        this.$toast.success("Form submitted successfully!");
+      }).catch(e=>{
+        this.$toast.error("Couldn't send the form!");
+      })
+    }
+  }
 }
 </script>
 
