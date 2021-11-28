@@ -7,8 +7,8 @@
           <h2 class="primary--text mb-3">Add a New Slide</h2>
           <v-text-field
             autocomplete="off"
-            v-model="newSlide.title"
-            label="Product URL"
+            v-model="newSlide.productID"
+            label="Product ID"
             required
             outlined
           ></v-text-field>
@@ -53,26 +53,39 @@ export default {
       drag: false,
       addModalShown: false,
       newSlide: {
-        route: "",
+        productID: "",
         src: ""
       }
     };
   },
   methods: {
     removeSlide (idx) {
-      this.slides.splice(idx,1);
+      this.$api("removeSpecialDeal", {idx: idx}).then((res) => {
+        if(res.status!=200)
+          this.$toast.success("Couldn't remove deal!");
+        else {
+          this.slides.splice(idx, 1);
+          this.$toast.success("Deal removed successfully!");
+        }
+      });
     },
     addSlide () {
-      this.slides.push(this.newSlide);
-      this.addModalShown=false;
-      this.newSlide = {};
+      this.$api("addSpecialDeal", {...this.newSlide, idx:this.slides.length}).then((res) => {
+        if(res.status!=200)
+          this.$toast.success("Couldn't add deal!");
+        else {
+          this.slides.push(this.newSlide);
+          this.$toast.success("New deal added successfully!");
+        }
+        this.newSlide = {};
+        this.addModalShown=false;
+      });
     }
   },
   mounted() {
-    console.log(this.props);
     this.$api("getSpecialDeals").then(({ data }) => {
-      this.slides = data;
       console.log(data);
+      this.slides = data;
     });
   },
   computed: {
