@@ -7,8 +7,8 @@ var mysql = require('mysql');
 
 // JS Imports
 import { loginUser, meUser, registerUser } from "./services/auth";
-import { getFeatured } from "./services/main-page";
 import { addCarouselSlide, removeCarouselSlide} from "./services/admin";
+import { getFeatured, getCarouselSlides } from "./services/main-page";
 import { getCategories } from "./services/main-page";
 import { getProductByID } from "./services/product";
 
@@ -25,6 +25,7 @@ var pool = mysql.createPool({
 
 // Endpoints
 app.get("/featured", getFeatured)
+app.get("/getCarouselSlides", getCarouselSlides)
 
 /***********
 ----Auth----
