@@ -16,19 +16,8 @@ export function getCarouselSlides(req, res) {
 }
 
 export function getSpecialDeals(req, res) {
-    pool.query("select * from specialDeals ORDER BY idx", (err, data) => {
+    pool.query("SELECT p.productID, productName, pricePerUnit, src FROM products p JOIN (SELECT * FROM specialDeals) AS sd WHERE p.productID=sd.productID", (err, data) => {
         if(err) return res.status(500).send("Internal Server Error");
-        // let items=[]
-        // data.forEach(element => {
-        //     pool.query("SELECT * FROM products WHERE productID=?", [element.productID], (err, itemData) => {
-        //         if(err) return res.status(500).send("Internal Server Error");
-        //         items.push(itemData);
-        //         console.log(items)
-        //     });
-        //     console.log(items)
-        // });
-        // console.log("\n\n\n")
-        // console.log(items)
         res.json(data)
     })
 }
