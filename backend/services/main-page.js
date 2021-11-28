@@ -15,6 +15,25 @@ export function getCarouselSlides(req, res) {
     })
 }
 
+export function getMainPageItems(req, res) {
+    pool.query("SELECT mpi.productID, mpi.listID, mpl.title FROM mainPageItems mpi JOIN mainPageLists mpl WHERE mpi.listID=mpl.listID", (err, data) => {
+        if(err) return res.status(500).send("Internal Server Error");
+        res.json(data)
+    })
+}
+
+export function getProductPreviewDetails(req, res) {
+    let queryText = `SELECT p.productID, p.productName, p.pricePerUnit, s.companyName, min(imgURL) as imgURL
+    FROM products p 
+    LEFT JOIN sellers s ON p.sellerID = s.sellerID 
+    LEFT JOIN productImages pi2 on pi2.productID=p.productID WHERE p.productID=?`
+    
+    pool.query(queryText, [req.body.productID],(err, data) => {
+        if(err) return res.status(500).send("Internal Server Error");
+        res.json(data)
+    })
+}
+
 export function getSpecialDeals(req, res) {
     pool.query("SELECT p.productID, productName, pricePerUnit, src FROM products p JOIN (SELECT * FROM specialDeals) AS sd WHERE p.productID=sd.productID", (err, data) => {
         if(err) return res.status(500).send("Internal Server Error");

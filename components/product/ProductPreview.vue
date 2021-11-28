@@ -9,12 +9,12 @@
 
     
     <div class="d-flex justify-center ma-2">
-      <v-img aspect-ratio="1.4" height="140px" :src="image"></v-img>
+      <v-img aspect-ratio="1.4" height="140px" :src="imgSrc"></v-img>
     </div>
     
 
-    <p style="text-align: center" class="ma-0">Organik Çanakkale Domates</p>
-    <p style="text-align: center" class="text-caption"><a class="" href="">Bizim Çiftlik</a></p>
+    <p style="text-align: center" class="ma-0">{{productName}}</p>
+    <p style="text-align: center" class="text-caption"><a class="" href="">{{sellerName}}</a></p>
     <div class="d-flex justify-space-around mb-3">
       <v-tooltip bottom>
         <template v-slot:activator="{ on, attrs }">
@@ -44,7 +44,7 @@
       </v-tooltip>
     </div>
 
-    <p class="primary--text font-weight-medium mb-3" style="text-align: center">19.95 TL</p>
+    <p class="primary--text font-weight-medium mb-3" style="text-align: center">{{price}} TL</p>
 
     <v-fab-transition leave-absolute>
       <div v-if="itemsInBasket == 0" class="d-flex justify-end">
@@ -78,11 +78,26 @@
 export default {
   data() {
     return {
-      image: "https://www.greenada.com/Uploads/UrunResimleri/buyuk/greenadadomates-1-kg-e162.jpg",
+      productID:"",
+      productName:"",
+      imgSrc:"",
+      sellerName:"",
+      price:0.0,
+      itemsInBasket:0,
       favorited: false,
-      itemsInBasket: 0,
     };
   },
+  props:{productId:0},
+  mounted() {
+    this.$api("getProductPreviewDetails", {productID: this.productId}).then(({data}) => {
+      data=data[0];
+      this.productID = data.productID;
+      this.productName=data.productName;
+      this.sellerName=data.companyName;
+      this.imgSrc=data.imgURL;
+      this.price=data.pricePerUnit;
+    })
+  }
 };
 </script>
 

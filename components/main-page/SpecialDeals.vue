@@ -47,11 +47,9 @@ export default {
   mounted() {
     this.$api("getSpecialDeals").then(({ data }) => {
       this.items = data;
-      console.log(data)
     });
   },
 };
-</script>
 </script>
 <style>
 </style>
