@@ -8,8 +8,8 @@ var mysql = require('mysql');
 // JS Imports
 import { loginUser, meUser, registerUser } from "./services/auth";
 import { addCarouselSlide, removeCarouselSlide, addSpecialDeal, removeSpecialDeal, checkAdmin } from "./services/admin";
-import { getFeatured, getCarouselSlides, getSpecialDeals, getCategories } from "./services/main-page";
 import { getCartProductsByID, getProductByID } from "./services/product";
+import { getFeatured, getCarouselSlides, getSpecialDeals, getCategories, getMainPageItems, getProductPreviewDetails } from "./services/main-page";
 import { submitForm } from "./services/contact-us";
 
 // Database Pool
@@ -52,6 +52,8 @@ app.post('/admin/removeSpecialDeal', checkAdmin, removeSpecialDeal)
 ****************/
 
 app.post('/submitForm', submitForm)
+app.get('/getMainPageItems', getMainPageItems)
+app.post('/getProductPreviewDetails', getProductPreviewDetails)
 
 // Get Product by ID
 app.get('/services/product/:id', getProductByID)
