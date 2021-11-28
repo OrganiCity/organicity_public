@@ -88,7 +88,7 @@ export default {
     }
   },
   mounted() {
-    this.$api("getFeaturedImages").then(({ data }) => {
+    this.$api("getCarouselSlides").then(({ data }) => {
       this.slides = data;
       console.log(data);
     });
