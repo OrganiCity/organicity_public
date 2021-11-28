@@ -36,6 +36,11 @@ export default {
     ]
   },
 
+  // Router
+  router: {
+    middleware: 'auth'
+  },
+
   // Global CSS: https://go.nuxtjs.dev/config-css
   css: [
     "~/assets/css/main.css",
@@ -77,7 +82,7 @@ export default {
       themes: {
         light: {
           primary: "#2DBD9C",
-          secondary: "#E6F7F2", 
+          secondary: "#E6F7F2",
           contrast: "#F5F5F5",
           inv_contrast: "#333333"
           //   accent: "#ff5722",
