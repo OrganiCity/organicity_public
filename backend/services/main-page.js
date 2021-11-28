@@ -11,15 +11,24 @@ export function getFeatured(req, res) {
 export function getCarouselSlides(req, res) {
     pool.query("select * from carouselSlides ORDER BY idx", (err, data) => {
         if(err) return res.status(500).send("Internal Server Error");
-        console.log(data)
         res.json(data)
     })
 }
 
 export function getSpecialDeals(req, res) {
-    pool.query("select * from getSpecialDeals ORDER BY idx", (err, data) => {
+    pool.query("select * from specialDeals ORDER BY idx", (err, data) => {
         if(err) return res.status(500).send("Internal Server Error");
-        console.log(data)
+        // let items=[]
+        // data.forEach(element => {
+        //     pool.query("SELECT * FROM products WHERE productID=?", [element.productID], (err, itemData) => {
+        //         if(err) return res.status(500).send("Internal Server Error");
+        //         items.push(itemData);
+        //         console.log(items)
+        //     });
+        //     console.log(items)
+        // });
+        // console.log("\n\n\n")
+        // console.log(items)
         res.json(data)
     })
 }
