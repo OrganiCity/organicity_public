@@ -9,7 +9,7 @@ export function getFeatured(req, res) {
 }
 
 export function getCarouselSlides(req, res) {
-    pool.query("select * from carouselSlides", (err, data) => {
+    pool.query("select * from carouselSlides ORDER BY idx", (err, data) => {
         if(err) return res.status(500).send("Internal Server Error");
         console.log(data)
         res.json(data)
