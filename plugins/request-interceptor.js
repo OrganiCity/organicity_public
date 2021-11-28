@@ -3,12 +3,14 @@ import axios from "axios"
 import * as example from "@/api/example"
 import * as mainPage from "~/api/main-page"
 import * as auth from "~/api/auth"
+import * as admin from "~/api/admin"
 import * as services from "~/api/services"
 
 const apis = {
     ...example,
     ...mainPage,
     ...auth,
+    ...admin,
     ...services
 }
 
