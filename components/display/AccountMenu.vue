@@ -2,7 +2,7 @@
   <div>
     <v-menu bottom offset-y left transition="slide-y-transition">
       <template v-slot:activator="{ on, attrs }">
-        <v-btn  @click="check = !check"  v-bind="attrs" v-on="on" text large class="user-btn pl-5 pr-3 mx-3">
+        <v-btn @click="check = !check" v-bind="attrs" v-on="on" text large class="user-btn pl-5 pr-3 mx-3">
           <!-- <div style="max-width: 80px" class="text-capitalize">
           <v-clamp :max-lines="2">
             {{ $store.getters["user/info"].fullName }}
@@ -52,6 +52,7 @@
               @click="
                 $store.commit('auth/logout');
                 $toast.info('Çıkış Yapıldı');
+                $router.push('/');
               "
             >
               <v-icon :color="hover ? 'primary' : ''" left>mdi-logout</v-icon>
