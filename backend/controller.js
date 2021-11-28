@@ -7,7 +7,7 @@ var mysql = require('mysql');
 
 // JS Imports
 import { loginUser, meUser, registerUser } from "./services/auth";
-import { getFeatured, getCarouselSlides } from "./services/main-page";
+import { getFeatured, getCarouselSlides, getSpecialDeals } from "./services/main-page";
 import { getCategories } from "./services/main-page";
 import { getProductByID } from "./services/product";
 
