@@ -11,6 +11,7 @@ import { addCarouselSlide, removeCarouselSlide, addSpecialDeal, removeSpecialDea
 import { getFeatured, getCarouselSlides, getSpecialDeals, getCategories, getMainPageItems, getProductPreviewDetails } from "./services/main-page";
 import { getProductByID } from "./services/product";
 import { submitForm } from "./services/contact-us";
+import { updatePersonalInfo, updateContactInfo } from "./services/account";
 
 // Database Pool
 var pool = mysql.createPool({
@@ -38,6 +39,8 @@ app.post('/auth/register', registerUser)
 app.get('/auth/me', meUser)
 // Login
 app.post('/auth/login', loginUser)
+// Refresh Token
+app.get('/auth/refresh-token', refreshToken)
 
 /***********
 ----Admin----
@@ -54,10 +57,14 @@ app.post('/admin/removeSpecialDeal', checkAdmin, removeSpecialDeal)
 app.post('/submitForm', submitForm)
 app.get('/getMainPageItems', getMainPageItems)
 app.post('/getProductPreviewDetails', getProductPreviewDetails)
+app.put('/update-personal-info', updatePersonalInfo)
+app.put('/update-contact-info', updateContactInfo)
 
 // Get Product by ID
 app.get('/services/product/:id', getProductByID)
 app.get('/categories', getCategories)
+
+
 
 export { pool }
 export default app

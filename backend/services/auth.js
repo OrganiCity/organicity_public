@@ -44,6 +44,9 @@ export function loginUser(req, res) {
             firstName: user.firstName,
             lastName: user.lastName,
             email: user.email,
+            gender: user.gender,
+            dateOfBirth: user.dateOfBirth,
+            phoneNumber: user.phoneNumber,
             userID: user.userID,
             isAdmin: user.isAdmin
         },
@@ -64,5 +67,15 @@ export function meUser(req, res) {
     jwt.verify(token, secrets.jwt_secret, function (err, decoded) {
         if (err) return res.status(401).send('Failed to authenticate token.');
         return res.status(200).send(decoded);
+    });
+}
+
+export function refreshToken(req, res) {
+    var token = req.headers.authorization;
+    if (!(token && token.split(' ')[0] == 'Bearer')) return res.status(401).send('No token provided.');
+    token = token.split(' ')[1]
+    jwt.verify(token, secrets.jwt_secret, function (err, decoded) {
+        if (err) return res.status(401).send('Failed to authenticate token.');
+    
     });
 }
