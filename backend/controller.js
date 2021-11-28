@@ -7,7 +7,7 @@ var mysql = require('mysql');
 
 // JS Imports
 import { loginUser, meUser, registerUser } from "./services/auth";
-import { addCarouselSlide, removeCarouselSlide} from "./services/admin";
+import { addCarouselSlide, removeCarouselSlide, addSpecialDeal, removeSpecialDeal} from "./services/admin";
 import { getFeatured, getCarouselSlides } from "./services/main-page";
 import { getCategories } from "./services/main-page";
 import { getProductByID } from "./services/product";
@@ -43,6 +43,9 @@ app.post('/auth/login', loginUser)
 ************/
 app.post('/admin/addCarouselSlide', addCarouselSlide)
 app.post('/admin/removeCarouselSlide', removeCarouselSlide)
+
+app.post('/admin/addSpecialDeal', addSpecialDeal)
+app.post('/admin/removeSpecialDeal', removeSpecialDeal)
 /***************
 ----Services----
 ****************/

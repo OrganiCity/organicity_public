@@ -46,3 +46,41 @@ export function removeCarouselSlide(req, res) {
     })
   })
 }
+
+
+export function addSpecialDeal(req, res) {
+  //if(!checkAdmin(req.headers.authorization))
+  //  return res.status(401).send("Failed to authanticate as admin.");
+  let itemIdx = req.body.idx;
+  let itemID = req.body.productID;
+  let itemImg = req.body.src;
+
+  const queryText = "INSERT INTO specialDeals (idx, productID, src) VALUES (?, ?, ?);"
+  const queryValues = [itemIdx, itemID, itemImg];
+  pool.query(queryText, queryValues, (err, data) => {
+    if (err) {
+      console.log(err)
+      return res.status(500).send("Internal Server Error")
+    }
+    res.status(200).send()
+  })
+}
+
+export function removeSpecialDeal(req, res) {
+  //if(!checkAdmin(req.headers.authorization))
+  //  return res.status(401).send("Failed to authanticate as admin.");
+  let itemIdx = req.body.idx;
+
+  let queryText = "DELETE FROM specialDeals WHERE idx=?;";
+  let queryValues = [itemIdx];
+  pool.query(queryText, queryValues, (err, data) => {
+    if (err)
+      return res.status(500).send("Internal Server Error")
+    queryText = "UPDATE carouselSlides SET idx=idx-1 WHERE idx > ?;";
+    pool.query(queryText, queryValues, (err, data) => {
+      if (err)
+        return res.status(500).send("Internal Server Error")
+      res.status(200).send()
+    })
+  })
+}
