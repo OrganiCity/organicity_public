@@ -41,7 +41,6 @@ app.get('/auth/me', meUser)
 // Login
 app.post('/auth/login', loginUser)
 // Refresh Token
-app.get('/auth/refresh-token', refreshToken)
 
 /***********
 ----Admin----
