@@ -4,14 +4,16 @@
       <v-col cols="12"><p class="text-h4 mb-0">Sepetim</p></v-col>
       <v-col cols="12" md="9">
         <v-card outlined>
-          <v-card-title v-if="$vuetify.breakpoint.mdAndUp">
-            <v-row>
-              <v-col cols="3">Ürün</v-col>
-              <v-col class="d-flex justify-end" cols="4">Adet</v-col>
-              <v-col class="d-flex justify-end" cols="3">Fiyat</v-col>
-            </v-row>
-          </v-card-title>
-          <v-divider class="mx-4"></v-divider>
+          <template v-if="$vuetify.breakpoint.mdAndUp">
+            <v-card-title >
+              <v-row>
+                <v-col cols="3">Ürün</v-col>
+                <v-col class="d-flex justify-end" cols="4">Adet</v-col>
+                <v-col class="d-flex justify-end" cols="3">Fiyat</v-col>
+              </v-row>
+            </v-card-title>
+            <v-divider  class="mx-4"></v-divider>
+          </template>
           <CartProductPreview
             v-for="(item, id) in $store.getters['cart/items']"
             :key="id"
