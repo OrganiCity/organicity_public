@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-dialog :max-width="modalMaxWidth" :value="addModalShown">
+    <v-dialog :max-width="modalMaxWidth" v-model="addModalShown">
       <v-card>
         
         <v-form ref="form" class="pa-7">

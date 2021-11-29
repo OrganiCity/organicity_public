@@ -30,9 +30,9 @@ export async function addSubCategory({ instance }, data) {
 
 // Update & Delete
 export async function updateCategory({ instance }, data) {
-  return await instance.put("/admin/add-sub-category", data)
+  return await instance.put("/admin/update-category", data)
 }
 
 export async function deleteCategory({ instance }, data) {
-  return await instance.delete("/admin/add-sub-category", data)
+  return await instance.post("/admin/delete-category", data)
 }
