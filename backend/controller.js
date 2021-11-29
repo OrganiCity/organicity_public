@@ -8,10 +8,10 @@ var mysql = require('mysql');
 // JS Imports
 import { loginUser, meUser, registerUser } from "./services/auth";
 import { addCarouselSlide, removeCarouselSlide, addSpecialDeal, removeSpecialDeal, checkAdmin, addCategoryToTop, addCategoryBelow, addSubCategory, updateCategory, deleteCategory} from "./services/admin";
-import { getCartProductsByID, getProductByID } from "./services/product";
+import { addToFavorites, deleteFromFavorites, getCartProductsByID, getProductByID, isFavorited } from "./services/product";
 import { getFeatured, getCarouselSlides, getSpecialDeals, getCategories, getMainPageItems, getProductPreviewDetails } from "./services/main-page";
 import { submitForm } from "./services/contact-us";
-import { updatePersonalInfo, updateContactInfo } from "./services/account";
+import { updatePersonalInfo, updateContactInfo, getFavoriteProducts } from "./services/account";
 
 // Database Pool
 var pool = mysql.createPool({
@@ -72,11 +72,16 @@ app.get('/getMainPageItems', getMainPageItems)
 app.post('/getProductPreviewDetails', getProductPreviewDetails)
 app.put('/update-personal-info', updatePersonalInfo)
 app.put('/update-contact-info', updateContactInfo)
+app.post('/get-favorite-products', getFavoriteProducts)
 
 // Get Product by ID
 app.get('/services/product/:id', getProductByID)
 app.get('/services/cart-product/', getCartProductsByID)
 app.get('/categories', getCategories)
+
+app.post('/services/is-favorited', isFavorited)
+app.post('/services/add-to-favorites', addToFavorites)
+app.post('/services/delete-from-favorites', deleteFromFavorites)
 
 
 
