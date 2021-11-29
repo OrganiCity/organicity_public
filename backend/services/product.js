@@ -52,7 +52,6 @@ export function getProductByID(req, res) {
 export function getCartProductsByID(req, res) {
     const ids = req.query.ids.map((e) => Number.parseInt(e))
     if (!isProvided(ids)) return res.status(400).send("Id not defined")
-    console.log("hata buasrada mı")
     pool.query(
         `select p.productName,p.productID,p.pricePerUnit,s.companyName from products p, sellers s where p.productID in (?) order by productID`,
         [ids],
