@@ -30,7 +30,10 @@ export function getProductPreviewDetails(req, res) {
     
     pool.query(queryText, [req.body.productID],(err, data) => {
         if(err) return res.status(500).send("Internal Server Error");
-        res.json(data)
+        pool.query(`SELECT c.cID, c.cName, c.description, c.iconTag FROM productCertificates pc LEFT JOIN certificates c ON c.cID = pc.cID WHERE pc.productID=? and pc.approved=1`, [req.body.productID],(err, cData) => {
+            if(err) return res.status(500).send("Internal Server Error");
+            res.json({...data, certificates:cData});
+        })
     })
 }
 
