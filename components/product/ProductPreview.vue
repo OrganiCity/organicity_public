@@ -12,7 +12,9 @@
     </nuxt-link>
     
 
-    <p style="text-align: center" class="ma-0">{{ productName }}</p>
+    <v-responsive height="46px">
+      <p style="text-align: center" class="ma-0 mx-1">{{ productName }}</p>
+    </v-responsive>
     <p style="text-align: center" class="text-caption">
       <a class="" href="">{{ sellerName }}</a>
     </p>
