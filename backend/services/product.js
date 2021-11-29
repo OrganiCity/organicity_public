@@ -49,6 +49,20 @@ export function getProductByID(req, res) {
         })
 }
 
+export function isFavorited(req, res) {
+    if (!isProvided(req.body.productID, req.body.userID)) return res.status(400).send("Id not defined")
+
+    pool.query(`SELECT 1 as favorited
+                FROM favorites f
+                WHERE f.productID= ? and f.userID = ?`, [req.body.productID, req.body.userID], (err, data) => {
+        if (err) return res.status(500).send("Internal Server Error");
+        if (data.length) data = data[0];
+        console.log(data);
+        return res.status(200).send(data)
+    })
+
+}
+
 export function getCartProductsByID(req, res) {
     const ids = req.query.ids.map((e) => Number.parseInt(e))
     if (!isProvided(ids)) return res.status(400).send("Id not defined")

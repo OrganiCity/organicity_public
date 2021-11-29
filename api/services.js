@@ -8,6 +8,10 @@ export async function getCartProducts({ instance }, payload) {
     })
 }
 
+export async function isFavorited({ instance }, payload) {
+    return await instance.post("/services/is-favorited", payload)
+}
+
 export async function addToFavorites({ instance }, payload) {
     return await instance.post("/services/add-to-favorites", payload)
 }

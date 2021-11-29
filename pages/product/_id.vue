@@ -231,14 +231,21 @@ export default {
       this.$api("getProductByID", this.$route.params.id)
         .then(({ data }) => {
           this.product = data;
+          if (this.$store.getters["auth/userInfo"]?.userID)
+            this.$api("isFavorited", {
+              productID: this.$route.params.id,
+              userID: this.$store.getters["auth/userInfo"].userID,
+            }).then(({ data }) => {
+              this.favorited = data.favorited;
+            });
         })
         .catch(() => {
           this.$router.push("/product");
         });
     },
     addToCart() {
-      this.$store.commit("cart/addToCart", this.product.productID)
-    }
+      this.$store.commit("cart/addToCart", this.product.productID);
+    },
   },
   mounted() {
     this.getProductInfo();
