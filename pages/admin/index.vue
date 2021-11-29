@@ -8,7 +8,7 @@
 
     <v-tabs-items v-model="tab">
       <v-tab-item>
-        Categories
+        <CategoryManager/>
       </v-tab-item>
 
       <v-tab-item>
@@ -24,8 +24,10 @@
 <script>
 import CarouselManager from '~/components/admin/CarouselManager.vue';
 import SpecialDealsManager from '~/components/admin/SpecialDealsManager.vue';
+import CategoryManager from '~/components/admin/CategoryManager.vue';
+
 export default {
-  components: { CarouselManager, SpecialDealsManager },
+  components: { CarouselManager, SpecialDealsManager, CategoryManager },
   layout:"admin",
   data () {
     return {
