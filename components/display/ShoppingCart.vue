@@ -5,28 +5,22 @@
         <v-icon>shopping_cart</v-icon>
       </v-btn>
     </template>
-    <v-card :key="cartKey" class="pa-4" width="400">
-      <v-card elevation="0" v-for="(cartItem, cartItemID) in cartItems" :key="cartItemID" class="d-flex pa-2">
-        <v-card rounded="lg" outlined>
-          <v-img width="72" aspect-ratio="1.1" :src="getCartItemInfo(cartItemID, 'image')" />
-        </v-card>
-        <div style="width: 100%" class="ml-2 d-flex flex-column justify-space-between">
-          <div class="subtitle">{{ getCartItemInfo(cartItemID, "productName") }}</div>
-          <div class="d-flex justify-space-between">
-            <AddButtonWithCounter v-model="cartItems[cartItemID]" />
-            <span class="title">{{ getCartItemInfo(cartItemID, "pricePerUnit") }} ₺</span>
-          </div>
-        </div>
-      </v-card>
+    <v-card class="pa-4" width="400">
+      <CartItem
+        v-for="(item, id) in $store.getters['cart/items']"
+        :key="id"
+        :productID="id"
+        :productInfo="JSON.parse(cartItemInfos)[id]"
+      />
       <v-divider class="mt-2 mb-3"></v-divider>
       <div class="d-flex justify-space-between">
         <div>
           <span class="title">Toplam:</span>
           <span>
-            {{
+            <!-- {{
               Math.round(Object.values(cartItemInfos).reduce((p, c) => p + c.pricePerUnit * cartItems[c.productID], 0) * 100) /
               100
-            }}
+            }} -->
           </span>
         </div>
 
@@ -40,47 +34,22 @@
 </template>
 
 <script>
+import CartItem from '../cart/CartItem.vue'
 import AddButtonWithCounter from '../input/AddButtonWithCounter.vue'
 export default {
-  components: { AddButtonWithCounter },
+  components: { AddButtonWithCounter, CartItem },
   data() {
     return {
-      cartItems: JSON.parse(JSON.stringify(this.$store.state['cart'].items)),
-      cartItemInfos: {},
-      cartKey: 0
+      cartItemInfos: "{}",
     }
-  },
-  methods: {
-    getCartItemInfo(key, attr) {
-      return this.cartItemInfos[key]?.[attr];
-    }
-  },
-  watch: {
-    cartItems: {
-      handler(value) {
-        for (var key in value) {
-          if (value[key] <= 0) delete value[key]
-        }
-        this.$store.commit("cart/updateCart", value)
-      },
-      deep: true
-    },
-    storeCart: {
-      handler(value) {
-        this.cartItems = value
-      },
-      deep: true
-    }
-  },
-  computed: {
-    storeCart() { return this.$store.state['cart/items'] }
   },
   mounted() {
     this.$api("getCartProducts", Object.keys(this.$store.state['cart'].items)).then(({ data }) => {
+      let obj = {}
       data.forEach(e => {
-        this.cartItemInfos[e.productID] = e
+        obj[e.productID] = e
       });
-      this.cartKey++;
+      this.cartItemInfos = JSON.stringify(obj)
     })
   }
 }
