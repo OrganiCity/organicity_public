@@ -36,22 +36,7 @@ export function getProductPreviewDetails(req, res) {
          WHERE pc.productID=? and pc.approved=1`, [req.body.productID], (err, cData) => {
             if (err) return res.status(500).send("Internal Server Error");
             data.certificates = cData;
-            if (req.body.userID != -1)
-                pool.query(`SELECT 1 as favorited
-                FROM favorites f
-                WHERE f.productID= ? and f.userID = ?`, [req.body.productID, req.body.userID], (err, fData) => {
-                    if (err) return res.status(500).send("Internal Server Error");
-
-
-                    if (fData.length) {
-                        fData = fData[0];
-                        return res.json({ ...data, favorited: fData.favorited })
-                    }
-
-                    return res.json({ ...data, favorited: 0 });
-                })
-            else
-                return res.json({ ...data, favorited: 0 });
+            return res.status(200).send(data);
 
         })
     })
