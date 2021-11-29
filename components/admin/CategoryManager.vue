@@ -10,8 +10,8 @@
             <v-card>
               <v-form ref="form" class="pa-7">
                 <h2 class="primary--text mb-3">Add New Category to Top</h2>
-                <v-text-field autocomplete="off" label="Category Name" required outlined></v-text-field>
-                <v-text-field autocomplete="off" label="Icon Tag" required outlined></v-text-field>
+                <v-text-field v-model="categoryName" autocomplete="off" label="Category Name" required outlined></v-text-field>
+                <v-text-field v-model="iconTag" autocomplete="off" label="Icon Tag" required outlined></v-text-field>
                 <v-btn @click="addCategoryToTop" color="primary" class="mr-4">Add Category</v-btn>
               </v-form>
             </v-card>
@@ -25,11 +25,17 @@
             <v-card>
               <v-form ref="form" class="pa-7">
                 <h2 class="primary--text mb-3">Add a Category below a category</h2>
-                <v-text-field autocomplete="off" label="Upper Category Name" required outlined></v-text-field>
+                <v-text-field
+                  v-model="upperCategoryName"
+                  autocomplete="off"
+                  label="Upper Category Name"
+                  required
+                  outlined
+                ></v-text-field>
 
-                <v-text-field autocomplete="off" label="Category Name" required outlined></v-text-field>
-                <v-text-field autocomplete="off" label="Icon Tag" required outlined></v-text-field>
-                <v-btn color="primary" class="mr-4">Add  Category</v-btn>
+                <v-text-field v-model="categoryName" autocomplete="off" label="Category Name" required outlined></v-text-field>
+                <v-text-field v-model="iconTag" autocomplete="off" label="Icon Tag" required outlined></v-text-field>
+                <v-btn @click="addCategoryBelow" color="primary" class="mr-4">Add Category</v-btn>
               </v-form>
             </v-card>
           </v-dialog>
@@ -38,45 +44,72 @@
 
         <!-- Sub Category -->
         <v-col cols="6">
-          <v-dialog overlay-color="secondary" max-width="500px" v-model="addSubCategory">
+          <v-dialog overlay-color="secondary" max-width="500px" v-model="addSubCategoryShown">
             <v-card>
               <v-form ref="form" class="pa-7">
                 <h2 class="primary--text mb-3">Add a Sub Category</h2>
-                <v-text-field autocomplete="off" label="Category Name" required outlined></v-text-field>
-                <v-text-field autocomplete="off" label="Icon Tag" required outlined></v-text-field>
-                <v-btn color="primary" class="mr-4">Add Category</v-btn>
+                <v-text-field
+                  v-model="parentCategoryName"
+                  autocomplete="off"
+                  label="Parent Category Name"
+                  required
+                  outlined
+                ></v-text-field>
+                <v-text-field v-model="categoryName" autocomplete="off" label="Category Name" required outlined></v-text-field>
+                <v-text-field v-model="iconTag" autocomplete="off" label="Icon Tag" required outlined></v-text-field>
+                <v-btn @click="addSubCategory" color="primary" class="mr-4">Add Category</v-btn>
               </v-form>
             </v-card>
           </v-dialog>
-          <v-btn block color="primary" @click.stop="addSubCategory = true" large>Add a Sub Category</v-btn>
+          <v-btn block color="primary" @click.stop="addSubCategoryShown = true" large>Add a Sub Category</v-btn>
         </v-col>
         <!-- Update -->
         <v-col cols="6">
-          <v-dialog overlay-color="#ADD8E6" max-width="500px" v-model="updateCategory">
+          <v-dialog overlay-color="#ADD8E6" max-width="500px" v-model="updateCategoryShown">
             <v-card>
               <v-form ref="form" class="pa-7">
                 <h2 class="info--text mb-3">Update a Category Name</h2>
-                <v-text-field color="info" autocomplete="off" label="Category Name" required outlined></v-text-field>
-                <v-text-field color="info" autocomplete="off" label="Image URL" required outlined></v-text-field>
-                <v-btn color="info" class="mr-4">Update the Category</v-btn>
+                <v-text-field
+                  v-model="categoryName"
+                  color="info"
+                  autocomplete="off"
+                  label="Old Category Name"
+                  required
+                  outlined
+                ></v-text-field>
+                <v-text-field
+                  v-model="newCategoryName"
+                  color="info"
+                  autocomplete="off"
+                  label="New Category Name"
+                  required
+                  outlined
+                ></v-text-field>
+                <v-btn @click="updateCategory" color="info" class="mr-4">Update the Category</v-btn>
               </v-form>
             </v-card>
           </v-dialog>
-          <v-btn block color="info" @click.stop="updateCategory = true" large>Update a Category Name</v-btn>
+          <v-btn block color="info" @click.stop="updateCategoryShown = true" large>Update a Category Name</v-btn>
         </v-col>
         <!-- Delete -->
         <v-col cols="6">
-          <v-dialog overlay-color="#ffcccb70" max-width="500px" v-model="deleteCategory">
+          <v-dialog overlay-color="#ffcccb70" max-width="500px" v-model="deleteCategoryShown">
             <v-card>
               <v-form ref="form" class="pa-7">
                 <h2 class="error--text mb-3">Delete a Category</h2>
-                <v-text-field color="error" autocomplete="off" label="Category Name" required outlined></v-text-field>
-                <v-text-field color="error" autocomplete="off" label="Image URL" required outlined></v-text-field>
-                <v-btn color="error" class="mr-4">Delete the Category</v-btn>
+                <v-text-field
+                  v-model="categoryName"
+                  color="error"
+                  autocomplete="off"
+                  label="Category Name"
+                  required
+                  outlined
+                ></v-text-field>
+                <v-btn @click="deleteCategory" color="error" class="mr-4">Delete the Category</v-btn>
               </v-form>
             </v-card>
           </v-dialog>
-          <v-btn block color="error" @click.stop="deleteCategory = true" large>Delete a Category</v-btn>
+          <v-btn block color="error" @click.stop="deleteCategoryShown = true" large>Delete a Category</v-btn>
         </v-col>
       </v-row>
     </v-col>
@@ -91,17 +124,57 @@ export default {
   },
   data() {
     return {
+      categoryName: "",
+      newCategoryName: "",
+      iconTag: "",
+      parentCategoryName: "",
+      upperCategoryName: "",
       addCategoryTopShown: false,
       addBelow: false,
-      addSubCategory: false,
-      updateCategory: false,
-      deleteCategory: false,
+      addSubCategoryShown: false,
+      updateCategoryShown: false,
+      deleteCategoryShown: false,
     };
   },
   methods: {
-    addCategoryToTop() {},
-    addCategoryBelow () {},
-
+    addCategoryToTop() {
+      this.$api("addCategoryToTop", { categoryName: this.categoryName, iconTag: this.iconTag }).then((res) => {
+        location.reload();
+      });
+    },
+    addCategoryBelow() {
+      this.$api("addCategoryBelow", {
+        upperCategoryName: this.upperCategoryName,
+        categoryName: this.categoryName,
+        iconTag: this.iconTag,
+      }).then((res) => {
+        location.reload();
+      });
+    },
+    addSubCategory() {
+      this.$api("addSubCategory", {
+        parentCategoryName: this.parentCategoryName,
+        categoryName: this.categoryName,
+        iconTag: this.iconTag,
+      }).then((res) => {
+        location.reload();
+      });
+    },
+     updateCategory() {
+      this.$api("updateCategory", {
+        newCategoryName: this.newCategoryName,
+        oldCategoryName: this.categoryName,
+      }).then((res) => {
+        location.reload();
+      });
+    },
+     deleteCategory() {
+      this.$api("deleteCategory", {
+        categoryName: this.categoryName,
+      }).then((res) => {
+        location.reload();
+      });
+    },
   },
 };
 </script>
