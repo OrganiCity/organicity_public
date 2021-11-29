@@ -116,12 +116,12 @@ export default {};
 <style>
 .v-badge__badge {
   color: #2dbd9c !important;
-  width: 10px;
-  height: 10px;
+  width: 10px !important;
+  height: 10px !important;
 }
 
 .v-badge--icon .v-badge__badge {
-  padding: 1px 2px;
+  padding: 1px 2px !important;
 }
 
 .card-btn >>> .v-btn::before {
