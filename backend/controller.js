@@ -4,10 +4,14 @@ const app = express();
 app.use(express.json());
 var mysql = require('mysql');
 
+
 // JS Imports
 import { loginUser, meUser, registerUser } from "./services/auth";
-import { getFeatured } from "./services/main-page";
-
+import { addCarouselSlide, removeCarouselSlide, addSpecialDeal, removeSpecialDeal, checkAdmin, addCategoryToTop, addCategoryBelow, addSubCategory, updateCategory, deleteCategory} from "./services/admin";
+import { getCartProductsByID, getProductByID } from "./services/product";
+import { getFeatured, getCarouselSlides, getSpecialDeals, getCategories, getMainPageItems, getProductPreviewDetails } from "./services/main-page";
+import { submitForm } from "./services/contact-us";
+import { updatePersonalInfo, updateContactInfo } from "./services/account";
 
 // Database Pool
 var pool = mysql.createPool({
@@ -16,12 +20,15 @@ var pool = mysql.createPool({
     port: 3306,
     user: 'admin',
     password: 'Organicity!',
-    database: 'organicity'
+    database: 'organicity',
+    multipleStatements: true
 });
 
 
 // Endpoints
 app.get("/featured", getFeatured)
+app.get("/getCarouselSlides", getCarouselSlides)
+app.get("/getSpecialDeals", getSpecialDeals)
 
 /***********
 ----Auth----
@@ -33,6 +40,44 @@ app.post('/auth/register', registerUser)
 app.get('/auth/me', meUser)
 // Login
 app.post('/auth/login', loginUser)
+// Refresh Token
+
+/***********
+----Admin----
+************/
+app.post('/admin/addCarouselSlide', checkAdmin, addCarouselSlide)
+app.post('/admin/removeCarouselSlide', checkAdmin, removeCarouselSlide)
+
+app.post('/admin/addSpecialDeal', checkAdmin, addSpecialDeal)
+app.post('/admin/removeSpecialDeal', checkAdmin, removeSpecialDeal)
+
+// Category
+// Add
+app.post ('/admin/add-category-to-top', checkAdmin, addCategoryToTop) 
+app.post ('/admin/add-category-below', checkAdmin, addCategoryBelow)
+app.post ('/admin/add-sub-category', checkAdmin, addSubCategory) 
+
+// Update & Delete
+app.put ('/admin/update-category', checkAdmin, updateCategory)
+app.post ('/admin/delete-category', checkAdmin, deleteCategory)
+
+
+
+/***************
+----Services----
+****************/
+
+app.post('/submitForm', submitForm)
+app.get('/getMainPageItems', getMainPageItems)
+app.post('/getProductPreviewDetails', getProductPreviewDetails)
+app.put('/update-personal-info', updatePersonalInfo)
+app.put('/update-contact-info', updateContactInfo)
+
+// Get Product by ID
+app.get('/services/product/:id', getProductByID)
+app.get('/services/cart-product/', getCartProductsByID)
+app.get('/categories', getCategories)
+
 
 
 export { pool }
