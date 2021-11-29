@@ -8,9 +8,9 @@
     
 
     
-    <div class="d-flex justify-center ma-2">
-      <v-img aspect-ratio="1.4" height="140px" :src="imgSrc"></v-img>
-    </div>
+    <a class="d-flex justify-center ma-2"  :href="'/product/'+productID">
+        <v-img aspect-ratio="1.4" height="140px" :src="imgSrc"></v-img>
+    </a>
     
 
     <p style="text-align: center" class="ma-0">{{productName}}</p>
