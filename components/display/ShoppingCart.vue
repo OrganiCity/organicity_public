@@ -13,7 +13,7 @@
         <div style="width: 100%" class="ml-2 d-flex flex-column justify-space-between">
           <div class="subtitle">{{ getCartItemInfo(cartItemID, "productName") }}</div>
           <div class="d-flex justify-space-between">
-            <AddButtonWithCounter v-model="cartItems[cartItemID].count" />
+            <AddButtonWithCounter v-model="cartItems[cartItemID]" />
             <span class="title">{{ getCartItemInfo(cartItemID, "pricePerUnit") }} ₺</span>
           </div>
         </div>
@@ -22,7 +22,12 @@
       <div class="d-flex justify-space-between">
         <div>
           <span class="title">Toplam:</span>
-          <span>{{ $store.getters["cart/totalPrice"] }}</span>
+          <span>
+            {{
+              Math.round(Object.values(cartItemInfos).reduce((p, c) => p + c.pricePerUnit * cartItems[c.productID], 0) * 100) /
+              100
+            }}
+          </span>
         </div>
 
         <v-btn to="/my-cart" elevation="0" color="primary" class="text-capitalize">
@@ -54,12 +59,21 @@ export default {
     cartItems: {
       handler(value) {
         for (var key in value) {
-          if (value[key].count <= 0) delete value[key]
+          if (value[key] <= 0) delete value[key]
         }
         this.$store.commit("cart/updateCart", value)
       },
       deep: true
+    },
+    storeCart: {
+      handler(value) {
+        this.cartItems = value
+      },
+      deep: true
     }
+  },
+  computed: {
+    storeCart() { return this.$store.state['cart/items'] }
   },
   mounted() {
     this.$api("getCartProducts", Object.keys(this.$store.state['cart'].items)).then(({ data }) => {
