@@ -27,10 +27,6 @@ export default {
         this.$store.commit('cart/setCount', { id: this.productID, count: value })
       }
     },
-    // productInfoObj() {
-    //   console.log(this.productInfo)
-    //   return JSON.parse(this.productInfo)
-    // }
   },
 }
 </script>

@@ -16,9 +16,7 @@
       <div class="d-flex justify-space-between">
         <div>
           <span class="title">Toplam:</span>
-          <span>
-            {{ totalPrice }} ₺
-          </span>
+          <span>{{ totalPrice }} ₺</span>
         </div>
 
         <v-btn to="/my-cart" elevation="0" color="primary" class="text-capitalize">
@@ -45,22 +43,35 @@ export default {
       return Math.round(
         Object.values(JSON.parse(this.cartItemInfos)).reduce(
           (p, c) => {
-            console.log(p,this.$store.getters["cart/items"][c.productID])
             return p + c.pricePerUnit * this.$store.getters["cart/items"][c.productID]
           },
           0
         ) * 100
       ) / 100
+    },
+    numberOfItemsInCart() {
+      return Object.keys(this.$store.getters["cart/items"]).length
+    }
+  },
+  methods: {
+    getCartProducts() {
+      this.$api("getCartProducts", Object.keys(this.$store.state['cart'].items)).then(({ data }) => {
+        let obj = {}
+        data.forEach(e => {
+          obj[e.productID] = e
+        });
+        this.cartItemInfos = JSON.stringify(obj)
+      })
+    }
+  },
+  watch: {
+    numberOfItemsInCart: function (p, c) {
+      if (p > c) this.getCartProducts()
     }
   },
   mounted() {
-    this.$api("getCartProducts", Object.keys(this.$store.state['cart'].items)).then(({ data }) => {
-      let obj = {}
-      data.forEach(e => {
-        obj[e.productID] = e
-      });
-      this.cartItemInfos = JSON.stringify(obj)
-    })
+    if (this.numberOfItemsInCart > 0)
+      this.getCartProducts()
   }
 }
 </script>

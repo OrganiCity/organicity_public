@@ -12,7 +12,9 @@ export const mutations = {
         else delete state.items[payload]
     },
     setCount(state, payload) {
-        state.items[payload.id] = payload.count
+        // state.items[payload.id] = payload.count
+        this._vm.$set(state.items, payload.id, payload.count)
+        if (payload.count <= 0) this._vm.$delete(state.items, payload.id)
     },
     updateCart(state, payload) { state.items = JSON.parse(JSON.stringify(payload)) },
     clearCart(state) { state.items = {} },
