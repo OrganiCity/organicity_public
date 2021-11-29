@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-dialog :max-width="modalMaxWidth" :value="addModalShown">
+    <v-dialog :max-width="modalMaxWidth" v-model="addModalShown">
       <v-card>
         
         <v-form ref="form" class="pa-7">
@@ -36,7 +36,7 @@
           <v-btn @click="removeSlide(i)" absolute top right icon small class="contrast"><v-icon color="primary" >close</v-icon></v-btn>
         </v-card>
       </draggable>
-        <v-btn class="ma-4" color="primary" @click="addModalShown=true" large>Add New Product</v-btn>
+        <v-btn class="ma-4" color="primary" @click.stop="addModalShown=true" large>Add New Product</v-btn>
     </v-container>
   </div>
 </template>
