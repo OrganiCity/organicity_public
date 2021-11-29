@@ -56,7 +56,7 @@
         </router-link>
       </div>
       <div class="d-flex">
-        <ShoppingCart />
+        <MobileShoppingCart />
         <AccessabilityMenu />
       </div>
     </div>
@@ -77,8 +77,9 @@ import AccessabilityMenu from "./AccessabilityMenu.vue";
 import DarkThemeSwitch from "./DarkThemeSwitch.vue";
 import LanguageSelector from "./LanguageSelector.vue";
 import SearchField from "./SearchField.vue";
+import MobileShoppingCart from "../display/MobileShoppingCart.vue"
 export default {
-  components: { DarkThemeSwitch, LanguageSelector, AccessabilityMenu, AuthModal, AccountMenu, SearchField, ShoppingCart },
+  components: { DarkThemeSwitch, LanguageSelector, AccessabilityMenu, AuthModal, AccountMenu, SearchField, ShoppingCart, MobileShoppingCart },
   computed: {
     paddingX() {
       let screenWidth = this.$vuetify.breakpoint.width;
