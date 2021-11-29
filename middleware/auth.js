@@ -1,6 +1,5 @@
 export default function ({ app, store, redirect, route }) {
     const restrictedRoutes = [
-        "product-id"
     ]
     const restrictedPaths = [
         "account"

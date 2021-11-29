@@ -44,6 +44,9 @@ export function loginUser(req, res) {
             firstName: user.firstName,
             lastName: user.lastName,
             email: user.email,
+            gender: user.gender,
+            dateOfBirth: user.dateOfBirth,
+            phoneNumber: user.phoneNumber,
             userID: user.userID,
             isAdmin: user.isAdmin
         },
