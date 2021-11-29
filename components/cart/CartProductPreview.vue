@@ -17,8 +17,10 @@
         <p class="mb-0 d-flex">{{ productInfo.productName }}</p>
         <p class="text-caption primary--text mb-0">{{ productInfo.companyName }}</p>
       </v-col>
-      <v-col md="3" cols="5">
-        <AddButtonWithCounter v-model="cartItemCount" />
+      <v-col class="d-flex justify-center" md="3" cols="5">
+        <v-responsive max-width="150px">
+          <AddButtonWithCounter v-model="cartItemCount" />
+        </v-responsive>
       </v-col>
       <v-col md="2" cols="7" class="d-flex justify-end">
         <p class="primary--text mb-0 text-body-1 font-weight-medium">{{ productInfo.pricePerUnit }}</p>
