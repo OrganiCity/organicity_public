@@ -32,7 +32,6 @@ export default {
         return r;
       }, {});
       this.lists = group;
-        console.log(this.lists);
     });
   },
   components: {

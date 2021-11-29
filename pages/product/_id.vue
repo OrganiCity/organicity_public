@@ -146,7 +146,7 @@
               <v-icon size="20" left>shopping_cart</v-icon>
               Sepete Ekle
             </v-btn>
-            <v-btn :outlined="favorited ? false : true" class="ml-4" icon large color="error" @click="favorited = !favorited">
+            <v-btn :outlined="favorited ? false : true" class="ml-4" icon large color="error" @click="addToFavorites">
               <v-icon>{{ favorited ? "favorite" : "favorite_border" }}</v-icon>
             </v-btn>
           </div>
@@ -208,13 +208,26 @@ export default {
       },
       page: 0,
       rating: 5.0,
-      favorited: false,
+      favorited: 0,
       tabs: null,
       tabTitles: ["extraInfo", "nutritionalValues", "ingredients", "howToPreserve"],
       breadcrumbs: [],
     };
   },
   methods: {
+    addToFavorites() {
+      if (!this.$store.getters["auth/userInfo"]) this.$toast.info("Lütfen Giriş Yapınız");
+      else if (!this.favorited) {
+        this.$api("addToFavorites", {
+          productID: this.$route.params.id,
+          userID: this.$store.getters["auth/userInfo"]?.userID,
+        }).then((this.favorited = 1));
+      } else
+        this.$api("deleteFromFavorites", {
+          productID: this.$route.params.id,
+          userID: this.$store.getters["auth/userInfo"]?.userID,
+        }).then((this.favorited = 0));
+    },
     setCurrentCertificate(index) {
       this.currentCertificate = index;
     },
@@ -231,14 +244,21 @@ export default {
       this.$api("getProductByID", this.$route.params.id)
         .then(({ data }) => {
           this.product = data;
+          if (this.$store.getters["auth/userInfo"]?.userID)
+            this.$api("isFavorited", {
+              productID: this.$route.params.id,
+              userID: this.$store.getters["auth/userInfo"].userID,
+            }).then(({ data }) => {
+              this.favorited = data.favorited;
+            });
         })
         .catch(() => {
           this.$router.push("/product");
         });
     },
     addToCart() {
-      this.$store.commit("cart/addToCart", this.product.productID)
-    }
+      this.$store.commit("cart/addToCart", this.product.productID);
+    },
   },
   mounted() {
     this.getProductInfo();
