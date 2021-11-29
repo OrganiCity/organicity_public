@@ -16,11 +16,11 @@
 
           <v-col class="pa-0 px-3" md="6" cols="12">
             <p class="text-body-2 mb-1">Name</p>
-            <v-text-field v-model="name" outlined></v-text-field>
+            <v-text-field v-model="name" outlined required :rules="rules.name"></v-text-field>
           </v-col>
           <v-col class="pa-0 px-3" md="6" cols="12">
             <p class="text-body-2 mb-1">Surname</p>
-            <v-text-field v-model="lastName" outlined></v-text-field>
+            <v-text-field v-model="lastName" outlined required :rules="rules.name"></v-text-field>
           </v-col>
           <v-divider class="py-3 mx-3"></v-divider>
           <!-- Birth -->
@@ -48,7 +48,7 @@
           <v-divider class="py-3 mx-3"></v-divider> -->
           <v-col cols="12" class="py-0">
             <p class="text-body-2 mb-1">Gender</p>
-            <v-select :items="genders" v-model="gender" outlined></v-select>
+            <v-select :items="genders" v-model="gender" outlined required></v-select>
           </v-col>
           <v-col cols="12" class="d-flex justify-center pt-0">
             <v-btn @click="updatePersonalInfo" block elevation="0" max-width="400px" class="primary--text" color="secondary">Update</v-btn>
@@ -69,13 +69,13 @@
 
           <v-col class="pa-0 px-3" cols="12">
             <p class="text-body-2 mb-1">Phone Number</p>
-            <v-text-field v-model="phoneNumber" outlined></v-text-field>
+            <v-text-field v-model="phoneNumber" outlined required></v-text-field>
           </v-col>
           <v-divider class="py-3 ma-3"></v-divider>
 
           <v-col class="pa-0 px-3" cols="12">
             <p class="text-body-2 mb-1">E-Mail Address</p>
-            <v-text-field v-model="email" outlined></v-text-field>
+            <v-text-field v-model="email" :rules="rules.email" outlined required></v-text-field>
           </v-col>
 
           <v-col cols="12" class="d-flex justify-center pt-0">
@@ -102,7 +102,21 @@ export default {
       name: this.$store.getters['auth/userInfo'].firstName,
       lastName: this.$store.getters['auth/userInfo'].lastName,
       gender: this.$store.getters['auth/userInfo'].gender,
-      phoneNumber: this.$store.getters['auth/userInfo'].phoneNumber
+      phoneNumber: this.$store.getters['auth/userInfo'].phoneNumber,
+
+      rules: {
+        name: [v => !!v || "Lütfen adınızı giriniz!"],
+        email: [
+          v => !!v || "Lütfen e-posta adresinizi giriniz!",
+          v =>
+            /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(
+              v
+            ) || "Lütfen geçerli bir e-posta adresi giriniz!"
+        ],
+        phone: [
+          v => !!v || "Lütfen telefon numaranızı giriniz!"
+        ]
+      },
     };
   },
   methods: {
