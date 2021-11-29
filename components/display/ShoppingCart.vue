@@ -17,10 +17,7 @@
         <div>
           <span class="title">Toplam:</span>
           <span>
-            <!-- {{
-              Math.round(Object.values(cartItemInfos).reduce((p, c) => p + c.pricePerUnit * cartItems[c.productID], 0) * 100) /
-              100
-            }} -->
+            {{ totalPrice }} ₺
           </span>
         </div>
 
@@ -41,6 +38,19 @@ export default {
   data() {
     return {
       cartItemInfos: "{}",
+    }
+  },
+  computed: {
+    totalPrice() {
+      return Math.round(
+        Object.values(JSON.parse(this.cartItemInfos)).reduce(
+          (p, c) => {
+            console.log(p,this.$store.getters["cart/items"][c.productID])
+            return p + c.pricePerUnit * this.$store.getters["cart/items"][c.productID]
+          },
+          0
+        ) * 100
+      ) / 100
     }
   },
   mounted() {
