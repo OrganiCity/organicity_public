@@ -12,7 +12,9 @@
     </nuxt-link>
     
 
-    <p style="text-align: center" class="ma-0">{{ productName }}</p>
+    <v-responsive height="46px">
+      <p style="text-align: center" class="ma-0 mx-1">{{ productName }}</p>
+    </v-responsive>
     <p style="text-align: center" class="text-caption">
       <a class="" href="">{{ sellerName }}</a>
     </p>
@@ -37,23 +39,25 @@
       </div>
     </v-fab-transition>
 
-    <div
-      style="border: 1px solid #2dbd9c; border-radius: 4px"
-      v-if="itemsInBasket"
-      class="d-flex justify-space-between align-center"
-    >
-      <div>
-        <v-btn class="rounded-r-0 secondary" elevation="0" height="30" @click="itemsInBasket--" x-small>
-          <v-icon color="primary" size="20">{{ itemsInBasket == 1 ? "delete_outline" : "remove" }}</v-icon>
-        </v-btn>
+    <v-scale-transition mode="in-out" leave-absolute>
+      <div
+        style="border: 1px solid #2dbd9c; border-radius: 5px"
+        v-if="itemsInBasket"
+        class="d-flex justify-space-between align-center"
+      >
+        <div>
+          <v-btn class="rounded-r-0 secondary" elevation="0" height="30" @click="itemsInBasket--" x-small>
+            <v-icon color="primary" size="20">{{ itemsInBasket == 1 ? "delete_outline" : "remove" }}</v-icon>
+          </v-btn>
+        </div>
+        <span>{{ itemsInBasket }}</span>
+        <div>
+          <v-btn class="rounded-l-0 secondary" elevation="0" height="30" @click="itemsInBasket++" x-small>
+            <v-icon color="primary" size="20">add</v-icon>
+          </v-btn>
+        </div>
       </div>
-      <span>{{ itemsInBasket }}</span>
-      <div>
-        <v-btn class="rounded-l-0 secondary" elevation="0" height="30" @click="itemsInBasket++" x-small>
-          <v-icon color="primary" size="20">add</v-icon>
-        </v-btn>
-      </div>
-    </div>
+    </v-scale-transition>
   </v-card>
 </template>
 
