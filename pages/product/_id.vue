@@ -44,7 +44,7 @@
                     elevation="0"
                     background-color=" white"
                     light
-                    class=" mx-2"
+                    class="mx-2"
                     :style="active ? 'border: 3px solid #ffd600;' : 'border: 1px solid #e5e5e5;'"
                     @click="page = n"
                   >
@@ -142,7 +142,7 @@
             <span class="grey--text text-h6">/{{ product.unitType }}</span>
           </span>
           <div>
-            <v-btn width="190px" color="primary">
+            <v-btn @click="addToCart" width="190px" color="primary">
               <v-icon size="20" left>shopping_cart</v-icon>
               Sepete Ekle
             </v-btn>
@@ -236,6 +236,9 @@ export default {
           this.$router.push("/product");
         });
     },
+    addToCart() {
+      this.$store.commit("cart/addToCart", this.product.productID)
+    }
   },
   mounted() {
     this.getProductInfo();

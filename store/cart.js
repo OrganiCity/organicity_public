@@ -1,15 +1,24 @@
 export const state = () => ({
-    items: { '0': { count: 2, price: 12.35 }, '1': { count: 2, price: 1.25 } },
+    items: {},
 })
 
 export const mutations = {
-    addToCart(state, payload) { state.items[payload.id] = payload },
-    removeFromCart(state, payload) { delete state.items[payload] },
+    addToCart(state, payload) {
+        if (state.items[payload] !== undefined) state.items[payload]++
+        else state.items[payload] = 1
+    },
+    removeFromCart(state, payload) {
+        if (state.items[payload] !== undefined) state.items[payload]--
+        else delete state.items[payload]
+    },
+    setCount(state, payload) {
+        state.items[payload.id] = payload.count
+    },
     updateCart(state, payload) { state.items = JSON.parse(JSON.stringify(payload)) },
     clearCart(state) { state.items = {} },
 }
 
 export const getters = {
     items: (state) => state.items,
-    totalPrice: (state) => Object.values(state.items).reduce((p, c) => p + c.price * c.count, 0)
+    // totalPrice: (state) => Object.values(state.items).reduce((p, c) => p + c.price * c.count, 0)
 }
