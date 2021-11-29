@@ -7,9 +7,9 @@
     </div>
 
     
-    <a class="d-flex justify-center ma-2"  :href="'/product/'+productID">
+    <nuxt-link class="d-flex justify-center ma-2"  :to="'/product/'+productID">
         <v-img aspect-ratio="1.4" height="140px" :src="imgSrc"></v-img>
-    </a>
+    </nuxt-link>
     
 
     <p style="text-align: center" class="ma-0">{{ productName }}</p>
