@@ -63,7 +63,7 @@
 
               <div class="text-caption primary--text">
                 <span>Teslim tarihi</span>
-                <span class="font-weight-medium">05 Oca Cts 2019, 15:31</span>
+                <span class="font-weight-medium">3 Ağs Sal 2021, 13:11</span>
               </div>
             </div>
           </div>
@@ -116,12 +116,11 @@ export default {};
 <style>
 .v-badge__badge {
   color: #2dbd9c !important;
-  width: 10px;
-  height: 10px;
+ 
 }
 
 .v-badge--icon .v-badge__badge {
-  padding: 1px 2px;
+  padding: 1px 2px !important;
 }
 
 .card-btn >>> .v-btn::before {
