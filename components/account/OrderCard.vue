@@ -63,7 +63,7 @@
 
               <div class="text-caption primary--text">
                 <span>Teslim tarihi</span>
-                <span class="font-weight-medium">05 Oca Cts 2019, 15:31</span>
+                <span class="font-weight-medium">3 Ağs Sal 2021, 13:11</span>
               </div>
             </div>
           </div>
@@ -116,8 +116,7 @@ export default {};
 <style>
 .v-badge__badge {
   color: #2dbd9c !important;
-  width: 10px !important;
-  height: 10px !important;
+ 
 }
 
 .v-badge--icon .v-badge__badge {
