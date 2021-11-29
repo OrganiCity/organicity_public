@@ -41,9 +41,9 @@ export default {
   computed: {
     totalPrice() {
       return Math.round(
-        Object.values(JSON.parse(this.cartItemInfos)).reduce(
+        Object.entries(this.$store.getters["cart/items"]).reduce(
           (p, c) => {
-            return p + c.pricePerUnit * this.$store.getters["cart/items"][c.productID]
+            return p + JSON.parse(this.cartItemInfos)[c[0]]?.pricePerUnit * c[1]
           },
           0
         ) * 100
