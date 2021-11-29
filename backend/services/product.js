@@ -57,7 +57,6 @@ export function isFavorited(req, res) {
                 WHERE f.productID= ? and f.userID = ?`, [req.body.productID, req.body.userID], (err, data) => {
         if (err) return res.status(500).send("Internal Server Error");
         if (data.length) data = data[0];
-        console.log(data);
         return res.status(200).send(data)
     })
 

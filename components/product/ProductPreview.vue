@@ -97,7 +97,7 @@ export default {
         this.$api("deleteFromFavorites", {
           productID: this.productId,
           userID: this.$store.getters["auth/userInfo"]?.userID,
-        }).then(this.favorited = 0);
+        }).then((this.favorited = 0));
     },
   },
   mounted() {
@@ -106,13 +106,18 @@ export default {
       userID: this.$store.getters["auth/userInfo"]?.userID || -1,
     }).then(({ data }) => {
       this.certificates = data.certificates;
-      console.log(data);
-      this.favorited = data.favorited;
       this.productID = data.productID;
       this.productName = data.productName;
       this.sellerName = data.companyName;
       this.imgSrc = data.imgURL;
       this.price = data.pricePerUnit;
+      if (this.$store.getters["auth/userInfo"]?.userID)
+        this.$api("isFavorited", {
+          productID: this.productID,
+          userID: this.$store.getters["auth/userInfo"].userID,
+        }).then(({ data }) => {
+          this.favorited = data.favorited;
+        });
     });
   },
 };
