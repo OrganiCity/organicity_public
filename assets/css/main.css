@@ -28,6 +28,3 @@
     height: 15px;
 }
 
-.miniBadgeIcon >>> .v-badge--icon .v-badge__badge {
-    padding: 2px 3px;
-}
