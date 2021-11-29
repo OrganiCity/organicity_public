@@ -1,16 +1,16 @@
 <template>
   <v-card elevation="0" outlined class="pa-1">
     <div class="d-flex justify-end">
-      <v-btn style="z-index: 1" class="contrast" icon small absolute @click="favorited = !favorited">
-        <v-icon :color="favorited ? 'error' : ''" size="20px">{{ favorited ? "favorite" : "favorite_border" }}</v-icon>
+      <v-btn v-model="favorited" style="z-index: 1" class="contrast" icon small absolute @click="addToFavorites">
+        <v-icon v-model="favorited" :color="favorited ? 'error' : ''" size="20px">
+          {{ favorited ? "favorite" : "favorite_border" }}
+        </v-icon>
       </v-btn>
     </div>
 
-    
-    <nuxt-link class="d-flex justify-center ma-2"  :to="'/product/'+productID">
-        <v-img aspect-ratio="1.4" height="140px" :src="imgSrc"></v-img>
+    <nuxt-link class="d-flex justify-center ma-2" :to="'/product/' + productID">
+      <v-img aspect-ratio="1.4" height="140px" :src="imgSrc"></v-img>
     </nuxt-link>
-    
 
     <v-responsive height="46px">
       <p style="text-align: center" class="ma-0 mx-1">{{ productName }}</p>
@@ -22,10 +22,10 @@
       <v-tooltip bottom v-for="c in certificates" :key="c.cID">
         <template v-slot:activator="{ on, attrs }">
           <v-hover v-slot="{ hover }">
-            <v-icon v-bind="attrs" v-on="on" :color="hover ? 'primary' : ''">{{c.iconTag}}</v-icon>
+            <v-icon v-bind="attrs" v-on="on" :color="hover ? 'primary' : ''">{{ c.iconTag }}</v-icon>
           </v-hover>
         </template>
-        <span>{{c.cName}}</span>
+        <span>{{ c.cName }}</span>
       </v-tooltip>
     </div>
 
@@ -70,7 +70,7 @@ export default {
       imgSrc: "",
       sellerName: "",
       price: 0.0,
-      favorited: false,
+      favorited: 0,
       certificates: [],
     };
   },
@@ -78,25 +78,43 @@ export default {
   computed: {
     itemsInBasket: {
       get: function () {
-        return this.$store.getters['cart/items'][this.productId] || 0
+        return this.$store.getters["cart/items"][this.productId] || 0;
       },
       set: function (value) {
-        this.$store.commit('cart/setCount', { id: this.productId, count: value })
-      }
-    }
+        this.$store.commit("cart/setCount", { id: this.productId, count: value });
+      },
+    },
+  },
+  methods: {
+    addToFavorites() {
+      if (!this.$store.getters["auth/userInfo"]) this.$toast.info("Lütfen Giriş Yapınız");
+      else if (!this.favorited) {
+        this.$api("addToFavorites", {
+          productID: this.productId,
+          userID: this.$store.getters["auth/userInfo"]?.userID,
+        }).then((this.favorited = 1));
+      } else
+        this.$api("deleteFromFavorites", {
+          productID: this.productId,
+          userID: this.$store.getters["auth/userInfo"]?.userID,
+        }).then(this.favorited = 0);
+    },
   },
   mounted() {
-    this.$api("getProductPreviewDetails", {productID: this.productId}).then(({data}) => {
+    this.$api("getProductPreviewDetails", {
+      productID: this.productId,
+      userID: this.$store.getters["auth/userInfo"]?.userID || -1,
+    }).then(({ data }) => {
+      this.certificates = data.certificates;
       console.log(data);
-      this.certificates=data.certificates;
-      data=data[0];
+      this.favorited = data.favorited;
       this.productID = data.productID;
       this.productName = data.productName;
       this.sellerName = data.companyName;
       this.imgSrc = data.imgURL;
       this.price = data.pricePerUnit;
-    })
-  }
+    });
+  },
 };
 </script>
 

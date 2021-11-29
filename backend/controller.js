@@ -8,7 +8,7 @@ var mysql = require('mysql');
 // JS Imports
 import { loginUser, meUser, registerUser } from "./services/auth";
 import { addCarouselSlide, removeCarouselSlide, addSpecialDeal, removeSpecialDeal, checkAdmin, addCategoryToTop, addCategoryBelow, addSubCategory, updateCategory, deleteCategory} from "./services/admin";
-import { getCartProductsByID, getProductByID } from "./services/product";
+import { addToFavorites, deleteFromFavorites, getCartProductsByID, getProductByID } from "./services/product";
 import { getFeatured, getCarouselSlides, getSpecialDeals, getCategories, getMainPageItems, getProductPreviewDetails } from "./services/main-page";
 import { submitForm } from "./services/contact-us";
 import { updatePersonalInfo, updateContactInfo } from "./services/account";
@@ -77,6 +77,9 @@ app.put('/update-contact-info', updateContactInfo)
 app.get('/services/product/:id', getProductByID)
 app.get('/services/cart-product/', getCartProductsByID)
 app.get('/categories', getCategories)
+
+app.post('/services/add-to-favorites', addToFavorites)
+app.post('/services/delete-from-favorites', deleteFromFavorites)
 
 
 

@@ -61,8 +61,37 @@ export function getCartProductsByID(req, res) {
             pool.query(`select min(imgURL) as imgURL from productImages where productID in (?) group by productID`, [ids], (err, imageData) => {
                 if (err) return res.status(500).send(err)
                 else if (!imageData.length) return res.status(404).send(err)
-                data.map((e,i) => e.image = imageData[i].imgURL)
+                data.map((e, i) => e.image = imageData[i].imgURL)
                 return res.status(200).send(data)
             })
+        })
+}
+
+export function addToFavorites(req, res) {
+    if (!isProvided(req.body.productID, req.body.userID)) return res.status(400).send("Id not defined")
+    pool.query(
+        `INSERT INTO organicity.favorites (userID,productID)
+        VALUES (?, ?);
+        `,
+        [req.body.userID, req.body.productID],
+        (err) => {
+            if (err) return res.status(500).send(err)
+            return res.status(200).send("OK")
+        })
+}
+
+
+
+
+export function deleteFromFavorites(req, res) {
+    if (!isProvided(req.body.productID, req.body.userID)) return res.status(400).send("Id not defined")
+    pool.query(
+        `DELETE FROM organicity.favorites
+        WHERE userID=? AND productID=?;
+            `,
+        [req.body.userID, req.body.productID],
+        (err) => {
+            if (err) return res.status(500).send(err)
+            return res.status(200).send("OK")
         })
 }
