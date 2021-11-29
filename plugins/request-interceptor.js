@@ -5,13 +5,15 @@ import * as mainPage from "~/api/main-page"
 import * as auth from "~/api/auth"
 import * as admin from "~/api/admin"
 import * as services from "~/api/services"
+import * as account from "~/api/account"
 
 const apis = {
     ...example,
     ...mainPage,
     ...auth,
     ...admin,
-    ...services
+    ...services,
+    ...account
 }
 
 export default function ({ store }, inject) {
