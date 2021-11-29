@@ -3,12 +3,14 @@
     <v-row class="d-flex align-center">
       <v-col md="2" cols="6">
         <v-img
+          @click="$router.push('/product/' + productID)"
+          v-ripple
           class="rounded"
           min-height="80px"
           max-height="98px"
           max-width="100px"
           aspect-ratio="1.4"
-          src="https://www.greenada.com/Uploads/UrunResimleri/buyuk/greenadadomates-1-kg-e162.jpg"
+          :src="productInfo.image"
         ></v-img>
       </v-col>
       <v-col md="3" cols="6">
@@ -18,11 +20,8 @@
       <v-col md="3" cols="5">
         <AddButtonWithCounter v-model="cartItemCount" />
       </v-col>
-      <v-col md="2" cols="3" class="d-flex justify-end">
+      <v-col md="2" cols="7" class="d-flex justify-end">
         <p class="primary--text mb-0 text-body-1 font-weight-medium">{{ productInfo.pricePerUnit }}</p>
-      </v-col>
-      <v-col md="2" cols="4" class="d-flex justify-end">
-        <p class="mr-4 my-0">Sil</p>
       </v-col>
     </v-row>
   </v-card>
@@ -43,6 +42,7 @@ export default {
       }
     },
   },
+
 };
 </script>
 
