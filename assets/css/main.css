@@ -19,3 +19,12 @@
     color: lightgrey !important;
     text-decoration: none !important;
 }
+
+/* v-badge Special Visualization */
+
+.miniBadgeIcon .v-badge__badge {
+    color: #2DBD9C !important;
+    min-width: 15px;
+    height: 15px;
+}
+

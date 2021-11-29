@@ -10,5 +10,9 @@ export default {
     contact_us : 'Contact Us',
     language: "Language",
     theme: "Theme",
-    special_deals: "Special Deals"
+    special_deals: "Special Deals",
+    extraInfo: "Additional Information",
+    nutritionalValues: "Nutrional Values",
+    ingredients: "Ingredients",
+    howToPreserve: "How to Preserve?"
 }

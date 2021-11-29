@@ -19,12 +19,12 @@
         height="auto"
         :show-arrows="false"
       >
-        <v-carousel-item v-for="(item, i) in items" :key="i" to="product-page">
+        <v-carousel-item v-for="(item, i) in items" :key="i" :to="'/product/'+item.productID">
           <v-img :aspect-ratio="1" :src="item.src"></v-img>
           <p class="font-weight-medium mt-2" style="text-align: center">
-            {{ $store.getters['preferences/language'] === 'TR' ? item.nameTR : item.nameEN }}
+            {{item.productName}}
           </p>
-          <p class="primary--text font-weight-medium" style="text-align: center">{{ item.price }} TL</p>
+          <p class="primary--text font-weight-medium" style="text-align: center">{{ item.pricePerUnit }} TL</p>
         </v-carousel-item>
       </v-carousel>
       <div class="d-flex justify-center mt-2">
@@ -50,7 +50,6 @@ export default {
     });
   },
 };
-</script>
 </script>
 <style>
 </style>
