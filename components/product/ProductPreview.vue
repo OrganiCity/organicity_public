@@ -16,31 +16,13 @@
     <p style="text-align: center" class="ma-0">{{productName}}</p>
     <p style="text-align: center" class="text-caption"><a class="" href="">{{sellerName}}</a></p>
     <div class="d-flex justify-space-around mb-3">
-      <v-tooltip bottom>
+      <v-tooltip bottom v-for="c in certificates" :key="c.cID">
         <template v-slot:activator="{ on, attrs }">
           <v-hover v-slot="{ hover }">
-            <v-icon v-bind="attrs" v-on="on" :color="hover ? 'primary' : ''">settings_backup_restore</v-icon>
+            <v-icon v-bind="attrs" v-on="on" :color="hover ? 'primary' : ''">{{c.iconTag}}</v-icon>
           </v-hover>
         </template>
-        <span>Organik Ürün</span>
-      </v-tooltip>
-
-      <v-tooltip bottom>
-        <template v-slot:activator="{ on, attrs }">
-          <v-hover v-slot="{ hover }">
-            <v-icon v-bind="attrs" v-on="on" :color="hover ? 'primary' : ''">download_done</v-icon>
-          </v-hover>
-        </template>
-        <span>T.O.B Onaylı</span>
-      </v-tooltip>
-
-      <v-tooltip bottom>
-        <template v-slot:activator="{ on, attrs }">
-          <v-hover v-slot="{ hover }">
-            <v-icon v-bind="attrs" v-on="on" :color="hover ? 'primary' : ''">pest_control</v-icon>
-          </v-hover>
-        </template>
-        <span>Pestisit Analizli</span>
+        <span>{{c.cName}}</span>
       </v-tooltip>
     </div>
 
@@ -85,11 +67,14 @@ export default {
       price:0.0,
       itemsInBasket:0,
       favorited: false,
+      certificates: [],
     };
   },
   props:{productId:0},
   mounted() {
     this.$api("getProductPreviewDetails", {productID: this.productId}).then(({data}) => {
+      console.log(data);
+      this.certificates=data.certificates;
       data=data[0];
       this.productID = data.productID;
       this.productName=data.productName;
