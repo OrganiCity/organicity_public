@@ -11,7 +11,7 @@ import { addCarouselSlide, removeCarouselSlide, addSpecialDeal, removeSpecialDea
 import { addToFavorites, deleteFromFavorites, getCartProductsByID, getProductByID, isFavorited } from "./services/product";
 import { getFeatured, getCarouselSlides, getSpecialDeals, getCategories, getMainPageItems, getProductPreviewDetails } from "./services/main-page";
 import { submitForm } from "./services/contact-us";
-import { updatePersonalInfo, updateContactInfo } from "./services/account";
+import { updatePersonalInfo, updateContactInfo, getFavoriteProducts } from "./services/account";
 
 // Database Pool
 var pool = mysql.createPool({
@@ -72,6 +72,7 @@ app.get('/getMainPageItems', getMainPageItems)
 app.post('/getProductPreviewDetails', getProductPreviewDetails)
 app.put('/update-personal-info', updatePersonalInfo)
 app.put('/update-contact-info', updateContactInfo)
+app.post('/get-favorite-products', getFavoriteProducts)
 
 // Get Product by ID
 app.get('/services/product/:id', getProductByID)
