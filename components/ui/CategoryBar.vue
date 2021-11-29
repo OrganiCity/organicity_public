@@ -9,11 +9,11 @@
               <v-list-item-content class="font-weight-regular">
                 {{ category.name }}
               </v-list-item-content>
-              <v-icon right>navigate_next</v-icon>
+              <v-icon v-if="category.children.length" right>navigate_next</v-icon>
             </v-list-item>
           </v-hover>
         </template>
-        <v-card>
+        <v-card v-if="category.children.length"> 
           <v-list>
             <template v-for="subCategory in category.children">
               <v-list-item class="primary--text font-weight-medium" to="featured/egri15" :key="subCategory.categoryID">
