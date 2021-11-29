@@ -38,7 +38,7 @@
     
         </v-card>
       </draggable>
-        <v-btn class="ma-4" color="primary" @click="addModalShown=true" large>Add New Slide</v-btn>
+        <v-btn class="ma-4" color="primary" @click.stop="addModalShown=true" large>Add New Slide</v-btn>
     </v-container>
   </div>
 </template>
