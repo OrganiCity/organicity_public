@@ -6,7 +6,7 @@ var mysql = require('mysql');
 
 
 // JS Imports
-import { loginUser, meUser, registerUser } from "./services/auth";
+import { loginUser, meUser, refreshToken, registerUser } from "./services/auth";
 import { addCarouselSlide, removeCarouselSlide, addSpecialDeal, removeSpecialDeal, checkAdmin, addCategoryToTop, addCategoryBelow, addSubCategory, updateCategory, deleteCategory} from "./services/admin";
 import { addToFavorites, deleteFromFavorites, getCartProductsByID, getProductByID, isFavorited } from "./services/product";
 import { getFeatured, getCarouselSlides, getSpecialDeals, getCategories, getMainPageItems, getProductPreviewDetails } from "./services/main-page";
@@ -40,6 +40,8 @@ app.post('/auth/register', registerUser)
 app.get('/auth/me', meUser)
 // Login
 app.post('/auth/login', loginUser)
+
+app.get('/auth/refreshToken', refreshToken)
 // Refresh Token
 
 /***********
