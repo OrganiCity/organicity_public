@@ -130,20 +130,30 @@ export default {
         firstName: this.name,
         lastName: this.lastName,
         userID: this.$store.getters['auth/userInfo'].userID
-      })
-      this.$store.commit("auth/logout")
-      this.$router.push("/")
-      this.$toast.success("Profil bilgileriniz değiştirildi. Lütfen tekrar giriş yapın.")
+       }).then(()=> {
+        this.$api("refreshToken").then(({data})=>{
+          this.$store.commit("auth/setUserToken", data);
+          this.$api("userMe").then(({ data }) => {
+              this.$store.commit("auth/setUserInfo", data);
+              this.$toast.success("Updated personal info successfully.")
+          })          
+         })
+       })
     },
     updateContactInfo() {
       this.$api("updateContactInfo", {
         phoneNumber: this.phoneNumber,
         email: this.email,
         userID: this.$store.getters['auth/userInfo'].userID
+      }).then(()=> {
+         this.$api("refreshToken").then(({data})=>{
+            this.$store.commit("auth/setUserToken", data);
+            this.$api("userMe").then(({ data }) => {
+              this.$store.commit("auth/setUserInfo", data);
+              this.$toast.success("Updated contact info successfully.")
+          })
+         })
       })
-      this.$store.commit("auth/logout")
-      this.$router.push("/")
-      this.$toast.success("Profil bilgileriniz değiştirildi. Lütfen tekrar giriş yapın.")
     },
   }
 };
