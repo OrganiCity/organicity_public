@@ -16,5 +16,5 @@ export async function userRegister({ instance }, { email, password, firstName, l
 }
 
 export async function refreshToken({ instance }) {
-    return await instance.get("/auth/refreshToken")
+    return await instance.get("/auth/refresh-token")
 }
