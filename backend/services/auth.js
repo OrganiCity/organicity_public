@@ -32,7 +32,9 @@ export function registerUser(req, res) {
 export function loginUser(req, res) {
     let email = req.body.email
     let password = req.body.password
-    const queryText = "select * from users where email = ?"
+    const queryText = `SELECT users.*,  IF(sellers.sellerID IS NULL, FALSE, TRUE) AS isSeller
+        FROM users
+        LEFT JOIN sellers ON (users.userID = sellers.sellerID) `
     const queryValue = [email]
     pool.query(queryText, queryValue, (err, data) => {
         if (err) return res.status(500).send("Internal Server Error")
@@ -48,7 +50,8 @@ export function loginUser(req, res) {
             dateOfBirth: user.dateOfBirth,
             phoneNumber: user.phoneNumber,
             userID: user.userID,
-            isAdmin: user.isAdmin
+            isAdmin: user.isAdmin,
+            isSeller: user.isSeller,
         },
             secrets.jwt_secret,
             {
