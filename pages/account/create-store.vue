@@ -109,8 +109,13 @@ export default {
   methods: {
     newSeller() {
       this.sellerInfo.userID = this.$store.getters['auth/userInfo'].userID;
-      this.$api("newSeller", this.sellerInfo).then(res=>{
-        this.$toast.success("Store created successfully.")
+      this.$api("newSeller", this.sellerInfo).then(()=>{
+        this.$api("refreshToken").then(()=>{
+          this.$api("userMe").then(({ data }) => {
+            this.$store.commit("auth/setUserInfo", data);
+            this.$toast.success("Store created successfully.")
+          })
+        })
       }).catch(err=>{
         this.$toast.error("Failed to create a new store.")
       })

@@ -34,7 +34,8 @@ export function loginUser(req, res) {
     let password = req.body.password
     const queryText = `SELECT users.*,  IF(sellers.sellerID IS NULL, FALSE, TRUE) AS isSeller
         FROM users
-        LEFT JOIN sellers ON (users.userID = sellers.sellerID) `
+        LEFT JOIN sellers ON (users.userID = sellers.sellerID) 
+        WHERE users.email=?`
     const queryValue = [email]
     pool.query(queryText, queryValue, (err, data) => {
         if (err) return res.status(500).send("Internal Server Error")
@@ -85,9 +86,9 @@ export function refreshToken(req, res) {
 
     const queryText = `SELECT users.*,  IF(sellers.sellerID IS NULL, FALSE, TRUE) AS isSeller
     FROM users
-    LEFT JOIN sellers ON (users.userID = sellers.sellerID) `
-    const queryValue = [userData.email]
-
+    LEFT JOIN sellers ON (users.userID = sellers.sellerID)
+    WHERE users.userID=? `
+    const queryValue = [userData.userID]
     pool.query(queryText, queryValue, (err, data) => {
         if (err) return res.status(500).send("Internal Server Error")
         else if (!data.length) return res.status(404).send('No user found.')
@@ -102,11 +103,9 @@ export function refreshToken(req, res) {
             userID: user.userID,
             isAdmin: user.isAdmin,
             isSeller: user.isSeller,
-        },
+            },
             secrets.jwt_secret,
-            {
-                expiresIn: 86400 // 24 hours
-            }
+            { expiresIn: 86400 }// 24 hours
         )
         res.status(200).send(token)
     })
