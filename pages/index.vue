@@ -13,7 +13,6 @@
 </template>
 
 <script>
-import axios from "axios";
 import CarouselSlider from "~/components/main-page/CarouselSlider.vue";
 import SpecialDeals from "~/components/main-page/SpecialDeals.vue";
 import CategoryBar from "~/components/ui/CategoryBar.vue";
