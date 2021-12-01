@@ -83,15 +83,15 @@ export function refreshToken(req, res) {
         userData = decoded;
     });
 
-    const queryText = "select * from users where email = ?"
+    const queryText = `SELECT users.*,  IF(sellers.sellerID IS NULL, FALSE, TRUE) AS isSeller
+    FROM users
+    LEFT JOIN sellers ON (users.userID = sellers.sellerID) `
     const queryValue = [userData.email]
 
     pool.query(queryText, queryValue, (err, data) => {
         if (err) return res.status(500).send("Internal Server Error")
         else if (!data.length) return res.status(404).send('No user found.')
         const user = data[0]
-        const passwordValid = password && bcrypt.compareSync(password, user.hashedPassword)
-        if (!passwordValid) return res.status(401).send({ token: null });
         const token = jwt.sign({
             firstName: user.firstName,
             lastName: user.lastName,
@@ -100,7 +100,8 @@ export function refreshToken(req, res) {
             dateOfBirth: user.dateOfBirth,
             phoneNumber: user.phoneNumber,
             userID: user.userID,
-            isAdmin: user.isAdmin
+            isAdmin: user.isAdmin,
+            isSeller: user.isSeller,
         },
             secrets.jwt_secret,
             {
