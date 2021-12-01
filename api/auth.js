@@ -14,3 +14,7 @@ export async function userRegister({ instance }, { email, password, firstName, l
         lastName: lastName
     })
 }
+
+export async function refreshToken({ instance }) {
+    return await instance.get("/auth/refresh-token")
+}

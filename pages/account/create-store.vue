@@ -13,12 +13,12 @@
 
           <v-col class="py-0" md="6" cols="12">
             <p class="text-body-2 mb-1">Company Name</p>
-            <v-text-field value="Bizim Çiftlik" outlined></v-text-field>
+            <v-text-field v-model="sellerInfo.companyName" outlined></v-text-field>
           </v-col>
 
           <v-col class="py-0" md="6" cols="12">
             <p class="text-body-2 mb-1">Tax Number</p>
-            <v-text-field value="1234567891011" outlined></v-text-field>
+            <v-text-field v-model="sellerInfo.taxNumber" outlined></v-text-field>
           </v-col>
           <v-col cols="12" class="pa-0 ma-0">
             <v-divider class="py-3 mx-3"></v-divider>
@@ -27,12 +27,12 @@
           <!-- Address -->
           <v-col class="py-0" md="6" cols="12">
             <p class="text-body-2 mb-1">Company Country</p>
-            <v-text-field value="Turkey" outlined></v-text-field>
+            <v-text-field v-model="sellerInfo.companyCountry" outlined></v-text-field>
           </v-col>
 
           <v-col class="py-0" md="6" cols="12">
             <p class="text-body-2 mb-1">Company City</p>
-            <v-text-field value="İstanbul" outlined></v-text-field>
+            <v-text-field v-model="sellerInfo.companyCity" outlined></v-text-field>
           </v-col>
           <v-col class="py-0 my-0">
             <p class="text-body-2 mb-1">Company Address</p>
@@ -40,7 +40,7 @@
               class="pa-0 ma-0"
               outlined
               name="input-7-4"
-              value="The Woodman set to work at once, and so sharp was his axe that the tree was soon chopped nearly through."
+              v-model="sellerInfo.companyAddress"
             ></v-textarea>
           </v-col>
         </v-row>
@@ -55,29 +55,29 @@
           <!-- Name -->
           <v-col class="py-0" md="6" cols="12">
             <p class="text-body-2 mb-1">Owner Name</p>
-            <v-text-field :value="$store.getters['auth/userInfo'].firstName" outlined></v-text-field>
+            <v-text-field v-model="sellerInfo.bankAccountOwnerName" outlined></v-text-field>
           </v-col>
           <v-col class="py-0" md="6" cols="12">
             <p class="text-body-2 mb-1">Owner Surname</p>
-            <v-text-field :value="$store.getters['auth/userInfo'].lastName" outlined></v-text-field>
+            <v-text-field v-model="sellerInfo.bankAccountOwnerSurname" outlined></v-text-field>
           </v-col>
           <v-divider class="py-3 mx-3"></v-divider>
           <v-col class="py-0" cols="12">
             <p class="text-body-2 mb-1">IBAN</p>
-            <v-text-field value="TR33 0006 1005 1978 6457 8413 26" outlined></v-text-field>
+            <v-text-field v-model="sellerInfo.IBAN" outlined></v-text-field>
           </v-col>
           <v-divider class="py-3 mx-3"></v-divider>
 
           <v-col class="py-0" cols="12">
             <p class="text-body-2 mb-1">Bank Name</p>
-            <v-text-field value="AKBANK T.A.Ş." outlined></v-text-field>
+            <v-text-field v-model="sellerInfo.bank" outlined></v-text-field>
           </v-col>
         </v-row>
       </v-card>
     </v-col>
 
     <v-responsive class="mx-2" max-width="500px">
-      <v-btn block elevation="0" color="primary">Mağaza Aboneliğimi Başlat</v-btn>
+      <v-btn block elevation="0" color="primary" @click="newSeller">Mağaza Aboneliğimi Başlat</v-btn>
     </v-responsive>
   </v-row>
 </template>
@@ -93,6 +93,33 @@ export default {
     genders: ["Male", "Female", "Do not want to mention"],
     menu: false,
     modal: false,
+    sellerInfo: {
+      userID: "",
+      companyName:"",
+      taxNumber:"",
+      companyCountry:"",
+      companyCity:"",
+      companyAddress:"",
+      IBAN:"",
+      bank:"",
+      bankAccountOwnerName: "",//this.$store.getters['auth/userInfo'].firstName,
+      bankAccountOwnerSurname: "",//this.$store.getters['auth/userInfo'].lastName
+    },
   }),
+  methods: {
+    newSeller() {
+      this.sellerInfo.userID = this.$store.getters['auth/userInfo'].userID;
+      this.$api("newSeller", this.sellerInfo).then(()=>{
+        this.$api("refreshToken").then(()=>{
+          this.$api("userMe").then(({ data }) => {
+            this.$store.commit("auth/setUserInfo", data);
+            this.$toast.success("Store created successfully.")
+          })
+        })
+      }).catch(err=>{
+        this.$toast.error("Failed to create a new store.")
+      })
+    }
+  },
 };
 </script>
