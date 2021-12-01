@@ -11,3 +11,7 @@ export async function updateContactInfo({ instance }, payload) {
 export async function getFavoriteProducts({ instance }, payload) {
     return await instance.post("/get-favorite-products", payload)
 }
+
+export async function newSeller({ instance }, payload) {
+    return await instance.post("/new-seller", payload);
+}

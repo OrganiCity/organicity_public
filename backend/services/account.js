@@ -51,3 +51,16 @@ export function getFavoriteProducts(req, res) {
         }
     )
 }
+
+export function newSeller(req, res) {
+    let queryValues = [req.body.userID, req.body.companyName, req.body.taxNumber, req.body.companyCountry, req.body.companyCity, req.body.companyAddress, req.body.IBAN, req.body.bank, req.body.bankAccountOwnerName, req.body.bankAccountOwnerSurname];
+    if (!isProvided(...queryValues)) return res.status(400).send("Invalid data!");
+    const queryText = `INSERT INTO organicity.sellers
+        (sellerID, companyName, taxNumber, companyCountry, companyCity, companyAddress, IBAN, bank, bankAccountOwnerName, bankAccountOwnerSurname) VALUES
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);`
+    
+    pool.query(queryText, queryValues, (err, data) => {
+        if (err) return res.status(500).send("Internal Server Error")
+        return res.status(200).send(data)
+    });
+}
