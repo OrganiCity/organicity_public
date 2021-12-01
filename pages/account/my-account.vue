@@ -51,7 +51,9 @@
             <v-select :items="genders" v-model="gender" outlined required></v-select>
           </v-col>
           <v-col cols="12" class="d-flex justify-center pt-0">
-            <v-btn @click="updatePersonalInfo" block elevation="0" max-width="400px" class="primary--text" color="secondary">Update</v-btn>
+            <v-btn @click="updatePersonalInfo" block elevation="0" max-width="400px" class="primary--text" color="secondary">
+              Update
+            </v-btn>
           </v-col>
         </v-row>
       </v-card>
@@ -79,7 +81,9 @@
           </v-col>
 
           <v-col cols="12" class="d-flex justify-center pt-0">
-            <v-btn @click="updateContactInfo" block elevation="0" max-width="400px" class="primary--text" color="secondary">Update</v-btn>
+            <v-btn @click="updateContactInfo" block elevation="0" max-width="400px" class="primary--text" color="secondary">
+              Update
+            </v-btn>
           </v-col>
         </v-row>
       </v-card>
@@ -120,25 +124,26 @@ export default {
     };
   },
   methods: {
-    updatePersonalInfo(){
-      this.$api("updatePersonalInfo",{
+    updatePersonalInfo() {
+      this.$api("updatePersonalInfo", {
         gender: this.gender,
         firstName: this.name,
         lastName: this.lastName,
         userID: this.$store.getters['auth/userInfo'].userID
       })
+      this.$store.commit("auth/logout")
+      this.$router.push("/")
+      this.$toast.success("Profil bilgileriniz değiştirildi. Lütfen tekrar giriş yapın.")
     },
-    updateContactInfo(){
-      this.$api("updateContactInfo",{
+    updateContactInfo() {
+      this.$api("updateContactInfo", {
         phoneNumber: this.phoneNumber,
         email: this.email,
         userID: this.$store.getters['auth/userInfo'].userID
       })
-    },
-    refreshToken(){
-      this.$api("userLogin", {
-        email: ''
-      })
+      this.$store.commit("auth/logout")
+      this.$router.push("/")
+      this.$toast.success("Profil bilgileriniz değiştirildi. Lütfen tekrar giriş yapın.")
     },
   }
 };
