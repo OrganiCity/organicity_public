@@ -1,13 +1,5 @@
 import { pool } from "../controller"
 
-export function getFeatured(req, res) {
-    pool.query("select * from users", (err, data) => {
-        if (err) throw err
-        res.status(200)
-        res.json(data)
-    })
-}
-
 export function getCarouselSlides(req, res) {
     pool.query("select * from carouselSlides ORDER BY idx", (err, data) => {
         if (err) return res.status(500).send("Internal Server Error");
