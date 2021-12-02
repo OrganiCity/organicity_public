@@ -8,7 +8,7 @@
 
     <v-tabs-items v-model="tab">
       <v-tab-item>
-        My Products
+        <MyProducts/>
       </v-tab-item>
 
       <v-tab-item>
@@ -22,9 +22,10 @@
 </template>
 
 <script>
+import MyProducts from '~/components/seller/MyProducts.vue';
 
 export default {
-  components: {  },
+  components: {MyProducts  },
   layout:"admin",
   data () {
     return {
@@ -33,7 +34,3 @@ export default {
   },
 }
 </script>
-
-<style>
-
-</style>
