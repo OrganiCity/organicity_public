@@ -6,6 +6,7 @@ import * as auth from "~/api/auth"
 import * as admin from "~/api/admin"
 import * as services from "~/api/services"
 import * as account from "~/api/account"
+import * as seller from "~/api/seller"
 
 const apis = {
     ...example,
@@ -13,7 +14,8 @@ const apis = {
     ...auth,
     ...admin,
     ...services,
-    ...account
+    ...account,
+    ...seller
 }
 
 export default function ({ store }, inject) {
