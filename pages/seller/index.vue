@@ -15,7 +15,7 @@
         Another Tab
       </v-tab-item>
       <v-tab-item>
-        Orders   
+        <Orders/>  
       </v-tab-item>
     </v-tabs-items>
   </v-container>
@@ -23,9 +23,10 @@
 
 <script>
 import MyProducts from '~/components/seller/MyProducts.vue';
+import Orders from '~/components/seller/Orders.vue';
 
 export default {
-  components: {MyProducts  },
+  components: {MyProducts, Orders  },
   layout:"admin",
   data () {
     return {
