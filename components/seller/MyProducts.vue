@@ -21,10 +21,7 @@ export default {
       products: [{productID: 1}, {productID: 2}, {productID: 0}],
     }
   },
-  mounted () {
-    // this.$api("getStoreProducts", this.$store.getters["auth/userInfo"].userID).then((data)=>{
-    // })
-  }
+ 
 }
 </script>
 

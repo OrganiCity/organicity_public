@@ -33,5 +33,10 @@ export default {
       tab: 0,
     };
   },
+   mounted () {
+     this.$api("getStoreProducts", {userID:this.$store.getters["auth/userInfo"].userID} ).then((data)=>{
+       console.log(data);
+   })
+  }
 }
 </script>

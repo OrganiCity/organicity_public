@@ -90,13 +90,6 @@ export default {
       this.sellerName = data.companyName;
       this.imgSrc = data.imgURL;
       this.price = data.pricePerUnit;
-      if (this.$store.getters["auth/userInfo"]?.userID)
-        this.$api("isFavorited", {
-          productID: this.productID,
-          userID: this.$store.getters["auth/userInfo"].userID,
-        }).then(({ data }) => {
-          this.favorited = data.favorited;
-        });
     });
   },
 };
