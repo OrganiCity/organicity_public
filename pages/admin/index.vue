@@ -4,18 +4,28 @@
       <v-tab>Categories</v-tab>
       <v-tab>Main Carousel</v-tab>
       <v-tab>Special Deals</v-tab>
+      <v-tab>User / Seller</v-tab>
+      <v-tab>Order / Shipper</v-tab>
     </v-tabs>
 
     <v-tabs-items v-model="tab">
       <v-tab-item>
-        <CategoryManager/>
+        <CategoryManager />
       </v-tab-item>
 
       <v-tab-item>
-        <v-card><CarouselManager/></v-card>
+        <v-card><CarouselManager /></v-card>
       </v-tab-item>
       <v-tab-item>
-        <SpecialDealsManager/>       
+        <SpecialDealsManager />
+      </v-tab-item>
+      <v-tab-item>
+        <UserManager />
+        <SellerManager />
+      </v-tab-item>
+      <v-tab-item>
+        <OrderManager />
+        <ShipperManager />
       </v-tab-item>
     </v-tabs-items>
   </v-container>
@@ -25,11 +35,15 @@
 import CarouselManager from '~/components/admin/CarouselManager.vue';
 import SpecialDealsManager from '~/components/admin/SpecialDealsManager.vue';
 import CategoryManager from '~/components/admin/CategoryManager.vue';
+import UserManager from '~/components/admin/advanced/UserManager.vue';
+import SellerManager from '~/components/admin/advanced/SellerManager.vue';
+import OrderManager from '~/components/admin/advanced/OrderManager.vue';
+import ShipperManager from '~/components/admin/advanced/ShipperManager.vue';
 
 export default {
-  components: { CarouselManager, SpecialDealsManager, CategoryManager },
-  layout:"admin",
-  data () {
+  components: { CarouselManager, SpecialDealsManager, CategoryManager, UserManager, SellerManager, OrderManager, ShipperManager },
+  layout: "admin",
+  data() {
     return {
       tab: 0,
     };
@@ -38,5 +52,4 @@ export default {
 </script>
 
 <style>
-
 </style>
