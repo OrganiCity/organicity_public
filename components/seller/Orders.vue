@@ -21,13 +21,13 @@
               </v-hover>
               <v-hover v-slot="{ hover }">
                 <v-list-item :class="hover ? 'primary--text' : ''" @click="tab=1">
-                  <v-icon :color="hover ? 'primary' : ''" left>favorite</v-icon>
+                  <v-icon :color="hover ? 'primary' : ''" left>schedule</v-icon>
                   <v-list-item-title class="ml-2">Orders In Progress</v-list-item-title>
                 </v-list-item>
               </v-hover>
               <v-hover v-slot="{ hover }">
                 <v-list-item :class="hover ? 'primary--text' : ''" @click="tab=2">
-                  <v-icon :color="hover ? 'primary' : ''" left>rate_review</v-icon>
+                  <v-icon :color="hover ? 'primary' : ''" left>done</v-icon>
                   <v-list-item-title class="ml-2">Completed Orders</v-list-item-title>
                 </v-list-item>
               </v-hover>

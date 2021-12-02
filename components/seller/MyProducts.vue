@@ -18,7 +18,7 @@ export default {
   components: { SellerProductPreview },
   data () {
     return {
-      products: [{productID: 1}, {productID: 2}, {productID: 0}, {productID: 0}, {productID: 0}],
+      products: [{productID: 1}, {productID: 2}, {productID: 0}],
     }
   },
   mounted () {
