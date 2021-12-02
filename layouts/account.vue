@@ -54,11 +54,14 @@
                     </v-list-item>
                   </v-hover>
 
-                  
                   <v-hover v-slot="{ hover }">
-                    <v-list-item :class="hover ? 'primary--text' : ''" to="/account/create-store">
+                    <v-list-item  v-if="!isSeller" :class="hover ? 'primary--text' : ''" to="/account/create-store">
                       <v-icon :color="hover ? 'primary' : ''" left>add_business</v-icon>
                       <v-list-item-title class="ml-2">Mağaza Aboneliği</v-list-item-title>
+                    </v-list-item>
+                    <v-list-item v-else :class="hover ? 'primary--text' : ''" href="/seller">
+                      <v-icon :color="hover ? 'primary' : ''" left>business</v-icon>
+                      <v-list-item-title class="ml-2">Mağaza Yönetimi</v-list-item-title>
                     </v-list-item>
                   </v-hover>
 
@@ -117,7 +120,13 @@ export default {
   data() {
     return {
       sideBarActive: false,
+      isSeller:  this.$store.getters["auth/userInfo"]?.isSeller,
     };
   },
+  // mounted: {
+  //   setSeller() {
+  //     this.isSeller = this.$store.getters["auth/userInfo"]?.isSeller;
+  //   },
+  // },
 };
 </script>
