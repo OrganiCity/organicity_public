@@ -60,8 +60,8 @@
                       <v-list-item-title class="ml-2">Mağaza Aboneliği</v-list-item-title>
                     </v-list-item>
                     <v-list-item v-else :class="hover ? 'primary--text' : ''" href="/seller">
-                      <v-icon :color="hover ? 'primary' : ''" left>business</v-icon>
-                      <v-list-item-title class="ml-2">Mağaza Yönetimi</v-list-item-title>
+                      <v-icon :color="hover ? 'primary' : ''" left>store</v-icon>
+                      <v-list-item-title class="ml-2">Mağazam</v-list-item-title>
                     </v-list-item>
                   </v-hover>
 
@@ -123,10 +123,6 @@ export default {
       isSeller:  this.$store.getters["auth/userInfo"]?.isSeller,
     };
   },
-  // mounted: {
-  //   setSeller() {
-  //     this.isSeller = this.$store.getters["auth/userInfo"]?.isSeller;
-  //   },
-  // },
+ 
 };
 </script>

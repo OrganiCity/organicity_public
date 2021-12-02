@@ -46,6 +46,13 @@
             </v-list-item>
           </v-hover>
 
+          <v-hover v-if="isSeller" v-slot="{ hover }">
+            <v-list-item :class="hover ? 'primary--text' : ''" href="/seller">
+              <v-icon :color="hover ? 'primary' : ''" left>store</v-icon>
+              <v-list-item-title class="ml-2">Mağazam</v-list-item-title>
+            </v-list-item>
+          </v-hover>
+
           <v-hover v-slot="{ hover }">
             <v-list-item
               :class="hover ? 'primary--text' : ''"
@@ -74,6 +81,7 @@ export default {
   data() {
     return {
       check: true,
+      isSeller: this.$store.getters["auth/userInfo"]?.isSeller,
     };
   },
 };

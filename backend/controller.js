@@ -12,7 +12,7 @@ import { addToFavorites, deleteFromFavorites, getCartProductsByID, getProductByI
 import { getFeatured, getCarouselSlides, getSpecialDeals, getCategories, getMainPageItems, getProductPreviewDetails } from "./services/main-page";
 import { submitForm } from "./services/contact-us";
 import { updatePersonalInfo, updateContactInfo, getFavoriteProducts, newSeller } from "./services/account";
-import { getStoreProducts } from "./services/seller";
+import { deleteMyProduct, getStoreProducts } from "./services/seller";
 
 // Database Pool
 var pool = mysql.createPool({
@@ -76,8 +76,6 @@ app.post('/getProductPreviewDetails', getProductPreviewDetails)
 app.put('/update-personal-info', updatePersonalInfo)
 app.put('/update-contact-info', updateContactInfo)
 app.post('/get-favorite-products', getFavoriteProducts)
-app.post('/get-store-products', getStoreProducts)
-app.post('/new-seller', newSeller)
 
 // Get Product by ID
 app.get('/services/product/:id', getProductByID)
@@ -88,7 +86,10 @@ app.post('/services/is-favorited', isFavorited)
 app.post('/services/add-to-favorites', addToFavorites)
 app.post('/services/delete-from-favorites', deleteFromFavorites)
 
-
+/* Seller */
+app.post('/get-store-products', getStoreProducts)
+app.post('/new-seller', newSeller)
+app.post('/delete-my-product', deleteMyProduct)
 
 export { pool }
 export default app
