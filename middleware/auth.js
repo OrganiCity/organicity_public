@@ -13,9 +13,9 @@ export default function ({ app, store, redirect, route }) {
             if (!data.isAdmin && adminOnlyPaths.some(e => route.path.startsWith(`/${e}`))) redirect("/");
         })
         .catch((e) => {
+            store.commit("auth/setLoggedIn", false)
             store.commit("auth/setUserInfo", null)
             store.commit("auth/setUserToken", null)
-            console.log("lan")
             if (adminOnlyPaths.some(e => route.path.startsWith(`/${e}`)))
                 redirect("/");
             if (restrictedRoutes.includes(route.name) || restrictedPaths.some(e => route.path.startsWith(`/${e}`)))
