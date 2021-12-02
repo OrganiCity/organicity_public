@@ -1,10 +1,6 @@
 <template>
   <div>
-    <v-dialog
-      v-model="dialog"
-      persistent
-      max-width="400px"
-    >
+    <v-dialog v-model="dialog" persistent max-width="400px">
       <v-card>
         <v-card-title class="text-h5 primary--text font-weight-bold">
           <v-icon class="mx-1" color="primary" size="28">info</v-icon>
@@ -13,20 +9,8 @@
         <v-card-text>Are you sure you want to delete this product? This operation is not reversible.</v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn
-            color="primary"
-            
-            @click="dialog = false"
-          >
-            CANCEL
-          </v-btn>
-          <v-btn
-            color="error"
-            
-            @click="dialog = false"
-          >
-            CONFIRM
-          </v-btn>
+          <v-btn color="primary" @click="dialog = false">CANCEL</v-btn>
+          <v-btn color="error" @click="deleteMyProduct()">CONFIRM</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -53,7 +37,7 @@
         <v-btn fab small color="primary" class="ma-2">
           <v-icon size="16">edit</v-icon>
         </v-btn>
-        <v-btn fab small color="error" class="ma-2" @click="dialog=true">
+        <v-btn fab small color="error" class="ma-2" @click="dialog = true">
           <v-icon size="16">delete</v-icon>
         </v-btn>
       </div>
@@ -76,9 +60,13 @@ export default {
   },
   props: { productId: 0 },
   methods: {
-    deleteProduct() {
-
-    }
+    deleteMyProduct() {
+      this.$api("deleteMyProduct", { productID: this.productId }).then(() => {
+        this.dialog = false;
+        this.$toast.success("Product deleted successfully!");
+        window.location.reload();
+      });
+    },
   },
   mounted() {
     this.$api("getProductPreviewDetails", {

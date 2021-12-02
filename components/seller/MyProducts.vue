@@ -5,7 +5,7 @@
   </v-row>
     <v-row>
       <v-col v-for="product in products" :key="product.productID" cols="4" sm="3">
-        <SellerProductPreview :product-id="product.productID" />
+        <SellerProductPreview :productId="product.productID" />
       </v-col>
     </v-row>
   </v-container>
@@ -16,11 +16,9 @@ import SellerProductPreview from "./SellerProductPreview.vue"
 
 export default {
   components: { SellerProductPreview },
-  data () {
-    return {
-      products: [{productID: 1}, {productID: 2}, {productID: 0}],
-    }
-  },
+  props:{
+    products: [],
+  }
  
 }
 </script>
