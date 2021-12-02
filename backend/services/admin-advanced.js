@@ -36,7 +36,7 @@ export function deleteSeller(req, res) {
 }
 
 export function getOrders(req, res) {
-    pool.query(`select o.orderID ,p.productID,p.productName ,sh.shipperCompanyName ,o.orderNumber ,o.quantity ,companyName,p.pricePerUnit from 
+    pool.query(`select o.orderID ,p.productID,p.productName ,sh.shipperCompanyName ,o.orderNumber ,o.quantity ,companyName,p.pricePerUnit,o.shippingStatus from 
                 sellers s join
                 orders o join
                 shippers sh join
