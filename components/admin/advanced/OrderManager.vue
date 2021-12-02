@@ -44,6 +44,7 @@ export default {
       { text: 'Product Name', value: 'productName' },
       { text: 'Seller Company', value: 'companyName' },
       { text: 'Shipper Name', value: 'shipperCompanyName' },
+      { text: 'Shipping Status', value: 'shippingStatus' },
       { text: 'Order Number', value: 'orderNumber' },
       { text: 'Quantity', value: 'quantity' },
       { text: 'Actions', value: 'actions', sortable: false },
