@@ -1,30 +1,32 @@
 <template>
 <v-container>
   <v-row>
-    <v-btn class="ma-4" color="primary" large>Add New Product</v-btn>
+    <v-btn @click.stop="dialogAddProduct = true"  class="ma-4" color="primary" large>Add New Product</v-btn>
+     <v-dialog v-model="dialogAddProduct" overlay-color="secondary" max-width="700px">
+      <AddProduct/>
+    </v-dialog>
   </v-row>
     <v-row>
       <v-col v-for="product in products" :key="product.productID" cols="4" sm="3">
-        <SellerProductPreview :product-id="product.productID" />
+        <SellerProductPreview :productId="product.productID" />
       </v-col>
     </v-row>
   </v-container>
 </template>
 
 <script>
+import AddProduct from './AddProduct.vue'
 import SellerProductPreview from "./SellerProductPreview.vue"
 
 export default {
-  components: { SellerProductPreview },
-  data () {
-    return {
-      products: [{productID: 1}, {productID: 2}, {productID: 0}],
-    }
-  },
-  mounted () {
-    // this.$api("getStoreProducts", this.$store.getters["auth/userInfo"].userID).then((data)=>{
-    // })
+  components: { SellerProductPreview, AddProduct },
+  data: () => ({
+    dialogAddProduct: false,
+  }),
+  props:{
+    products: [],
   }
+ 
 }
 </script>
 

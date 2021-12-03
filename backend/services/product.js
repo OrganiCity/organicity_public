@@ -34,9 +34,12 @@ export function getProductByID(req, res) {
                         })
 
                         pool.query(
-                            `SELECT c.cName, c.description, c.iconTag 
-                            FROM certificates c, productCertificates pc
-                            WHERE c.cID = pc.cID AND pc.approved = 1  AND pc.productID = ?`, [id], (err, cData) => {
+                            `
+                            SELECT c.cName, c.description, c.iconTag 
+                            FROM productCertificates pc, sellerCertificates sc, products p, certificates c 
+                            WHERE pc.productID = ? AND pc.productID = p.productID AND p.sellerID = sc.sellerID 
+                            AND sc.cID = pc.cID AND sc.cID = c.cID AND sc.approved = 1 
+                        `, [id], (err, cData) => {
                             if (err) return res.status(500).send(err)
                             data.certificates = cData
                             res.status(200).send(data)
