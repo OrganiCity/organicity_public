@@ -15,7 +15,7 @@ export function getMainPageItems(req, res) {
 }
 
 export function getProductPreviewDetails(req, res) {
-    let queryText = `SELECT p.productID, p.productName, p.pricePerUnit, s.companyName, min(imgURL) as imgURL
+    let queryText = `SELECT p.productID, p.productName, p.pricePerUnit, s.companyName, s.sellerID, min(imgURL) as imgURL
     FROM products p 
     LEFT JOIN sellers s ON p.sellerID = s.sellerID 
     LEFT JOIN productImages pi2 on pi2.productID=p.productID WHERE p.productID=?`

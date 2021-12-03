@@ -5,7 +5,7 @@ export function getProductByID(req, res) {
     const id = req.params.id
     if (!isProvided(id)) return res.status(400).send("Id not defined")
     pool.query(
-        `SELECT p.*,s.companyName FROM products p, sellers s WHERE p.productID = ?  AND s.sellerID = p.sellerID`,
+        `SELECT p.*,s.companyName, s.sellerID FROM products p, sellers s WHERE p.productID = ?  AND s.sellerID = p.sellerID`,
         [id],
         (err, data) => {
             if (err) return res.status(500).send(err)
