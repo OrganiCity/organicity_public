@@ -1,7 +1,10 @@
 <template>
 <v-container>
   <v-row>
-    <v-btn class="ma-4" color="primary" large>Add New Product</v-btn>
+    <v-btn @click.stop="dialogAddProduct = true"  class="ma-4" color="primary" large>Add New Product</v-btn>
+     <v-dialog v-model="dialogAddProduct" overlay-color="secondary" max-width="700px">
+      <AddProduct/>
+    </v-dialog>
   </v-row>
     <v-row>
       <v-col v-for="product in products" :key="product.productID" cols="4" sm="3">
@@ -12,10 +15,14 @@
 </template>
 
 <script>
+import AddProduct from './AddProduct.vue'
 import SellerProductPreview from "./SellerProductPreview.vue"
 
 export default {
-  components: { SellerProductPreview },
+  components: { SellerProductPreview, AddProduct },
+  data: () => ({
+    dialogAddProduct: false,
+  }),
   props:{
     products: [],
   }
