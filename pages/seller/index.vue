@@ -8,7 +8,7 @@
 
     <v-tabs-items v-model="tab">
       <v-tab-item>
-        <MyProducts/>
+        <MyProducts :products="products"/>
       </v-tab-item>
 
       <v-tab-item>
@@ -31,7 +31,14 @@ export default {
   data () {
     return {
       tab: 0,
+      products: [],
     };
   },
+   mounted () {
+     this.$api("getStoreProducts", {userID:6} ).then(({data})=>{
+       console.log(data)
+       this.products = data;
+   })
+  }
 }
 </script>

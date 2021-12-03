@@ -11,9 +11,10 @@
       <v-carousel-item
         v-for="(item, i) in items"
         :key="i"
-        :src="item.src"
+        eager
         :to="item.route"
-      ></v-carousel-item>
+      >
+      <v-img eager height="100%"  :src="item.src"></v-img></v-carousel-item>
     </v-carousel>
   </v-card>
 </template>
