@@ -42,7 +42,8 @@
         />
       </v-col>
       <v-col class="py-0" cols="6">
-        <p>Choose a category *</p>
+        <p class="primary--text text-h5">Choose a category *</p>
+        <p class="primary--text" >Current Category: </p>
         <p>{{ choosenCategoryName }}</p>
       </v-col>
       <v-col class="mt-3" cols="12">
@@ -77,9 +78,9 @@
       <!-- Certificates -->
       <p class="primary--text text-h5">Choose Certificate(s)</p>
       <v-col cols="12">
-        <v-chip-group multiple active-class="primary--text">
-          <v-chip large v-for="tag in availableCertificates" :key="tag">
-            {{ tag }}
+        <v-chip-group column multiple active-class="primary--text">
+          <v-chip large filter v-for="certificate in availableCertificates" :key="certificate.cID">
+            {{ certificate.cName }}
           </v-chip>
         </v-chip-group>
       </v-col>
@@ -99,7 +100,7 @@ export default {
       newURL: "",
       choosenCategoryID: 0,
       choosenCategoryName: "Tüm Ürünler",
-      availableCertificates: ["Organik Ürün", "Pestisit Analizli","Yerli Üretim", "Vegan"],
+      availableCertificates: [],
     };
   },
   methods: {
@@ -112,7 +113,9 @@ export default {
     },
   },
   mounted(){
-
+    this.$api("getCertificates").then(({ data }) => {
+        this.availableCertificates = data;
+      });
   },
   components: { ChooseCategory },
 };
