@@ -7,12 +7,13 @@ var mysql = require('mysql');
 
 // JS Imports
 import { loginUser, meUser, refreshToken, registerUser } from "./services/auth";
-import { addCarouselSlide, removeCarouselSlide, addSpecialDeal, removeSpecialDeal, checkAdmin, addCategoryToTop, addCategoryBelow, addSubCategory, updateCategory, deleteCategory} from "./services/admin";
+import { addCarouselSlide, removeCarouselSlide, addSpecialDeal, removeSpecialDeal, checkAdmin, addCategoryToTop, addCategoryBelow, addSubCategory, updateCategory, deleteCategory } from "./services/admin";
 import { addToFavorites, deleteFromFavorites, getCartProductsByID, getProductByID, isFavorited } from "./services/product";
-import { getFeatured, getCarouselSlides, getSpecialDeals, getCategories, getMainPageItems, getProductPreviewDetails } from "./services/main-page";
+import { getCarouselSlides, getSpecialDeals, getCategories, getMainPageItems, getProductPreviewDetails } from "./services/main-page";
 import { submitForm } from "./services/contact-us";
 import { updatePersonalInfo, updateContactInfo, getFavoriteProducts, newSeller } from "./services/account";
 import { deleteMyProduct, getCertificates, getStoreProducts } from "./services/seller";
+import { addShipper, deleteOrder, deleteSeller, deleteShipper, deleteUser, getOrders, getSellers, getShippers, getUsers } from "./services/admin-advanced";
 
 // Database Pool
 var pool = mysql.createPool({
@@ -27,7 +28,6 @@ var pool = mysql.createPool({
 
 
 // Endpoints
-app.get("/featured", getFeatured)
 app.get("/getCarouselSlides", getCarouselSlides)
 app.get("/getSpecialDeals", getSpecialDeals)
 
@@ -56,14 +56,26 @@ app.post('/admin/removeSpecialDeal', checkAdmin, removeSpecialDeal)
 
 // Category
 // Add
-app.post ('/admin/add-category-to-top', checkAdmin, addCategoryToTop) 
-app.post ('/admin/add-category-below', checkAdmin, addCategoryBelow)
-app.post ('/admin/add-sub-category', checkAdmin, addSubCategory) 
+app.post('/admin/add-category-to-top', checkAdmin, addCategoryToTop)
+app.post('/admin/add-category-below', checkAdmin, addCategoryBelow)
+app.post('/admin/add-sub-category', checkAdmin, addSubCategory)
 
 // Update & Delete
-app.put ('/admin/update-category', checkAdmin, updateCategory)
-app.post ('/admin/delete-category', checkAdmin, deleteCategory)
+app.put('/admin/update-category', checkAdmin, updateCategory)
+app.post('/admin/delete-category', checkAdmin, deleteCategory)
 
+/*******************
+----Admin Advanced---
+********************/
+app.get("/admin/users", getUsers)
+app.delete("/admin/users/:id", deleteUser)
+app.get("/admin/sellers", getSellers)
+app.delete("/admin/sellers/:id", deleteSeller)
+app.get("/admin/orders", getOrders)
+app.delete("/admin/orders/:id", deleteOrder)
+app.get("/admin/shippers", getShippers)
+app.delete("/admin/shippers/:id", deleteShipper)
+app.post("/admin/shippers", addShipper)
 
 
 /***************
