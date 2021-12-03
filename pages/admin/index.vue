@@ -1,6 +1,6 @@
 <template>
   <v-container>
-    <v-tabs v-model="tab">
+    <v-tabs fixed-tabs v-model="tab">
       <v-tab>Categories</v-tab>
       <v-tab>Main Carousel</v-tab>
       <v-tab>Special Deals</v-tab>
@@ -32,13 +32,13 @@
 </template>
 
 <script>
-import CarouselManager from '~/components/admin/CarouselManager.vue';
-import SpecialDealsManager from '~/components/admin/SpecialDealsManager.vue';
-import CategoryManager from '~/components/admin/CategoryManager.vue';
-import UserManager from '~/components/admin/advanced/UserManager.vue';
-import SellerManager from '~/components/admin/advanced/SellerManager.vue';
-import OrderManager from '~/components/admin/advanced/OrderManager.vue';
-import ShipperManager from '~/components/admin/advanced/ShipperManager.vue';
+import CarouselManager from "~/components/admin/CarouselManager.vue";
+import SpecialDealsManager from "~/components/admin/SpecialDealsManager.vue";
+import CategoryManager from "~/components/admin/CategoryManager.vue";
+import UserManager from "~/components/admin/advanced/UserManager.vue";
+import SellerManager from "~/components/admin/advanced/SellerManager.vue";
+import OrderManager from "~/components/admin/advanced/OrderManager.vue";
+import ShipperManager from "~/components/admin/advanced/ShipperManager.vue";
 
 export default {
   components: { CarouselManager, SpecialDealsManager, CategoryManager, UserManager, SellerManager, OrderManager, ShipperManager },
@@ -48,7 +48,7 @@ export default {
       tab: 0,
     };
   },
-}
+};
 </script>
 
 <style>
