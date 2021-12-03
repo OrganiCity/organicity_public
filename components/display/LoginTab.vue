@@ -64,6 +64,7 @@ export default {
           })
         })
         .catch(({ response: { status } }) => {
+          this.loading = false
           if (status === 500) this.$toast.error("Bilinmeyen hata")
           else this.$toast.error("Yanlış giriş bilgileri")
         })

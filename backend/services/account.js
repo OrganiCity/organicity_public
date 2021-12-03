@@ -30,11 +30,15 @@ export function updateContactInfo(req, res) {
                 phoneNumber=? ,email= ?
 	        WHERE userID= ?;
             `;
-    let queryValues = [req.body.phoneNumber, req.body.email, req.body.userID];
+    const queryValues = [req.body.phoneNumber, req.body.email, req.body.userID];
 
-    pool.query(queryText, queryValues, (err) => {
+    pool.query("select userID from users where email = ? and userID != ? ", [req.body.email,req.body.userID], (err, data) => {
         if (err) return res.status(500).send("Internal Server Error")
-        return res.status(200).send()
+        else if (data.length) return res.status(404).send("User already exists")
+        else pool.query(queryText, queryValues, (err) => {
+            if (err) return res.status(500).send("Internal Server Error")
+            return res.status(200).send()
+        })
     })
 }
 
@@ -58,7 +62,7 @@ export function newSeller(req, res) {
     const queryText = `INSERT INTO organicity.sellers
         (sellerID, companyName, taxNumber, companyCountry, companyCity, companyAddress, IBAN, bank, bankAccountOwnerName, bankAccountOwnerSurname) VALUES
         (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);`
-    
+
     pool.query(queryText, queryValues, (err, data) => {
         if (err) return res.status(500).send("Internal Server Error")
         return res.status(200).send(data)

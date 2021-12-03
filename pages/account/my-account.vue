@@ -51,7 +51,15 @@
             <v-select :items="genders" v-model="gender" outlined required></v-select>
           </v-col>
           <v-col cols="12" class="d-flex justify-center pt-0">
-            <v-btn @click="updatePersonalInfo" block elevation="0" max-width="400px" class="primary--text" color="secondary">
+            <v-btn
+              @click="updatePersonalInfo"
+              :disabled="!personalInfoChanged"
+              block
+              elevation="0"
+              max-width="400px"
+              class="primary--text"
+              color="secondary"
+            >
               Update
             </v-btn>
           </v-col>
@@ -81,7 +89,15 @@
           </v-col>
 
           <v-col cols="12" class="d-flex justify-center pt-0">
-            <v-btn @click="updateContactInfo" block elevation="0" max-width="400px" class="primary--text" color="secondary">
+            <v-btn
+              @click="updateContactInfo"
+              :disabled="!contactInfoChanged"
+              block
+              elevation="0"
+              max-width="400px"
+              class="primary--text"
+              color="secondary"
+            >
               Update
             </v-btn>
           </v-col>
@@ -98,16 +114,16 @@ export default {
   layout: "account",
   data() {
     return {
-      date: this.$store.getters["auth/userInfo"].dateOfBirth,
       genders: ["Male", "Female", "Do not want to mention"],
       menu: false,
       modal: false,
-      email: this.$store.getters["auth/userInfo"].email,
+
       name: this.$store.getters['auth/userInfo'].firstName,
       lastName: this.$store.getters['auth/userInfo'].lastName,
       gender: this.$store.getters['auth/userInfo'].gender,
+      date: this.$store.getters["auth/userInfo"].dateOfBirth,
+      email: this.$store.getters["auth/userInfo"].email,
       phoneNumber: this.$store.getters['auth/userInfo'].phoneNumber,
-
       rules: {
         name: [v => !!v || "Lütfen adınızı giriniz!"],
         email: [
@@ -130,31 +146,61 @@ export default {
         firstName: this.name,
         lastName: this.lastName,
         userID: this.$store.getters['auth/userInfo'].userID
-       }).then(()=> {
-        this.$api("refreshToken").then(({data})=>{
+      }).then(() => {
+        this.$api("refreshToken").then(({ data }) => {
           this.$store.commit("auth/setUserToken", data);
           this.$api("userMe").then(({ data }) => {
-              this.$store.commit("auth/setUserInfo", data);
-              this.$toast.success("Updated personal info successfully.")
-          })          
-         })
-       })
+            this.$store.commit("auth/setUserInfo", data);
+            this.$toast.success("Updated personal info successfully.")
+          })
+        })
+      })
     },
     updateContactInfo() {
       this.$api("updateContactInfo", {
         phoneNumber: this.phoneNumber,
         email: this.email,
         userID: this.$store.getters['auth/userInfo'].userID
-      }).then(()=> {
-         this.$api("refreshToken").then(({data})=>{
-            this.$store.commit("auth/setUserToken", data);
-            this.$api("userMe").then(({ data }) => {
-              this.$store.commit("auth/setUserInfo", data);
-              this.$toast.success("Updated contact info successfully.")
+      }).then(() => {
+        this.$api("refreshToken").then(({ data }) => {
+          this.$store.commit("auth/setUserToken", data);
+          this.$api("userMe").then(({ data }) => {
+            this.$store.commit("auth/setUserInfo", data);
+            this.$toast.success("Updated contact info successfully.")
+            this.$router.push("/account/my-account")
           })
-         })
+        })
       })
+        .catch(({ response: { status } }) => {
+          if(status === 404) this.$toast.error("Bu e-posta ile kayıtlı zaten bir kullanıcı var")
+          else this.$toast.error("Bilinmeyen bir hata oluştu")
+        })
     },
+  },
+  computed: {
+    defaultValues() {
+      return {
+        name: this.$store.getters['auth/userInfo'].firstName,
+        lastName: this.$store.getters['auth/userInfo'].lastName,
+        gender: this.$store.getters['auth/userInfo'].gender,
+        date: this.$store.getters["auth/userInfo"].dateOfBirth,
+        email: this.$store.getters["auth/userInfo"].email,
+        phoneNumber: this.$store.getters['auth/userInfo'].phoneNumber,
+      }
+    },
+    personalInfoChanged() {
+      return (
+        this.name != this.defaultValues.name ||
+        this.lastName != this.defaultValues.lastName ||
+        this.gender != this.defaultValues.gender
+      )
+    },
+    contactInfoChanged() {
+      return (
+        this.email != this.defaultValues.email ||
+        this.phoneNumber != this.defaultValues.phoneNumber
+      )
+    }
   }
 };
 </script>
