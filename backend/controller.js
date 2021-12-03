@@ -12,7 +12,7 @@ import { addToFavorites, deleteFromFavorites, getCartProductsByID, getProductByI
 import { getFeatured, getCarouselSlides, getSpecialDeals, getCategories, getMainPageItems, getProductPreviewDetails } from "./services/main-page";
 import { submitForm } from "./services/contact-us";
 import { updatePersonalInfo, updateContactInfo, getFavoriteProducts, newSeller } from "./services/account";
-import { deleteMyProduct, getStoreProducts } from "./services/seller";
+import { deleteMyProduct, getCertificates, getStoreProducts } from "./services/seller";
 
 // Database Pool
 var pool = mysql.createPool({
@@ -90,6 +90,7 @@ app.post('/services/delete-from-favorites', deleteFromFavorites)
 app.post('/get-store-products', getStoreProducts)
 app.post('/new-seller', newSeller)
 app.post('/delete-my-product', deleteMyProduct)
+app.get('/certificates', getCertificates)
 
 export { pool }
 export default app

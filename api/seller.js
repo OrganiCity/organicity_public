@@ -5,3 +5,7 @@ export async function getStoreProducts({ instance }, payload) {
 export async function deleteMyProduct({ instance }, payload) {
   return await instance.post("/delete-my-product", payload)
 }
+
+export async function getCertificates({ instance }) {
+  return await instance.get("/certificates")
+}
