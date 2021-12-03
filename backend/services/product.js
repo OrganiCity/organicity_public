@@ -5,12 +5,12 @@ export function getProductByID(req, res) {
     const id = req.params.id
     if (!isProvided(id)) return res.status(400).send("Id not defined")
     pool.query(
-        `select p.*,s.companyName from products p, sellers s where p.productID = ?  AND s.sellerID = p.sellerID`,
+        `SELECT p.*,s.companyName FROM products p, sellers s WHERE p.productID = ?  AND s.sellerID = p.sellerID`,
         [id],
         (err, data) => {
             if (err) return res.status(500).send(err)
             else if (!data.length) return res.status(404).send("No product found with this id")
-            pool.query(`select imgURL from productImages where productID = ?`, [id], (err, imageData) => {
+            pool.query(`SELECT imgURL from productImages WHERE productID = ?`, [id], (err, imageData) => {
                 if (err) return res.status(500).send(err)
                 else if (!imageData.length) return res.status(404).send(err)
                 data = data[0]
@@ -42,13 +42,11 @@ export function getProductByID(req, res) {
                         `, [id], (err, cData) => {
                             if (err) return res.status(500).send(err)
                             data.certificates = cData
-                            res.status(200).send(data)
+                            return res.status(200).send(data)
                         })
 
                     })
-
             })
-
         })
 }
 
@@ -69,12 +67,14 @@ export function getCartProductsByID(req, res) {
     const ids = req.query.ids.map((e) => Number.parseInt(e))
     if (!isProvided(ids)) return res.status(400).send("Id not defined")
     pool.query(
-        `select p.productName,p.productID,p.pricePerUnit,s.companyName from products p, sellers s where p.productID in (?) and p.sellerID = s.sellerID order by productID`,
+        `SELECT p.productName,p.productID,p.pricePerUnit,s.companyName from products p, sellers s 
+        WHERE p.productID in (?) and p.sellerID = s.sellerID 
+        ORDER BY productID`,
         [ids],
         (err, data) => {
             if (err) return res.status(500).send(err)
             else if (!data.length) return res.status(404).send("No product found with this id")
-            pool.query(`select min(imgURL) as imgURL from productImages where productID in (?) group by productID`, [ids], (err, imageData) => {
+            pool.query(`SELECT min(imgURL) as imgURL FROM productImages WHERE productID in (?) GROUP BY productID`, [ids], (err, imageData) => {
                 if (err) return res.status(500).send(err)
                 else if (!imageData.length) return res.status(404).send(err)
                 data.map((e, i) => e.image = imageData[i].imgURL)
