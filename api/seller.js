@@ -9,3 +9,6 @@ export async function deleteMyProduct({ instance }, payload) {
 export async function getCertificates({ instance }) {
   return await instance.get("/certificates")
 }
+export async function getStoreProductsByID({ instance }, payload) {
+  return await instance.get("/services/store/" + payload)
+}
