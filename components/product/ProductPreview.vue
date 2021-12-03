@@ -15,9 +15,11 @@
     <v-responsive height="46px">
       <p style="text-align: center" class="ma-0 mx-1">{{ productName }}</p>
     </v-responsive>
-    <p style="text-align: center" class="text-caption">
-      <a class="" href="">{{ sellerName }}</a>
-    </p>
+    <nuxt-link :to="'/store/' + sellerID">
+      <p style="text-align: center" class="text-caption">
+        {{ sellerName }}
+      </p>
+    </nuxt-link>
     <div class="d-flex justify-space-around mb-3">
       <v-tooltip bottom v-for="c in certificates" :key="c.cID">
         <template v-slot:activator="{ on, attrs }">
@@ -69,6 +71,7 @@ export default {
       productName: "",
       imgSrc: "",
       sellerName: "",
+      sellerID: 0,
       price: 0.0,
       favorited: 0,
       certificates: [],
@@ -109,6 +112,7 @@ export default {
       this.productID = data.productID;
       this.productName = data.productName;
       this.sellerName = data.companyName;
+      this.sellerID = data.sellerID;
       this.imgSrc = data.imgURL;
       this.price = data.pricePerUnit;
       if (this.$store.getters["auth/userInfo"]?.userID)

@@ -33,3 +33,25 @@ export function getCertificates(req, res) {
     return res.status(200).send(data)
   })
 }
+
+
+
+export function getStoreProductsByID(req, res) {
+  const id = req.params.id
+  if (!isProvided(id)) return res.status(400).send("Id not defined")
+  pool.query(`SELECT s.companyName
+              FROM sellers s
+              WHERE s.sellerID = ?`, [id], (err, data) => {
+    if (err) return res.status(500).send(err)
+    data = data[0]
+    pool.query(`SELECT p.productID 
+                FROM products p 
+                WHERE p.sellerID = ?`, [id],
+      (err, pData) => {
+        if (err) return res.status(500).send(err)
+        else if (!pData.length) return res.status(404).send("No product found with this id")
+        data.products = pData.map(e => e.productID)
+        return res.status(200).send(data)
+      })
+  })
+}

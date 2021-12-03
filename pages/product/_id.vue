@@ -82,9 +82,10 @@
       <!-- Title -->
 
       <v-col cols="12" md="6" :class="$vuetify.breakpoint.mdAndUp ? 'pr-10' : ''">
-        <span class="mr-4">
-          <a style="text-decoration: none" href="/">{{ product.companyName }}</a>
-        </span>
+        <nuxt-link :to="'/store/' + product.sellerID">
+          <p class="mb-0">{{ product.companyName }}</p>
+        </nuxt-link>
+
         <p class="text-h4">{{ product.productName }}</p>
 
         <v-rating
