@@ -1,8 +1,16 @@
 <template>
   <v-row class="">
-    <v-col cols="4" md="2" class="pa-0 ma-0">
-      <v-avatar style="position: absolute; border: 1px solid #00000020">
-        <img src="https://www.greenada.com/Uploads/UrunResimleri/buyuk/greenadadomates-1-kg-e162.jpg" />
+    <v-col v-if="order.imgURLs.length < 4" cols="4" md="2" class="pa-0 ma-0">
+      <v-avatar :class="'ml-'+6*idx" v-for="(img, idx) in order.imgURLs" :key="img" style="position: absolute; border: 1px solid #00000020">
+        <img :src="img" />
+      </v-avatar>
+    </v-col>
+     <v-col v-else cols="4" md="2" class="pa-0 ma-0">
+      <v-avatar :class="'ml-'+6*(idx-1)" v-for="idx in 2" :key="idx" style="position: absolute; border: 1px solid #00000020">
+        <img :src="order.imgURLs[idx-1]" />
+      </v-avatar>
+      <v-avatar color="primary"  class="ml-12" style="position: absolute; border: 1px solid #00000020">
+        <span class="white--text text-h5">+{{order.imgURLs.length-2}}</span>
       </v-avatar>
     </v-col>
     <v-col cols="8" md="3" class="py-0 my-0 mt-2">
@@ -55,10 +63,6 @@ export default {
       return status == "arrived";
     },
   },
-  // computed (){
-  //   this.status = order.status.every(defineStatus)
-  //   console.log(this.status)
-  // }
 };
 </script>
 
