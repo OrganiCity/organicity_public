@@ -14,7 +14,7 @@
             <v-divider></v-divider>
           </div>
           <div class="d-flex justify-center">
-            <v-btn color="error" @click="deleteMyCertificate">
+            <v-btn rounded outlined plain color="error" @click="deleteMyCertificate">
               <v-icon left>delete_outline</v-icon>
               Delete the CertIfIcate
             </v-btn>
@@ -54,7 +54,7 @@ export default {
       );
     },
     updateMyCertificate() {
-      this.$api("updateCertificate", {
+      this.$api("updateCertificateDocument", {
         document: this.document,
         cID: this.cID,
         sellerID: this.$store.getters["auth/userInfo"].userID
