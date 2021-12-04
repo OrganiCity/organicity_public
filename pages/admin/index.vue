@@ -5,6 +5,7 @@
       <v-tab>Main Carousel</v-tab>
       <v-tab>Special Deals</v-tab>
       <v-tab>User / Seller</v-tab>
+      <v-tab>CertifIcates</v-tab>
       <v-tab>Order / Shipper</v-tab>
     </v-tabs>
 
@@ -23,6 +24,7 @@
         <UserManager />
         <SellerManager />
       </v-tab-item>
+      <v-tab-item> <CertificateManager/> </v-tab-item>
       <v-tab-item>
         <OrderManager />
         <ShipperManager />
@@ -39,9 +41,10 @@ import UserManager from "~/components/admin/advanced/UserManager.vue";
 import SellerManager from "~/components/admin/advanced/SellerManager.vue";
 import OrderManager from "~/components/admin/advanced/OrderManager.vue";
 import ShipperManager from "~/components/admin/advanced/ShipperManager.vue";
+import CertificateManager from '~/components/admin/advanced/CertificateManager.vue';
 
 export default {
-  components: { CarouselManager, SpecialDealsManager, CategoryManager, UserManager, SellerManager, OrderManager, ShipperManager },
+  components: { CarouselManager, SpecialDealsManager, CategoryManager, UserManager, SellerManager, OrderManager, ShipperManager, CertificateManager },
   layout: "admin",
   data() {
     return {
