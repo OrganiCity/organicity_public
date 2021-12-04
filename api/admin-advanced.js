@@ -10,6 +10,9 @@ export async function getSellers({ instance }) {
     return await instance.get("/admin/sellers")
 }
 
+export async function getSellerCertificates({ instance }, data) {
+    return await instance.get("/admin/seller-certificates", data)
+  }
 export async function deleteSeller({ instance }, id) {
     return await instance.delete("/admin/users/" + id)
 }
@@ -33,3 +36,4 @@ export async function deleteShipper({ instance }, id) {
 export async function addShipper({ instance }, body) {
     return await instance.post("/admin/shippers", body)
 }
+

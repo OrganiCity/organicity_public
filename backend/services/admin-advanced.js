@@ -26,6 +26,16 @@ export function getSellers(req, res) {
     })
 }
 
+export function getSellerCertificates(req, res) {
+    pool.query(`SELECT s.sellerID, s.companyName, s.companyCountry, s.companyCity, sc.document, c.cID, c.cName, sc.approved
+                FROM sellerCertificates sc, certificates c, sellers s 
+                WHERE s.sellerID = sc.sellerID AND sc.sellerID = s.sellerID AND sc.cID = c.cID `, (err, data) => {
+        if (err) return res.status(500).send(err)
+        res.status(200)
+        res.json(data)
+    })
+}
+
 export function deleteSeller(req, res) {
     const id = req.params.id
     if (!isProvided(id) || !Number.isInteger(Number.parseInt(id))) return res.status(400).send("No seller id provided")
@@ -83,7 +93,8 @@ export function addShipper(req, res) {
     pool.query(`INSERT INTO organicity.shippers
     (shipperCompanyName, contactNumber, shipperURL)
     VALUES(?, ?, ?)`, [shipperCompanyName, contactNumber, shipperURL], (err, data) => {
-        if(err) return res.status(500).send(err)
+        if (err) return res.status(500).send(err)
         return res.status(200).send("Shipper Added")
     })
 }
+
