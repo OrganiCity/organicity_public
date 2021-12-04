@@ -7,7 +7,7 @@
       <v-dialog v-model="dialog" max-width="600">
         <v-card class="pa-6 py-10">
           <v-text-field autocomplete="off" v-model="document" label="Document URL" required outlined></v-text-field>
-          <v-btn block color="primary">Update the Document URL</v-btn>
+          <v-btn @click="updateMyCertificate" block color="primary">Update the Document URL</v-btn>
           <div class="d-flex justify-between align-center my-4">
             <v-divider></v-divider>
             <p class="mb-0 mx-4 font-weight-medium">OR</p>
@@ -52,6 +52,13 @@ export default {
       this.$api("deleteCertificate", { cID: this.cID, sellerID: this.$store.getters["auth/userInfo"].userID }).then(
         window.location.reload()
       );
+    },
+    updateMyCertificate() {
+      this.$api("updateCertificate", {
+        document: this.document,
+        cID: this.cID,
+        sellerID: this.$store.getters["auth/userInfo"].userID
+      }).then(window.location.reload());
     },
   },
 };
