@@ -74,6 +74,36 @@ export function sendCertificateApprovalRequest(req, res){
   })
 }
 
+export function deleteCertificate(req, res) {
+  const cID = req.body.cID
+  const sellerID = req.body.sellerID
+  if (!isProvided(cID, sellerID)) return res.status(400).send("Id not defined")
+  const queryText = `DELETE FROM sellerCertificates
+                      WHERE cID = ? AND sellerID = ?`;
+  pool.query(queryText, [cID, sellerID], (err, data) => {
+    if (err) return res.status(500).send(err)
+    return res.status(200).send(data)
+  })
+}
+
+
+export function updateCertificate(req, res) {
+  const cID = req.body.cID
+  const sellerID = req.body.sellerID
+  const document = req.body.document
+  if (!isProvided(cID, sellerID, document)) return res.status(400).send("Id not defined")
+  const queryText = `UPDATE organicity.sellerCertificates
+                     SET document = ?, approved='p'
+                     WHERE cID = ? AND sellerID = ?`;
+
+  pool.query(queryText, [document, cID, sellerID, ], (err, data) => {
+    if (err) return res.status(500).send(err)
+    return res.status(200).send(data)
+  })
+}
+
+
+
 export function getStoreProductsByID(req, res) {
   const id = req.params.id
   if (!isProvided(id)) return res.status(400).send("Id not defined")

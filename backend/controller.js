@@ -12,7 +12,7 @@ import { addToFavorites, deleteFromFavorites, getCartProductsByID, getProductByI
 import { getCarouselSlides, getSpecialDeals, getCategories, getMainPageItems, getProductPreviewDetails } from "./services/main-page";
 import { submitForm } from "./services/contact-us";
 import { updatePersonalInfo, updateContactInfo, getFavoriteProducts, newSeller } from "./services/account";
-import { deleteMyProduct, getAvailableCertificatesBySellerID, getCertificates, getCertificatesBySellerID, getStoreProducts, getStoreProductsByID, sendCertificateApprovalRequest } from "./services/seller";
+import { deleteCertificate, deleteMyProduct, getAvailableCertificatesBySellerID, getCertificates, getCertificatesBySellerID, getStoreProducts, getStoreProductsByID, sendCertificateApprovalRequest, updateCertificate } from "./services/seller";
 import { addShipper, deleteOrder, deleteSeller, deleteShipper, deleteUser, getOrders, getSellers, getShippers, getUsers } from "./services/admin-advanced";
 
 // Database Pool
@@ -98,15 +98,22 @@ app.post('/services/is-favorited', isFavorited)
 app.post('/services/add-to-favorites', addToFavorites)
 app.post('/services/delete-from-favorites', deleteFromFavorites)
 
-/* Seller */
+/***************
+----Seller----
+****************/
 app.post('/get-store-products', getStoreProducts)
 app.post('/new-seller', newSeller)
 app.post('/delete-my-product', deleteMyProduct)
+app.get('/services/store/:id', getStoreProductsByID)
+
+// Certificates
 app.get('/services/certificates', getCertificates)
 app.get('/services/certificates/:id', getCertificatesBySellerID)
 app.get('/services/available-certificates/:id', getAvailableCertificatesBySellerID)
 app.post("/certificate-approval-request", sendCertificateApprovalRequest)
-app.get('/services/store/:id', getStoreProductsByID)
+app.post("/services/delete-certificate", deleteCertificate)
+app.post("/services/update-certificate", updateCertificate)
+
 
 export { pool }
 export default app

@@ -18,37 +18,37 @@
       </v-card>
     </v-dialog>
 
-    <v-row class="mt-4">
+    <v-row v-if="approved.length" class="mt-4">
       <v-col cols="12">
         <p class="primary--text text-h5">
           <v-icon color="primary">check_circle_outline</v-icon>
           Approved
         </p>
       </v-col>
-      <v-col v-for="certificate in approved" :key="certificate.cID" cols="3">
-        <CertificateCard :name="certificate.cName" :document="certificate.document" :cardColor="'secondary'" />
+      <v-col v-for="certificate in approved" :key="certificate.cID" cols="4">
+        <CertificateCard :cID="certificate.cID" :name="certificate.cName" :document="certificate.document" :cardColor="'secondary'" />
       </v-col>
     </v-row>
-    <v-row>
+    <v-row v-if="pending.length">
       <v-col cols="12">
         <p class="warning--text text-h5">
           <v-icon color="warning">pending</v-icon>
           Pending
         </p>
       </v-col>
-      <v-col v-for="certificate in pending" :key="certificate.cID" cols="3">
-        <CertificateCard :name="certificate.cName" :document="certificate.document" :cardColor="'#ffcc80'" />
+      <v-col v-for="certificate in pending" :key="certificate.cID" cols="4">
+        <CertificateCard :cID="certificate.cID" :name="certificate.cName" :document="certificate.document" :cardColor="'#ffcc80'" />
       </v-col>
     </v-row>
-    <v-row>
+    <v-row v-if="declined.length">
       <v-col cols="12">
         <p class="error--text text-h5">
           <v-icon color="error">cancel</v-icon>
           Declined
         </p>
       </v-col>
-      <v-col v-for="certificate in declined" :key="certificate.cID" cols="3">
-        <CertificateCard :name="certificate.cName" :document="certificate.document" :cardColor="'#e57373 '" />
+      <v-col  v-for="certificate in declined" :key="certificate.cID" cols="4">
+        <CertificateCard :cID="certificate.cID" :name="certificate.cName" :document="certificate.document" :cardColor="'#e57373 '" />
       </v-col>
     </v-row>
   </v-container>
