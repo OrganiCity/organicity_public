@@ -23,11 +23,13 @@ export function deleteMyProduct(req, res) {
   })
 }
 
-export function getCertificates(res) {
+export function getCertificates(req, res) {
   const queryText = `SELECT c.cID, c.cName 
                      FROM certificates c `;
+
   pool.query(queryText, (err, data) => {
     if (err) return res.status(500).send(err)
+    console.log("aa")
     return res.status(200).send(data)
   })
 }
@@ -44,6 +46,33 @@ export function getCertificatesBySellerID(req, res) {
   })
 }
 
+export function getAvailableCertificatesBySellerID(req, res) {
+  const id = req.params.id
+  if (!isProvided(id)) return res.status(400).send("Id not defined")
+  const queryText = `SELECT  c.cID, c.cName 
+                     FROM certificates c 
+                     WHERE c.cID NOT IN (SELECT sc.cID 
+                                         FROM sellerCertificates sc 
+                                         WHERE sc.sellerID = ? ) `;
+  pool.query(queryText, [id], (err, data) => {
+    if (err) return res.status(500).send(err)
+    return res.status(200).send(data)
+  })
+}
+
+
+export function sendCertificateApprovalRequest(req, res){
+  const cID = req.body.cID;
+  const sellerID = req.body.sellerID
+  const document = req.body.document
+  if (!isProvided(cID, sellerID, document)) return res.status(400).send("Id not defined")
+  const queryText = `INSERT INTO organicity.sellerCertificates (cID,sellerID,approved,document)
+	                      VALUES (? ,? ,'p', ?) `;
+  pool.query(queryText, [cID, sellerID, document], (err, data) => {
+    if (err) return res.status(500).send(err)
+    return res.status(200).send(data)
+  })
+}
 
 export function getStoreProductsByID(req, res) {
   const id = req.params.id

@@ -12,7 +12,7 @@ import { addToFavorites, deleteFromFavorites, getCartProductsByID, getProductByI
 import { getCarouselSlides, getSpecialDeals, getCategories, getMainPageItems, getProductPreviewDetails } from "./services/main-page";
 import { submitForm } from "./services/contact-us";
 import { updatePersonalInfo, updateContactInfo, getFavoriteProducts, newSeller } from "./services/account";
-import { deleteMyProduct, getCertificates, getCertificatesBySellerID, getStoreProducts, getStoreProductsByID } from "./services/seller";
+import { deleteMyProduct, getAvailableCertificatesBySellerID, getCertificates, getCertificatesBySellerID, getStoreProducts, getStoreProductsByID, sendCertificateApprovalRequest } from "./services/seller";
 import { addShipper, deleteOrder, deleteSeller, deleteShipper, deleteUser, getOrders, getSellers, getShippers, getUsers } from "./services/admin-advanced";
 
 // Database Pool
@@ -104,6 +104,8 @@ app.post('/new-seller', newSeller)
 app.post('/delete-my-product', deleteMyProduct)
 app.get('/services/certificates', getCertificates)
 app.get('/services/certificates/:id', getCertificatesBySellerID)
+app.get('/services/available-certificates/:id', getAvailableCertificatesBySellerID)
+app.post("/certificate-approval-request", sendCertificateApprovalRequest)
 app.get('/services/store/:id', getStoreProductsByID)
 
 export { pool }
