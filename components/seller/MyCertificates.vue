@@ -8,6 +8,7 @@
           Approved
         </p>
       </v-col>
+      <p v-for="certificate in approved" :key="certificate.cID"> {{certificate.cName}} </p>
       <v-col cols="3"><CertificateCard /></v-col>
       <v-col cols="3"><CertificateCard /></v-col>
       <v-col cols="3"><CertificateCard /></v-col>
@@ -20,6 +21,7 @@
           Pending
         </p>
       </v-col>
+      <p v-for="certificate in pending" :key="certificate.cID"> {{certificate.cName}} </p>
       <v-col cols="3"><CertificateCard /></v-col>
       <v-col cols="3"><CertificateCard /></v-col>
       <v-col cols="3"><CertificateCard /></v-col>
@@ -32,6 +34,7 @@
           Declined
         </p>
       </v-col>
+      <p v-for="certificate in declined" :key="certificate.cID"> {{certificate.cName}} </p>
       <v-col cols="3"><CertificateCard /></v-col>
       <v-col cols="3"><CertificateCard /></v-col>
       <v-col cols="3"><CertificateCard /></v-col>
@@ -44,6 +47,40 @@
 import CertificateCard from "./CertificateCard.vue";
 export default {
   components: { CertificateCard },
+  data() {
+    return {
+      approved: [],
+      pending: [],
+      declined: [],
+    };
+  },
+  mounted() {
+    this.$api("getCertificatesBySellerID", this.$store.getters["auth/userInfo"]?.userID).then(({ data }) => {
+      console.log(data);
+      let approved = data.reduce((approved, thing) => {
+        if (thing.approved == 'a') {
+          approved.push(thing);
+        }
+        return approved;
+      }, []);
+       let pending = data.reduce((pending, thing) => {
+        if (thing.approved == 'p') {
+          pending.push(thing);
+        }
+        return pending;
+      }, []);
+       let declined = data.reduce((declined, thing) => {
+        if (thing.approved == 'd') {
+          declined.push(thing);
+        }
+        return declined;
+      }, []);
+      
+      this.approved = approved;
+      this.pending = pending;
+      this.declined = declined;
+    });
+  },
 };
 </script>
 
