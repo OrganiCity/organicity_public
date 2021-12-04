@@ -13,7 +13,7 @@ import { getCarouselSlides, getSpecialDeals, getCategories, getMainPageItems, ge
 import { submitForm } from "./services/contact-us";
 import { updatePersonalInfo, updateContactInfo, getFavoriteProducts, newSeller } from "./services/account";
 import { deleteCertificate, deleteMyProduct, getAvailableCertificatesBySellerID, getCertificates, getCertificatesBySellerID, getStoreProducts, getStoreProductsByID, sendCertificateApprovalRequest, updateCertificate } from "./services/seller";
-import { addShipper, deleteOrder, deleteSeller, deleteShipper, deleteUser, getOrders, getSellers, getShippers, getUsers } from "./services/admin-advanced";
+import { addShipper, deleteOrder, deleteSeller, deleteShipper, deleteUser, getOrders, getSellerCertificates, getSellers, getShippers, getUsers } from "./services/admin-advanced";
 
 // Database Pool
 var pool = mysql.createPool({
@@ -76,6 +76,7 @@ app.delete("/admin/orders/:id", deleteOrder)
 app.get("/admin/shippers", getShippers)
 app.delete("/admin/shippers/:id", deleteShipper)
 app.post("/admin/shippers", addShipper)
+app.get("/admin/seller-certificates", getSellerCertificates)
 
 
 /***************
