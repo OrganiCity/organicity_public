@@ -38,7 +38,7 @@ export function getProductByID(req, res) {
                             SELECT c.cName, c.description, c.iconTag 
                             FROM productCertificates pc, sellerCertificates sc, products p, certificates c 
                             WHERE pc.productID = ? AND pc.productID = p.productID AND p.sellerID = sc.sellerID 
-                            AND sc.cID = pc.cID AND sc.cID = c.cID AND sc.approved = 1 
+                            AND sc.cID = pc.cID AND sc.cID = c.cID AND sc.approved = 'a'
                         `, [id], (err, cData) => {
                             if (err) return res.status(500).send(err)
                             data.certificates = cData
