@@ -23,11 +23,13 @@ export function deleteMyProduct(req, res) {
   })
 }
 
-export function getCertificates(res) {
+export function getCertificates(req, res) {
   const queryText = `SELECT c.cID, c.cName 
                      FROM certificates c `;
+
   pool.query(queryText, (err, data) => {
     if (err) return res.status(500).send(err)
+    console.log("aa")
     return res.status(200).send(data)
   })
 }
