@@ -23,17 +23,26 @@ export function deleteMyProduct(req, res) {
   })
 }
 
-export function getCertificates(req, res) {
-
+export function getCertificates(res) {
   const queryText = `SELECT c.cID, c.cName 
                      FROM certificates c `;
   pool.query(queryText, (err, data) => {
-    console.log(req.body.productID)
     if (err) return res.status(500).send(err)
     return res.status(200).send(data)
   })
 }
 
+export function getCertificatesBySellerID(req, res) {
+  const id = req.params.id
+  if (!isProvided(id)) return res.status(400).send("Id not defined")
+  const queryText = `SELECT sc.cID, c.cName, sc.approved, sc.document 
+                     FROM sellerCertificates sc, certificates c
+                     WHERE sc.cID = c.cID AND sc.sellerID = ? `;
+  pool.query(queryText, [id], (err, data) => {
+    if (err) return res.status(500).send(err)
+    return res.status(200).send(data)
+  })
+}
 
 
 export function getStoreProductsByID(req, res) {
