@@ -54,7 +54,7 @@ export default {
       );
     },
     updateMyCertificate() {
-      this.$api("updateCertificate", {
+      this.$api("updateCertificateDocument", {
         document: this.document,
         cID: this.cID,
         sellerID: this.$store.getters["auth/userInfo"].userID

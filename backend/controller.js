@@ -12,8 +12,8 @@ import { addToFavorites, deleteFromFavorites, getCartProductsByID, getProductByI
 import { getCarouselSlides, getSpecialDeals, getCategories, getMainPageItems, getProductPreviewDetails } from "./services/main-page";
 import { submitForm } from "./services/contact-us";
 import { updatePersonalInfo, updateContactInfo, getFavoriteProducts, newSeller } from "./services/account";
-import { deleteCertificate, deleteMyProduct, getAvailableCertificatesBySellerID, getCertificates, getCertificatesBySellerID, getStoreProducts, getStoreProductsByID, sendCertificateApprovalRequest, updateCertificate } from "./services/seller";
-import { addShipper, deleteOrder, deleteSeller, deleteShipper, deleteUser, getOrders, getSellerCertificates, getSellers, getShippers, getUsers } from "./services/admin-advanced";
+import { deleteCertificate, deleteMyProduct, getAvailableCertificatesBySellerID, getCertificates, getCertificatesBySellerID, getStoreProducts, getStoreProductsByID, sendCertificateApprovalRequest, updateCertificateDocument } from "./services/seller";
+import { addShipper, deleteOrder, deleteSeller, deleteShipper, deleteUser, getOrders, getSellerCertificates, getSellers, getShippers, getUsers, updateCertificateStatus } from "./services/admin-advanced";
 
 // Database Pool
 var pool = mysql.createPool({
@@ -77,6 +77,7 @@ app.get("/admin/shippers", getShippers)
 app.delete("/admin/shippers/:id", deleteShipper)
 app.post("/admin/shippers", addShipper)
 app.get("/admin/seller-certificates", getSellerCertificates)
+app.post("/admin/update-certificate-status", updateCertificateStatus)
 
 
 /***************
@@ -113,7 +114,7 @@ app.get('/services/certificates/:id', getCertificatesBySellerID)
 app.get('/services/available-certificates/:id', getAvailableCertificatesBySellerID)
 app.post("/certificate-approval-request", sendCertificateApprovalRequest)
 app.post("/services/delete-certificate", deleteCertificate)
-app.post("/services/update-certificate", updateCertificate)
+app.post("/services/update-certificate-document", updateCertificateDocument)
 
 
 export { pool }

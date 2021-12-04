@@ -10,7 +10,7 @@
           <v-card class="pa-6 pt-5 py-10">
             <p class="primary--text text-h4 text-center mb-10">Edit Certificate</p>
             <v-select :items="status" label="Status" v-model="editedItem.approved" outlined></v-select>
-            <v-btn block color="primary">Update Status</v-btn>
+            <v-btn @click="updateCertificateStatus" block color="primary">Update Status</v-btn>
             <div class="d-flex justify-between align-center my-4">
               <v-divider></v-divider>
               <p class="mb-0 mx-4 font-weight-medium">OR</p>
@@ -121,6 +121,13 @@ export default {
       this.editedIndex = this.sellers.indexOf(item);
       this.editedItem = Object.assign({}, item);
       this.dialogEdit = true;
+    },
+    updateCertificateStatus() {
+      this.$api("updateCertificateStatus", {
+        approved: this.editedItem.approved,
+        cID: this.editedItem.cID,
+        sellerID: this.editedItem.sellerID
+      }).then(window.location.reload());
     },
 
     deleteItemConfirm() {

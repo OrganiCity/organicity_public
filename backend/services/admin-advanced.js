@@ -35,6 +35,20 @@ export function getSellerCertificates(req, res) {
         res.json(data)
     })
 }
+export function updateCertificateStatus(req, res) {
+    const cID = req.body.cID
+    const sellerID = req.body.sellerID
+    const approved = req.body.approved
+    if (!isProvided(cID, sellerID, approved)) return res.status(400).send("Id not defined")
+    const queryText = `UPDATE organicity.sellerCertificates
+                       SET approved = ?
+                       WHERE cID = ? AND sellerID = ?`;
+  
+    pool.query(queryText, [approved, cID, sellerID, ], (err, data) => {
+      if (err) return res.status(500).send(err)
+      return res.status(200).send(data)
+    })
+  }
 
 export function deleteSeller(req, res) {
     const id = req.params.id
