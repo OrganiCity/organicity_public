@@ -41,6 +41,7 @@ export default {
   mounted(){
     this.$api("getOrderPreviewsByID", this.$store.getters["auth/userInfo"].userID).then(({ data }) => {
       this.orders = data
+    //  console.log(this.orders["123"].products)
     })
   }
 };

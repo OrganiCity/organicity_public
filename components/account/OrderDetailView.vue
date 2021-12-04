@@ -31,6 +31,9 @@ export default {
   components: {
     OrderCard,
   },
+  props:{
+    products: [],
+  }
 };
 </script>
 
