@@ -14,6 +14,7 @@ import { submitForm } from "./services/contact-us";
 import { updatePersonalInfo, updateContactInfo, getFavoriteProducts, newSeller } from "./services/account";
 import { deleteCertificate, deleteMyProduct, getAvailableCertificatesBySellerID, getCertificates, getCertificatesBySellerID, getStoreProducts, getStoreProductsByID, sendCertificateApprovalRequest, updateCertificateDocument } from "./services/seller";
 import { addShipper, deleteOrder, deleteSeller, deleteShipper, deleteUser, getOrders, getSellerCertificates, getSellers, getShippers, getUsers, updateCertificateStatus } from "./services/admin-advanced";
+import { getOrderPreviewsByID } from "./services/order";
 
 // Database Pool
 var pool = mysql.createPool({
@@ -116,6 +117,11 @@ app.post("/certificate-approval-request", sendCertificateApprovalRequest)
 app.post("/services/delete-certificate", deleteCertificate)
 app.post("/services/update-certificate-document", updateCertificateDocument)
 
+
+/************
+----ORDER----
+*************/
+app.get('/order/get-order-previews/:id', getOrderPreviewsByID)
 
 export { pool }
 export default app
