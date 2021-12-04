@@ -10,8 +10,26 @@ export function getOrderPreviewsByID(req, res) {
                         GROUP BY o.orderNumber, o.productID `
 
     pool.query(queryText, [id], (err, data) => {
-        if (err) return res.status(500).send(err);
-        return res.status(200).send(data);
+        if (err) return res.status(500).send(err)
+        const order = {}
+        data.forEach(e => {
+            const current = order[e.orderNumber]
+            if(current){ // If exists
+                current.imgURLs.push(e.imgURL)
+                current.orderTotal += e.productTotal
+                current.products.push(e.productID)
+                current.status.push(e.shippingStatus)
+            }
+            else{
+                order[e.orderNumber] = {}
+                order[e.orderNumber].imgURLs = [e.imgURL]
+                order[e.orderNumber].orderTotal = e.productTotal
+                order[e.orderNumber].products = [e.productID]
+                order[e.orderNumber].status = [e.shippingStatus]
+                order[e.orderNumber].orderDate = e.orderDate
+            }
+        });
+        return res.status(200).send(order);
     })
     
 }
