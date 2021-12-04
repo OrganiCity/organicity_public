@@ -7,7 +7,10 @@ export async function deleteMyProduct({ instance }, payload) {
 }
 
 export async function getCertificates({ instance }) {
-  return await instance.get("/certificates")
+  return await instance.get("/services/certificates")
+}
+export async function getCertificatesBySellerID({ instance }, payload) {
+  return await instance.get("/services/certificates/" + payload)
 }
 export async function getStoreProductsByID({ instance }, payload) {
   return await instance.get("/services/store/" + payload)
