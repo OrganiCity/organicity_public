@@ -1,5 +1,5 @@
 <template>
-  <v-data-table :headers="headers" :items="sellers" sort-by="Approved" class="elevation-1">
+  <v-data-table :headers="headers" :items="sellers" :sort-by="['approved', 'sellerID']" class="elevation-1">
     <template v-slot:top>
       <v-toolbar flat>
         <v-toolbar-title>Seller Management</v-toolbar-title>
