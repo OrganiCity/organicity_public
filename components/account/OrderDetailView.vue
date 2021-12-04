@@ -4,8 +4,6 @@
 
     <OrderCard />
     <OrderCard />
-    <OrderCard />
-    <OrderCard />
 
     <v-col cols="12" class="py-0">
       <p class="text-h6 font-weight-medium mb-1 mt-6">Adres Bilgileri</p>
