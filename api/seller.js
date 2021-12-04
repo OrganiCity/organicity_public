@@ -23,8 +23,8 @@ export async function deleteCertificate({ instance }, payload) {
   return await instance.post("/services/delete-certificate", payload)
 }
 
-export async function updateCertificate({ instance }, payload) {
-  return await instance.post("/services/update-certificate", payload)
+export async function updateCertificateDocument({ instance }, payload) {
+  return await instance.post("/services/update-certificate-document", payload)
 }
 
 export async function getStoreProductsByID({ instance }, payload) {

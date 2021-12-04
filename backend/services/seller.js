@@ -87,7 +87,7 @@ export function deleteCertificate(req, res) {
 }
 
 
-export function updateCertificate(req, res) {
+export function updateCertificateDocument(req, res) {
   const cID = req.body.cID
   const sellerID = req.body.sellerID
   const document = req.body.document
