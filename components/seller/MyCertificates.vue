@@ -26,7 +26,7 @@
         </p>
       </v-col>
       <v-col v-for="certificate in approved" :key="certificate.cID" cols="3">
-        <CertificateCard :name="certificate.cName" :document="certificate.document" />
+        <CertificateCard :name="certificate.cName" :document="certificate.document" :cardColor="'secondary'" />
       </v-col>
     </v-row>
     <v-row>
@@ -37,7 +37,7 @@
         </p>
       </v-col>
       <v-col v-for="certificate in pending" :key="certificate.cID" cols="3">
-        <CertificateCard :name="certificate.cName" :document="certificate.document" />
+        <CertificateCard :name="certificate.cName" :document="certificate.document" :cardColor="'#ffcc80'" />
       </v-col>
     </v-row>
     <v-row>
@@ -48,7 +48,7 @@
         </p>
       </v-col>
       <v-col v-for="certificate in declined" :key="certificate.cID" cols="3">
-        <CertificateCard :name="certificate.cName" :document="certificate.document" />
+        <CertificateCard :name="certificate.cName" :document="certificate.document" :cardColor="'#e57373 '" />
       </v-col>
     </v-row>
   </v-container>
