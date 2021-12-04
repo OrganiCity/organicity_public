@@ -1,12 +1,22 @@
 <template>
   <v-container>
-    <v-btn color="primary">request an approval</v-btn>
-     <v-chip-group column active-class="primary--text">
-          <v-chip large filter v-for="certificate in available" :key="certificate.cID">
-            {{ certificate.cName }}
+    <v-dialog max-width="600">
+      <template v-slot:activator="{ on, attrs }">
+        <v-btn color="primary" dark v-bind="attrs" v-on="on">Add new certIfIcate</v-btn>
+      </template>
+      <v-card color="pa-4">
+        <p class="primary--text text-h4 text-center">Add New Certificate</p>
+        <p>Below you can see the available certificates to request an approval</p>
+        <v-chip-group  mandatory column active-class="primary--text">
+          <v-chip @click="cID=certificate.cID" large filter v-for="certificate in available" :key="certificate.cID">
+            {{ certificate.cName }} 
           </v-chip>
         </v-chip-group>
-     
+        <p> {{cID}} </p>
+        <v-text-field autocomplete="off" v-model="document" label="Document URL" required outlined></v-text-field>
+        <v-btn @click="sendCertificateApprovalRequest" block color="primary">Request an approval</v-btn>
+      </v-card>
+    </v-dialog>
 
     <v-row class="mt-4">
       <v-col cols="12">
@@ -54,8 +64,19 @@ export default {
       pending: [],
       declined: [],
       available: [],
-      cID: null
+      cID: null,
+      document: "",
+      dialog: false,
     };
+  },
+  methods: {
+    sendCertificateApprovalRequest() {
+      this.$api("sendCertificateApprovalRequest", {
+        cID: this.cID,
+        sellerID: this.$store.getters["auth/userInfo"]?.userID,
+        document: this.document,
+      }).then((window.location.reload()));
+    },
   },
   mounted() {
     this.$api("getCertificatesBySellerID", this.$store.getters["auth/userInfo"]?.userID).then(({ data }) => {
@@ -83,9 +104,9 @@ export default {
       this.pending = pending;
       this.declined = declined;
 
-      this.$api("getAvailableCertificatesBySellerID", this.$store.getters["auth/userInfo"]?.userID).then(({ data }) =>{
+      this.$api("getAvailableCertificatesBySellerID", this.$store.getters["auth/userInfo"]?.userID).then(({ data }) => {
         this.available = data;
-      })
+      });
     });
   },
 };

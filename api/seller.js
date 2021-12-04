@@ -15,6 +15,9 @@ export async function getCertificatesBySellerID({ instance }, payload) {
 export async function getAvailableCertificatesBySellerID({ instance }, payload) {
   return await instance.get("/services/available-certificates/" + payload)
 }
+export async function sendCertificateApprovalRequest({ instance }, payload) {
+  return await instance.post("/certificate-approval-request", payload)
+}
 
 export async function getStoreProductsByID({ instance }, payload) {
   return await instance.get("/services/store/" + payload)
