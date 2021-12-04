@@ -12,7 +12,7 @@ import { addToFavorites, deleteFromFavorites, getCartProductsByID, getProductByI
 import { getCarouselSlides, getSpecialDeals, getCategories, getMainPageItems, getProductPreviewDetails } from "./services/main-page";
 import { submitForm } from "./services/contact-us";
 import { updatePersonalInfo, updateContactInfo, getFavoriteProducts, newSeller } from "./services/account";
-import { deleteMyProduct, getCertificates, getStoreProducts, getStoreProductsByID } from "./services/seller";
+import { deleteMyProduct, getCertificates, getCertificatesBySellerID, getStoreProducts, getStoreProductsByID } from "./services/seller";
 import { addShipper, deleteOrder, deleteSeller, deleteShipper, deleteUser, getOrders, getSellers, getShippers, getUsers } from "./services/admin-advanced";
 
 // Database Pool
@@ -102,7 +102,8 @@ app.post('/services/delete-from-favorites', deleteFromFavorites)
 app.post('/get-store-products', getStoreProducts)
 app.post('/new-seller', newSeller)
 app.post('/delete-my-product', deleteMyProduct)
-app.get('/certificates', getCertificates)
+app.get('/services/certificates', getCertificates)
+app.get('/services/certificates/:id', getCertificatesBySellerID)
 app.get('/services/store/:id', getStoreProductsByID)
 
 export { pool }
