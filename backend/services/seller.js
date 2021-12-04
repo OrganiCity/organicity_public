@@ -44,6 +44,20 @@ export function getCertificatesBySellerID(req, res) {
   })
 }
 
+export function getAvailableCertificatesBySellerID(req, res) {
+  const id = req.params.id
+  if (!isProvided(id)) return res.status(400).send("Id not defined")
+  const queryText = `SELECT  c.cID, c.cName 
+                     FROM certificates c 
+                     WHERE c.cID NOT IN (SELECT sc.cID 
+                                         FROM sellerCertificates sc 
+                                         WHERE sc.sellerID = ? ) `;
+  pool.query(queryText, [id], (err, data) => {
+    if (err) return res.status(500).send(err)
+    return res.status(200).send(data)
+  })
+}
+
 
 export function getStoreProductsByID(req, res) {
   const id = req.params.id
