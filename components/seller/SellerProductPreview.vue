@@ -14,6 +14,9 @@
         </v-card-actions>
       </v-card>
     </v-dialog>
+    <v-dialog v-model="editDialog" overlay-color="secondary" max-width="700px">
+      <AddProduct :type="'edit'" :product="productID"/>
+    </v-dialog>
     <v-card elevation="0" outlined class="pa-1">
       <v-img aspect-ratio="1.4" height="160px" :src="imgSrc" class="ma-2"></v-img>
       <v-responsive height="46px">
@@ -34,7 +37,7 @@
       </div>
       <p class="primary--text font-weight-medium mb-3" style="text-align: center">{{ price }} TL</p>
       <div class="d-flex justify-end">
-        <v-btn fab small color="primary" class="ma-2">
+        <v-btn fab small color="primary" class="ma-2" @click="editDialog = true">
           <v-icon size="16">edit</v-icon>
         </v-btn>
         <v-btn fab small color="error" class="ma-2" @click="dialog = true">
@@ -46,7 +49,9 @@
 </template>
 
 <script>
+import AddProduct from './AddProduct.vue';
 export default {
+  components: { AddProduct },
   data() {
     return {
       productID: "",
@@ -56,6 +61,7 @@ export default {
       price: 0.0,
       certificates: [],
       dialog: false,
+      editDialog: false,
     };
   },
   props: { productId: 0 },

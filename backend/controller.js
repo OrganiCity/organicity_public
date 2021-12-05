@@ -12,7 +12,7 @@ import { addToFavorites, deleteFromFavorites, getCartProductsByID, getProductByI
 import { getCarouselSlides, getSpecialDeals, getCategories, getMainPageItems, getProductPreviewDetails } from "./services/main-page";
 import { submitForm } from "./services/contact-us";
 import { updatePersonalInfo, updateContactInfo, getFavoriteProducts, newSeller } from "./services/account";
-import { deleteCertificate, deleteMyProduct, getAvailableCertificatesBySellerID, getCertificates, getCertificatesBySellerID, getStoreProducts, getStoreProductsByID, sendCertificateApprovalRequest, updateCertificateDocument } from "./services/seller";
+import { addProductToStore, deleteCertificate, deleteMyProduct, editProductOfStore, getAvailableCertificatesBySellerID, getCertificates, getCertificatesBySellerID, getStoreProducts, getStoreProductsByID, sendCertificateApprovalRequest, updateCertificateDocument } from "./services/seller";
 import { addShipper, deleteOrder, deleteSeller, deleteShipper, deleteUser, getOrders, getSellerCertificates, getSellers, getShippers, getUsers, updateCertificateStatus } from "./services/admin-advanced";
 
 // Database Pool
@@ -107,6 +107,8 @@ app.post('/get-store-products', getStoreProducts)
 app.post('/new-seller', newSeller)
 app.post('/delete-my-product', deleteMyProduct)
 app.get('/services/store/:id', getStoreProductsByID)
+app.post('/add-product-to-store', addProductToStore)
+app.put('/edit-product-of-store', editProductOfStore)
 
 // Certificates
 app.get('/services/certificates', getCertificates)
