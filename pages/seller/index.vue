@@ -10,8 +10,9 @@
       <v-tab-item>
         <MyProducts :products="products" />
       </v-tab-item>
-
-      <v-tab-item> <MyCertificates/> </v-tab-item>
+      <v-tab-item>
+        <MyCertificates />
+      </v-tab-item>
       <v-tab-item>
         <Orders />
       </v-tab-item>

@@ -6,6 +6,14 @@ export async function deleteMyProduct({ instance }, payload) {
   return await instance.post("/delete-my-product", payload)
 }
 
+export async function addProductToStore({ instance }, payload) {
+  return await instance.post("/add-product-to-store", payload)
+}
+
+export async function editProductOfStore({ instance }, payload) {
+  return await instance.put("/edit-product-of-store", payload)
+}
+
 export async function getCertificates({ instance }) {
   return await instance.get("/services/certificates")
 }
