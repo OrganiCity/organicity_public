@@ -30,6 +30,7 @@
         <span>{{ c.cName }}</span>
       </v-tooltip>
     </div>
+    <v-responsive v-if="!certificates.length" height="24px"></v-responsive>
 
     <p class="primary--text font-weight-medium mb-3" style="text-align: center">{{ price }} TL</p>
 
