@@ -1,9 +1,16 @@
 <template>
   <v-row class="mt-4 mb-1 mx-1">
-    <p class="primary--text text-h6 font-weight-medium">Satıcı: Bizim Çiftlik</p>
-
-    <OrderCard />
-    <OrderCard />
+    <v-col cols="12" v-for="(value, key) in sellerProducts" :key="key">
+      <p class="primary--text text-h6 font-weight-medium">Satıcı: {{ value.companyName }}</p>
+      <OrderCard
+        :products="value.products"
+        :names="value.names"
+        :prices="value.pricesPerUnit"
+        :quantities="value.quantities"
+        :imgURLs="value.imgURLs"
+        :status="value.status"
+      />
+    </v-col>
 
     <v-col cols="12" class="py-0">
       <p class="text-h6 font-weight-medium mb-1 mt-6">Adres Bilgileri</p>
@@ -31,9 +38,19 @@ export default {
   components: {
     OrderCard,
   },
-  props:{
-    products: [],
-  }
+  data() {
+    return {
+      sellerProducts: {},
+    };
+  },
+  props: {
+    orderNumber: 0,
+  },
+  mounted() {
+    this.$api("getOrderDetailsByOrderNumber", this.orderNumber).then(({ data }) => {
+      this.sellerProducts = data;
+    });
+  },
 };
 </script>
 

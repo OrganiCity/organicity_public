@@ -4,17 +4,23 @@
       <!-- Product Info -->
       <v-col class="mb-4" cols="12" md="6">
         <v-row>
-          <v-col v-for="n in 3" :key="n" cols="12">
-            <OrderCardProduct />
+          <v-col v-for="(id, idx) in products" :key="id" cols="12">
+            <OrderCardProduct
+              :price="prices[idx]"
+              :quantity="quantities[idx]"
+              :productName="names[idx]"
+              :productID="id"
+              :imgURL="imgURLs[idx]"
+            />
           </v-col>
         </v-row>
       </v-col>
 
       <!-- Delivery Info -->
       <v-col cols="12" md="6">
-        <v-card class="rounded-0 pa-6" elevation="0" height="100%" color="secondary">
+        <v-card class="rounded-0 pa-6" elevation="0" height="100%" :color="status.every(defineStatus) ? 'secondary' : 'contrast'">
           <div class="d-flex align-center">
-            <v-avatar size="58px" color="primary">
+            <v-avatar size="58px" :color="status.every(defineStatus) ? 'primary' :'warning'">
               <v-badge
                 class="miniBadgeIcon d-flex justify-center align-center"
                 offset-x="15"
@@ -22,7 +28,7 @@
                 color="white"
                 bottom
                 overlap
-                icon="check"
+                :icon="status.every(defineStatus) ? 'check' : 'pending'"
               >
                 <v-icon color="#FFFFFF" size="36px">mdi-package-variant-closed</v-icon>
               </v-badge>
@@ -54,7 +60,7 @@
                 Kargo Takibi
               </v-btn>
             </v-col>
-          
+
             <v-col cols="12">
               <v-btn
                 to="/contact-us"
@@ -78,7 +84,22 @@
 <script>
 import OrderCardProduct from "./OrderCardProduct.vue";
 
-export default { components: { OrderCardProduct } };
+export default {
+  components: { OrderCardProduct },
+  props: {
+    products: [],
+    names: [],
+    prices: [],
+    quantities: [],
+    imgURLs: [],
+    status: [],
+  },
+  methods: {
+    defineStatus(status) {
+      return status == "arrived";
+    },
+  },
+};
 </script>
 
 
