@@ -1,11 +1,14 @@
 <template>
   <v-row class="mt-4 mb-1 mx-1">
-    <p class="primary--text text-h6 font-weight-medium">Satıcı: Bizim Çiftlik</p>
-
-    <OrderCard />
-    <OrderCard />
-    <OrderCard />
-    <OrderCard />
+    <v-col cols="12" v-for="(value, key) in sellerProducts" :key="key">
+      <nuxt-link :to="'/store/'+ key">
+        <p class="primary--text text-h6 font-weight-medium">Satıcı: {{ value.companyName }}</p>
+      </nuxt-link>
+      <OrderCard
+        :products="value.products"
+        :status="value.status"
+      />
+    </v-col>
 
     <v-col cols="12" class="py-0">
       <p class="text-h6 font-weight-medium mb-1 mt-6">Adres Bilgileri</p>
@@ -32,6 +35,19 @@ import OrderCard from "~/components/account/OrderCard.vue";
 export default {
   components: {
     OrderCard,
+  },
+  data() {
+    return {
+      sellerProducts: {},
+    };
+  },
+  props: {
+    orderNumber: 0,
+  },
+  mounted() {
+    this.$api("getOrderDetailsByOrderNumber", this.orderNumber).then(({ data }) => {
+      this.sellerProducts = data;
+    });
   },
 };
 </script>

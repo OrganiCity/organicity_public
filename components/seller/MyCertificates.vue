@@ -81,29 +81,14 @@ export default {
   mounted() {
     this.$api("getCertificatesBySellerID", this.$store.getters["auth/userInfo"]?.userID).then(({ data }) => {
       console.log(data);
-      let approved = data.reduce((approved, thing) => {
-        if (thing.approved == "a") {
-          approved.push(thing);
-        }
-        return approved;
-      }, []);
-      let pending = data.reduce((pending, thing) => {
-        if (thing.approved == "p") {
-          pending.push(thing);
-        }
-        return pending;
-      }, []);
-      let declined = data.reduce((declined, thing) => {
-        if (thing.approved == "d") {
-          declined.push(thing);
-        }
-        return declined;
-      }, []);
-
-      this.approved = approved;
-      this.pending = pending;
-      this.declined = declined;
-
+      data.forEach(element => {
+          switch (element.approved){
+            case "a": this.approved.push(element); break
+            case "p": this.pending.push(element); break
+            case "d": this.declined.push(element); break
+          }
+      });
+       
       this.$api("getAvailableCertificatesBySellerID", this.$store.getters["auth/userInfo"]?.userID).then(({ data }) => {
         this.available = data;
       });
