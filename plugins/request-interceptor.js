@@ -8,6 +8,7 @@ import * as services from "~/api/services"
 import * as account from "~/api/account"
 import * as seller from "~/api/seller"
 import * as adminAdvanced from "~/api/admin-advanced"
+import * as order from "~/api/order"
 
 const apis = {
     ...example,
@@ -18,6 +19,7 @@ const apis = {
     ...account,
     ...seller,
     ...adminAdvanced,
+    ...order
 }
 
 export default function ({ store }, inject) {
