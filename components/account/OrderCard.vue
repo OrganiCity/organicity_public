@@ -36,10 +36,12 @@
             <div class="ml-3">
               <div>
                 <span class="text-body-1 font-weight-medium">Doğkan Saraç</span>
-                <span class="text-body-2">adlı kişiye teslim edildi</span>
+                <span v-if="status.every(defineStatus)" class="text-body-2">adlı kişiye teslim edildi</span>
+                <span v-else class="text-body-2">adlı kişiye teslim edilecek</span>
+
               </div>
 
-              <div class="text-caption primary--text">
+              <div v-if="status.every(defineStatus)" class="text-caption primary--text">
                 <span>Teslim tarihi</span>
                 <span class="font-weight-medium">3 Ağs Sal 2021, 13:11</span>
               </div>
