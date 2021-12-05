@@ -1,5 +1,8 @@
+import util from "util"
 import { pool } from "../controller"
 import { isProvided } from "../utils"
+var secrets = require('../secrets.json')
+import jwt from "jsonwebtoken";
 
 export function getStoreProducts(req, res) {
   if (!isProvided(req.body.userID)) return res.status(400).send("Bad request!")
@@ -11,8 +14,68 @@ export function getStoreProducts(req, res) {
   })
 }
 
+export function addProductToStore(req, res) {
+  const name = req.body.name
+  const extraInfo = req.body.extraInfo
+  const nutrValues = req.body.nutrValues
+  const ingredients = req.body.ingredients
+  const howToPreserve = req.body.howToPreserve
+  const desc = req.body.desc
+  const price = req.body.price
+  const unitsInStock = req.body.unitsInStock
+  const categoryID = req.body.categoryID
+  const images = req.body.images
+  const certificates = req.body.certificates
+  if (!isProvided(name, categoryID, images, certificates, price, unitsInStock) || !images.length) return res.status(400).send("Required info not provided")
+  var token = req.headers.authorization;
+  if (!(token && token.split(' ')[0] == 'Bearer')) return res.status(401).send('No token provided.');
+  token = token.split(' ')[1]
+  var userData;
+  jwt.verify(token, secrets.jwt_secret, function (err, decoded) {
+    if (err) return res.status(401).send('Failed to authenticate token.');
+    userData = decoded;
+    if (!userData.isSeller) return res.status(401).send("Not a seller")
+    pool.query(`INSERT INTO organicity.products (
+      productName,
+      sellerID,
+      categoryID,
+      pricePerUnit,
+      unitsInStock,
+      description,
+      nutritionalValues,
+      howToPreserve,
+      ingredients,
+      extraInfo)
+    VALUES (?,?,?,?,?,?,?,?,?,?);`,
+      [name, userData.userID, categoryID, price, unitsInStock, unitsInStock, desc, nutrValues, howToPreserve, ingredients, extraInfo],
+      (err, data) => {
+        if (err) return res.status(500).send(err)
+        const productID = data.insertId
+
+        const queryPromise = util.promisify(pool.query).bind(pool);
+        const queryPromises = []
+        images.forEach(im => {
+          queryPromises.push(
+            queryPromise("INSERT INTO organicity.productImages (productID, imgURL) VALUES(?, ?)", [productID, im])
+          )
+        });
+        certificates.forEach(cert => {
+          queryPromises.push(
+            queryPromise("INSERT INTO organicity.productCertificates (productID, cID) VALUES(?, ?)", [productID, cert])
+          )
+        })
+        Promise.all(queryPromises)
+          .then(() => {
+            return res.status(200).send("Product Added to Store")
+          }).catch((err) => {
+            return res.status(500).send(err)
+          })
+      });
+  });
+}
+
 export function deleteMyProduct(req, res) {
-  if (!isProvided(req.body.productID)) return res.status(400).send("Bad request!")
+  if (!isProvided(req.body.productID)) return res.status(400).send("Product ID not provided!")
   const queryText = `DELETE FROM organicity.products
 	                    WHERE productID = ?`;
   const queryValues = [req.body.productID];
@@ -20,6 +83,75 @@ export function deleteMyProduct(req, res) {
     console.log(req.body.productID)
     if (err) return res.status(500).send(err)
     return res.status(200).send(data)
+  })
+}
+
+export function editProductOfStore(req, res) {
+  if (!isProvided(req.body.productID)) return res.status(400).send("Bad request!")
+  const queryText = `DELETE FROM organicity.products
+	                    WHERE productID = ?`;
+  const queryValues = [req.body.productID];
+  pool.query(queryText, queryValues, (err, data) => {
+    if (err) return res.status(500).send(err)
+    const name = req.body.name
+    const extraInfo = req.body.extraInfo
+    const nutrValues = req.body.nutrValues
+    const ingredients = req.body.ingredients
+    const howToPreserve = req.body.howToPreserve
+    const desc = req.body.desc
+    const price = req.body.price
+    const unitsInStock = req.body.unitsInStock
+    const categoryID = req.body.categoryID
+    const images = req.body.images
+    const certificates = req.body.certificates
+    if (!isProvided(name, categoryID, images, certificates, price, unitsInStock) || !images.length) return res.status(400).send("Required info not provided")
+    var token = req.headers.authorization;
+    console.log(certificates)
+    if (!(token && token.split(' ')[0] == 'Bearer')) return res.status(401).send('No token provided.');
+    token = token.split(' ')[1]
+    var userData;
+    jwt.verify(token, secrets.jwt_secret, function (err, decoded) {
+      if (err) return res.status(401).send('Failed to authenticate token.');
+      userData = decoded;
+      if (!userData.isSeller) return res.status(401).send("Not a seller")
+      pool.query(`INSERT INTO organicity.products (
+      productID,
+      productName,
+      sellerID,
+      categoryID,
+      pricePerUnit,
+      unitsInStock,
+      description,
+      nutritionalValues,
+      howToPreserve,
+      ingredients,
+      extraInfo)
+    VALUES (?,?,?,?,?,?,?,?,?,?,?);`,
+        [req.body.productID, name, userData.userID, categoryID, price, unitsInStock, unitsInStock, desc, nutrValues, howToPreserve, ingredients, extraInfo],
+        (err, data) => {
+          if (err) return res.status(500).send(err)
+          const productID = data.insertId
+
+          const queryPromise = util.promisify(pool.query).bind(pool);
+          const queryPromises = []
+          images.forEach(im => {
+            queryPromises.push(
+              queryPromise("INSERT INTO organicity.productImages (productID, imgURL) VALUES(?, ?)", [productID, im])
+            )
+          });
+          certificates.forEach(cert => {
+            queryPromises.push(
+              queryPromise("INSERT INTO organicity.productCertificates (productID, cID) VALUES(?, ?)", [productID, cert])
+            )
+          })
+          Promise.all(queryPromises)
+            .then(() => {
+              return res.status(200).send("Product Added to Store")
+            }).catch((err) => {
+              return res.status(500).send(err)
+            })
+        });
+    });
   })
 }
 
@@ -61,7 +193,7 @@ export function getAvailableCertificatesBySellerID(req, res) {
 }
 
 
-export function sendCertificateApprovalRequest(req, res){
+export function sendCertificateApprovalRequest(req, res) {
   const cID = req.body.cID;
   const sellerID = req.body.sellerID
   const document = req.body.document
@@ -96,7 +228,7 @@ export function updateCertificateDocument(req, res) {
                      SET document = ?, approved='p'
                      WHERE cID = ? AND sellerID = ?`;
 
-  pool.query(queryText, [document, cID, sellerID, ], (err, data) => {
+  pool.query(queryText, [document, cID, sellerID,], (err, data) => {
     if (err) return res.status(500).send(err)
     return res.status(200).send(data)
   })
