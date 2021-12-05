@@ -15,7 +15,7 @@
             <OrderPreview :order="value" :orderNumber="key" />
           </v-expansion-panel-header>
           <v-expansion-panel-content>
-            <OrderDetailView/>
+            <OrderDetailView :orderNumber="key"/>
           </v-expansion-panel-content>
         </v-expansion-panel>
       </v-expansion-panels>
