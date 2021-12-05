@@ -1,7 +1,9 @@
 <template>
   <v-row class="mt-4 mb-1 mx-1">
     <v-col cols="12" v-for="(value, key) in sellerProducts" :key="key">
-      <p class="primary--text text-h6 font-weight-medium">Satıcı: {{ value.companyName }}</p>
+      <nuxt-link :to="'/store/'+ key">
+        <p class="primary--text text-h6 font-weight-medium">Satıcı: {{ value.companyName }}</p>
+      </nuxt-link>
       <OrderCard
         :products="value.products"
         :names="value.names"
