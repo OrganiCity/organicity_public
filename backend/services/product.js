@@ -35,7 +35,7 @@ export function getProductByID(req, res) {
 
                         pool.query(
                             `
-                            SELECT c.cName, c.description, c.iconTag 
+                            SELECT c.cName, c.description, c.iconTag,c.cID 
                             FROM productCertificates pc, sellerCertificates sc, products p, certificates c 
                             WHERE pc.productID = ? AND pc.productID = p.productID AND p.sellerID = sc.sellerID 
                             AND sc.cID = pc.cID AND sc.cID = c.cID AND sc.approved = 'a'
