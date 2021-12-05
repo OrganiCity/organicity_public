@@ -6,10 +6,6 @@
       </nuxt-link>
       <OrderCard
         :products="value.products"
-        :names="value.names"
-        :prices="value.pricesPerUnit"
-        :quantities="value.quantities"
-        :imgURLs="value.imgURLs"
         :status="value.status"
       />
     </v-col>
