@@ -87,51 +87,48 @@ export function deleteMyProduct(req, res) {
 }
 
 export function editProductOfStore(req, res) {
-  if (!isProvided(req.body.productID)) return res.status(400).send("Bad request!")
-  const queryText = `DELETE FROM organicity.products
-	                    WHERE productID = ?`;
-  const queryValues = [req.body.productID];
-  pool.query(queryText, queryValues, (err, data) => {
-    if (err) return res.status(500).send(err)
-    const name = req.body.name
-    const extraInfo = req.body.extraInfo
-    const nutrValues = req.body.nutrValues
-    const ingredients = req.body.ingredients
-    const howToPreserve = req.body.howToPreserve
-    const desc = req.body.desc
-    const price = req.body.price
-    const unitsInStock = req.body.unitsInStock
-    const categoryID = req.body.categoryID
-    const images = req.body.images
-    const certificates = req.body.certificates
-    if (!isProvided(name, categoryID, images, certificates, price, unitsInStock) || !images.length) return res.status(400).send("Required info not provided")
-    var token = req.headers.authorization;
-    console.log(certificates)
-    if (!(token && token.split(' ')[0] == 'Bearer')) return res.status(401).send('No token provided.');
-    token = token.split(' ')[1]
-    var userData;
-    jwt.verify(token, secrets.jwt_secret, function (err, decoded) {
-      if (err) return res.status(401).send('Failed to authenticate token.');
-      userData = decoded;
-      if (!userData.isSeller) return res.status(401).send("Not a seller")
-      pool.query(`INSERT INTO organicity.products (
-      productID,
-      productName,
-      sellerID,
-      categoryID,
-      pricePerUnit,
-      unitsInStock,
-      description,
-      nutritionalValues,
-      howToPreserve,
-      ingredients,
-      extraInfo)
-    VALUES (?,?,?,?,?,?,?,?,?,?,?);`,
-        [req.body.productID, name, userData.userID, categoryID, price, unitsInStock, unitsInStock, desc, nutrValues, howToPreserve, ingredients, extraInfo],
-        (err, data) => {
+  const productID = req.body.productID
+  const name = req.body.name
+  const extraInfo = req.body.extraInfo
+  const nutrValues = req.body.nutrValues
+  const ingredients = req.body.ingredients
+  const howToPreserve = req.body.howToPreserve
+  const desc = req.body.desc
+  const price = req.body.price
+  const unitsInStock = req.body.unitsInStock
+  const categoryID = req.body.categoryID
+  const images = req.body.images
+  const certificates = req.body.certificates
+  if (!isProvided(productID, name, categoryID, images, certificates, price, unitsInStock) || !images.length) return res.status(400).send("Required info not provided")
+  var token = req.headers.authorization;
+  console.log(certificates)
+  if (!(token && token.split(' ')[0] == 'Bearer')) return res.status(401).send('No token provided.');
+  token = token.split(' ')[1]
+  var userData;
+  jwt.verify(token, secrets.jwt_secret, function (err, decoded) {
+    if (err) return res.status(401).send('Failed to authenticate token.');
+    userData = decoded;
+    if (!userData.isSeller) return res.status(401).send("Not a seller")
+    pool.query(`UPDATE organicity.products SET
+      productName = ?,
+      sellerID = ?,
+      categoryID = ?,
+      pricePerUnit = ?,
+      unitsInStock = ?,
+      description = ?,
+      nutritionalValues = ?,
+      howToPreserve = ?,
+      ingredients = ?,
+      extraInfo = ?
+      WHERE productID = ?;`,
+      [name, userData.userID, categoryID, price, unitsInStock, desc, nutrValues, howToPreserve, ingredients, extraInfo, productID],
+      (err, data) => {
+        if (err) return res.status(500).send(err)
+        pool.query(
+          `DELETE FROM organicity.productImages WHERE productID = ?;
+           DELETE FROM organicity.productCertificates WHERE productID = ?
+          `, [productID, productID], (err, data) => {
           if (err) return res.status(500).send(err)
-          const productID = data.insertId
-
           const queryPromise = util.promisify(pool.query).bind(pool);
           const queryPromises = []
           images.forEach(im => {
@@ -146,13 +143,13 @@ export function editProductOfStore(req, res) {
           })
           Promise.all(queryPromises)
             .then(() => {
-              return res.status(200).send("Product Added to Store")
+              return res.status(200).send("Product Updated")
             }).catch((err) => {
               return res.status(500).send(err)
             })
-        });
-    });
-  })
+        })
+      });
+  });
 }
 
 export function getCertificates(req, res) {
