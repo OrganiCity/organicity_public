@@ -7,14 +7,14 @@
       max-height="98px"
       max-width="120px" 
       aspect-ratio="1.4"
-      :src="imgURL"
+      :src="product.imgURL"
     ></v-img>
     <div class="mt-4">
       <div>
-        <p class="text-body-1 ma-0">{{productName}}</p>
+        <p class="text-body-1 ma-0">{{product.name}}</p>
         <div class="mt-8">
-          <p class="text-body-2 ma-0">{{quantity}} Adet</p>
-          <p class="primary--text font-weight-medium">{{price}} TL</p>
+          <p class="text-body-2 ma-0">{{product.quantity}} Adet</p>
+          <p class="primary--text font-weight-medium">{{product.price}} TL</p>
         </div>
       </div>
       <!-- Buttons -->
@@ -39,11 +39,9 @@
 <script>
 export default {
   props:{
-    price: 0,
-    quantity: 0,
+    product: {},
     productID: 0,
-    imgURL: '',
-    productName: '',
+    
   }
 };
 </script>

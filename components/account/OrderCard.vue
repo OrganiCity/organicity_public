@@ -4,13 +4,10 @@
       <!-- Product Info -->
       <v-col class="mb-4" cols="12" md="6">
         <v-row>
-          <v-col v-for="(id, idx) in products" :key="id" cols="12">
+          <v-col v-for="(product, key) in products" :key="key" cols="12">
             <OrderCardProduct
-              :price="prices[idx]"
-              :quantity="quantities[idx]"
-              :productName="names[idx]"
-              :productID="id"
-              :imgURL="imgURLs[idx]"
+              :productID="key"
+              :product="product"
             />
           </v-col>
         </v-row>
@@ -18,9 +15,9 @@
 
       <!-- Delivery Info -->
       <v-col cols="12" md="6">
-        <v-card class="rounded-0 pa-6" elevation="0" height="100%" :color="status.every(defineStatus) ? 'secondary' : 'contrast'">
+        <v-card class="rounded-0 pa-6" elevation="0" height="100%" :color="status ? 'secondary' : 'contrast'">
           <div class="d-flex align-center">
-            <v-avatar size="58px" :color="status.every(defineStatus) ? 'primary' :'warning'">
+            <v-avatar size="58px" :color=" status ? 'primary' :'warning'">
               <v-badge
                 class="miniBadgeIcon d-flex justify-center align-center"
                 offset-x="15"
@@ -28,7 +25,7 @@
                 color="white"
                 bottom
                 overlap
-                :icon="status.every(defineStatus) ? 'check' : 'pending'"
+                :icon="status ? 'check' : 'pending'"
               >
                 <v-icon color="#FFFFFF" size="36px">mdi-package-variant-closed</v-icon>
               </v-badge>
@@ -36,12 +33,12 @@
             <div class="ml-3">
               <div>
                 <span class="text-body-1 font-weight-medium">Doğkan Saraç</span>
-                <span v-if="status.every(defineStatus)" class="text-body-2">adlı kişiye teslim edildi</span>
+                <span v-if="status" class="text-body-2">adlı kişiye teslim edildi</span>
                 <span v-else class="text-body-2">adlı kişiye teslim edilecek</span>
 
               </div>
 
-              <div v-if="status.every(defineStatus)" class="text-caption primary--text">
+              <div v-if="status" class="text-caption primary--text">
                 <span>Teslim tarihi</span>
                 <span class="font-weight-medium">3 Ağs Sal 2021, 13:11</span>
               </div>
@@ -89,18 +86,10 @@ import OrderCardProduct from "./OrderCardProduct.vue";
 export default {
   components: { OrderCardProduct },
   props: {
-    products: [],
-    names: [],
-    prices: [],
-    quantities: [],
-    imgURLs: [],
-    status: [],
+    products: {},
+    status: false
   },
-  methods: {
-    defineStatus(status) {
-      return status == "arrived";
-    },
-  },
+ 
 };
 </script>
 

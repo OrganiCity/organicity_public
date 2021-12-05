@@ -29,7 +29,7 @@
       :class="$vuetify.breakpoint.mdAndUp ? '' : 'mt-4'"
       class="d-flex justify-space-between align-center py-0"
     >
-      <p v-if="order.status.every(defineStatus)" class="text-body-2">
+      <p v-if="order.status" class="text-body-2">
         <v-avatar size="20px">
           <v-icon x-small class="primary" color="white">check</v-icon>
         </v-avatar>
@@ -57,11 +57,6 @@ export default {
   props: {
     orderNumber: 0,
     order: {},
-  },
-  methods: {
-    defineStatus(status) {
-      return status == "arrived";
-    },
   },
 };
 </script>
