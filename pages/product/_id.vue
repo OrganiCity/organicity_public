@@ -86,7 +86,7 @@
           <p class="mb-0">{{ product.companyName }}</p>
         </nuxt-link>
 
-        <p class="text-h4">{{ product.productName }}</p>
+        <p class="text-h4 text-capitalize">{{ product.productName }}</p>
 
         <v-rating
           class="d-inline"
@@ -138,10 +138,7 @@
           {{ product.description }}
         </v-sheet>
         <div class="d-flex flex-wrap justify-space-around align-center">
-          <span class="primary--text font-weight-medium text-h5">
-            {{ product.pricePerUnit }} TL
-            <span class="grey--text text-h6">/{{ product.unitType }}</span>
-          </span>
+          <span class="primary--text font-weight-medium text-h5">{{ product.pricePerUnit }} TL</span>
           <div>
             <v-btn @click="addToCart" width="190px" color="primary">
               <v-icon size="20" left>shopping_cart</v-icon>
@@ -251,6 +248,39 @@ export default {
               userID: this.$store.getters["auth/userInfo"].userID,
             }).then(({ data }) => {
               this.favorited = data.favorited;
+              if (this.$store.getters["preferences/language"] == "EN") {
+                this.$api("translate", { text: this.product.productName }).then(({ data }) => {
+                  this.product.productName = data.translatedText;
+                });
+                if (!this.product.description){
+                  delay(1000);
+                  this.$api("translate", { text: this.product.description }).then(({ data }) => {
+                    this.product.description = data.translatedText;
+                  });
+                }
+                if (!this.product.extraInfo)
+                  this.$api("translate", { text: this.product.extraInfo }).then(({ data }) => {
+                    this.product.extraInfo = data.translatedText;
+                  });
+                if (!this.product.nutritionalValues)
+                  this.$api("translate", { text: this.product.nutritionalValues }).then(({ data }) => {
+                    this.product.nutritionalValues = data.translatedText;
+                  });
+                if (!this.product.ingredients)
+                  this.$api("translate", { text: this.product.ingredients }).then(({ data }) => {
+                    this.product.ingredients = data.translatedText;
+                  });
+                if (!this.product.howToPreserve)
+                  this.$api("translate", { text: this.product.howToPreserve }).then(({ data }) => {
+                    this.product.howToPreserve = data.translatedText;
+                  });
+                for (var i = 0; i < this.breadcrumbs.length; i++) {
+                   this.$api("translate", { text: this.breadcrumbs[i] }).then(({ data }) => {
+                    this.breadcrumbs[i]  = data.translatedText;
+                  });
+                  
+                }
+              }
             });
         })
         .catch(() => {
