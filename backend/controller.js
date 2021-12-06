@@ -15,6 +15,7 @@ import { updatePersonalInfo, updateContactInfo, getFavoriteProducts, newSeller }
 import { addProductToStore, deleteCertificate, deleteMyProduct, editProductOfStore, getAvailableCertificatesBySellerID, getCertificates, getCertificatesBySellerID, getStoreProducts, getStoreProductsByID, sendCertificateApprovalRequest, updateCertificateDocument } from "./services/seller";
 import { addShipper, deleteOrder, deleteSeller, deleteShipper, deleteUser, getOrders, getSellerCertificates, getSellers, getShippers, getUsers, updateCertificateStatus } from "./services/admin-advanced";
 import { getOrderDetailsByOrderNumber, getOrderPreviewsByID } from "./services/order";
+import { translate } from "./services/translate";
 
 // Database Pool
 var pool = mysql.createPool({
@@ -28,6 +29,8 @@ var pool = mysql.createPool({
 });
 
 
+
+app.post("/services/translate", translate)
 // Endpoints
 app.get("/getCarouselSlides", getCarouselSlides)
 app.get("/getSpecialDeals", getSpecialDeals)
