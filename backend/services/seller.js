@@ -47,7 +47,7 @@ export function addProductToStore(req, res) {
       ingredients,
       extraInfo)
     VALUES (?,?,?,?,?,?,?,?,?,?);`,
-      [name, userData.userID, categoryID, price, unitsInStock, unitsInStock, desc, nutrValues, howToPreserve, ingredients, extraInfo],
+      [name, userData.userID, categoryID, price, unitsInStock, desc, nutrValues, howToPreserve, ingredients, extraInfo],
       (err, data) => {
         if (err) return res.status(500).send(err)
         const productID = data.insertId
