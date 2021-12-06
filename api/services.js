@@ -1,3 +1,7 @@
+export async function translate({ instance }, payload) {
+    return await instance.post("/services/translate", payload)
+}
+
 export async function getProductByID({ instance }, payload) {
     return await instance.get("/services/product/" + payload)
 }
