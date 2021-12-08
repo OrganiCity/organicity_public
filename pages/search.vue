@@ -11,6 +11,7 @@
 <script>
 import ProductPreview from '~/components/product/ProductPreview.vue'
 export default {
+  layout: "search",
   components: { ProductPreview },
   data() {
     return {
@@ -20,12 +21,18 @@ export default {
   methods: {
     getSearchResults() {
       this.$api("getSearchResults", this.$route.query).then(({ data }) => {
+        console.log("cagirdik")
         this.results = data
       })
     }
   },
   mounted() {
     this.getSearchResults()
+  },
+  watch: {
+    "$route.query"() {
+      this.getSearchResults()
+    }
   }
 }
 </script>
