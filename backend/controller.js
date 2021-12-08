@@ -16,6 +16,7 @@ import { addProductToStore, deleteCertificate, deleteMyProduct, editProductOfSto
 import { addShipper, deleteOrder, deleteSeller, deleteShipper, deleteUser, getOrders, getSellerCertificates, getSellers, getShippers, getUsers, updateCertificateStatus } from "./services/admin-advanced";
 import { getOrderDetailsByOrderNumber, getOrderPreviewsByID } from "./services/order";
 import { translate } from "./services/translate";
+import { getSearchResults } from "./services/search";
 
 // Database Pool
 var pool = mysql.createPool({
@@ -128,6 +129,11 @@ app.post("/services/update-certificate-document", updateCertificateDocument)
 *************/
 app.get('/order/get-order-previews/:id', getOrderPreviewsByID)
 app.get('/order/get-order-details/:id', getOrderDetailsByOrderNumber)
+
+/************
+----SEARCH----
+*************/
+app.get('/search', getSearchResults)
 
 export { pool }
 export default app
