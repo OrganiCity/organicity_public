@@ -14,8 +14,9 @@
       clearable
       hide-details
       prepend-inner-icon="search"
+      @keydown.enter="search"
     />
-    <v-btn large depressed :disabled="!focusedSearch && !searchString" class="rounded-l-0 primary">Ara</v-btn>
+    <v-btn @click="search" large depressed :disabled="!focusedSearch && !searchString" class="rounded-l-0 primary">Ara</v-btn>
   </div>
 </template>
 
@@ -24,7 +25,12 @@ export default {
   data: () => ({
     searchString: "",
     focusedSearch: false,
-  })
+  }),
+  methods: {
+    search() {
+      this.$router.push({ name: "search", query: { q: this.searchString } })
+    }
+  }
 }
 </script>
 
