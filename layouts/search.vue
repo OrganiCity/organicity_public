@@ -7,14 +7,14 @@
       <v-container>
         <v-row>
           <v-col class="mt-2" lg="3" md="4" v-if="$vuetify.breakpoint.mdAndUp">
-            <CategoryBar/>
-            <SpecialDeals class="mx-8 my-8" v-if="$vuetify.breakpoint.md" />
+            <CategoryBar />
+            <FilterSortBar class="mx-8 my-8" v-if="$vuetify.breakpoint.md" />
           </v-col>
           <v-col lg="7" md="8" cols="12">
             <Nuxt />
           </v-col>
           <v-col class="pt-5" cols="2" v-if="$vuetify.breakpoint.lgAndUp">
-            
+            <FilterSortBar />
           </v-col>
         </v-row>
       </v-container>
@@ -27,6 +27,7 @@
 import SpecialDeals from '~/components/main-page/SpecialDeals.vue';
 import CategoryBar from '~/components/ui/CategoryBar.vue';
 import DarkThemeSwitch from "~/components/ui/DarkThemeSwitch.vue";
+import FilterSortBar from '~/components/ui/FilterSortBar.vue';
 import Footer from "~/components/ui/Footer.vue";
 import HeaderBar from "~/components/ui/HeaderBar.vue";
 import LanguageSelector from "~/components/ui/LanguageSelector.vue";
@@ -42,6 +43,7 @@ export default {
     MobileSidebar,
     CategoryBar,
     SpecialDeals,
+    FilterSortBar,
   },
   middleware: "preferences",
   head() { return { titleTemplate: `${this.$i18n("organicity")}` } },
