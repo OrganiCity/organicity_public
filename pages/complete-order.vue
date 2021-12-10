@@ -9,10 +9,14 @@
           <AddressSelector :addresses="addresses"/>
         </v-row>
         <v-row>
-          2 Ödeme Aracı
+          <v-col cols="12">
+            <p class="text-h4 mb-0">Ödeme Aracı</p>
+          </v-col>
         </v-row>
         <v-row>
-          3 Ürünler ve Teslimat
+          <v-col cols="12">
+            <p class="text-h4 mb-0">Ürünler ve Teslimat</p>
+          </v-col>
         </v-row>
       </v-col>
       <v-col cols="3">
