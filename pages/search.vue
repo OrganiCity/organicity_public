@@ -1,6 +1,6 @@
 <template>
   <v-container>
-    <v-row>
+    <v-row :key="keyIncrement">
       <v-col v-for="(r, i) in results" :key="i" cols="6" sm="4">
         <ProductPreview :productId="r" />
       </v-col>
@@ -15,7 +15,8 @@ export default {
   components: { ProductPreview },
   data() {
     return {
-      results: []
+      results: [],
+      keyIncrement: 0
     }
   },
   methods: {
@@ -23,6 +24,7 @@ export default {
       this.$api("getSearchResults", this.$route.query).then(({ data }) => {
         console.log("cagirdik")
         this.results = data
+        this.keyIncrement++
       })
     }
   },
