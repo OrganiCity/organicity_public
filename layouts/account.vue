@@ -59,7 +59,7 @@
                       <v-icon :color="hover ? 'primary' : ''" left>add_business</v-icon>
                       <v-list-item-title class="ml-2">Mağaza Aboneliği</v-list-item-title>
                     </v-list-item>
-                    <v-list-item v-else :class="hover ? 'primary--text' : ''" href="/seller">
+                    <v-list-item v-else :class="hover ? 'primary--text' : ''" to="/seller">
                       <v-icon :color="hover ? 'primary' : ''" left>store</v-icon>
                       <v-list-item-title class="ml-2">Mağazam</v-list-item-title>
                     </v-list-item>
