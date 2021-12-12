@@ -7,6 +7,7 @@ export function getSearchResults(req, res) {
     const seller = Number.parseInt(req.query.seller)
     const minPrice = Number.parseFloat(req.query.minPrice)
     const maxPrice = Number.parseFloat(req.query.maxPrice)
+    const sort = req.query.sort
 
     const sqlQueries = {
         none: "SELECT p.productID FROM products p WHERE 1=1",
@@ -14,7 +15,9 @@ export function getSearchResults(req, res) {
         byCat: " AND p.categoryID in (?)",
         bySeller: " AND p.sellerID = ?",
         byMinPrice: " AND p.pricePerUnit > ?",
-        byMaxPrice: " AND p.pricePerUnit < ?"
+        byMaxPrice: " AND p.pricePerUnit < ?",
+        sortByPriceAsc: " ORDER BY p.pricePerUnit",
+        sortByPriceDesc: " ORDER BY p.pricePerUnit DESC"
     }
 
     let filterCats = false
@@ -38,6 +41,10 @@ export function getSearchResults(req, res) {
     if (isProvided(maxPrice) && !Number.isNaN(maxPrice)) {
         sqlText += sqlQueries.byMaxPrice
         sqlVars.push(Number.parseFloat(maxPrice))
+    }
+    if (isProvided(sort)) {
+        if (sort === "sortByPriceAsc") sqlText += sqlQueries.sortByPriceAsc
+        else if (sort === "sortByPriceDesc") sqlText += sqlQueries.sortByPriceDesc
     }
     if (!filterCats)
         pool.query(sqlText, sqlVars, (err, data) => {
@@ -64,7 +71,7 @@ export function getSearchResults(req, res) {
     HAVING depth <= 3
     ORDER BY node.lft;`, [cat], (err, data) => {
         if (err) return res.status(500).send(err)
-        let catArr = data.map(e=>e.categoryID)
+        let catArr = data.map(e => e.categoryID)
         sqlText += sqlQueries.byCat
         sqlVars.push(catArr)
         pool.query(sqlText, sqlVars, (err, data) => {
