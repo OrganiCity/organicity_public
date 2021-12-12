@@ -53,7 +53,7 @@
             :value="priceRange"
             inverse-label
             :hide-details="true"
-            @input="onPriceSelect"
+            @end="onPriceSelect"
           />
           <p class="mb-0">Aralık: {{ priceRange[0] }} ₺ - {{ priceRange[1] }} ₺</p>
         </v-list-item-content>
