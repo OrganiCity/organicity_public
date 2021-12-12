@@ -1,7 +1,7 @@
 <template>
   <div>
-    <FilterMenu />
-    <SortMenu />
+    <FilterMenu class="mb-2" />
+    <SortMenu class="mt-2" />
   </div>
 </template>
 
