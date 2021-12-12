@@ -19,35 +19,35 @@
       <v-list flat>
         <v-list-item-group color="primary">
           <v-hover v-slot="{ hover }">
-            <v-list-item :class="hover ? 'primary--text' : ''" href="/account/my-orders">
+            <v-list-item :class="hover ? 'primary--text' : ''" to="/account/my-orders">
               <v-icon :color="hover ? 'primary' : ''" left>mdi-shopping-outline</v-icon>
               <v-list-item-title class="ml-2">Siparişlerim</v-list-item-title>
             </v-list-item>
           </v-hover>
 
           <v-hover v-slot="{ hover }">
-            <v-list-item :class="hover ? 'primary--text' : ''" href="/account/my-favorites">
+            <v-list-item :class="hover ? 'primary--text' : ''" to="/account/my-favorites">
               <v-icon :color="hover ? 'primary' : ''" left>favorite</v-icon>
               <v-list-item-title class="ml-2">Favorilerim</v-list-item-title>
             </v-list-item>
           </v-hover>
 
           <v-hover v-slot="{ hover }">
-            <v-list-item :class="hover ? 'primary--text' : ''" href="/account/my-reviews">
+            <v-list-item :class="hover ? 'primary--text' : ''" to="/account/my-reviews">
               <v-icon :color="hover ? 'primary' : ''" left>rate_review</v-icon>
               <v-list-item-title class="ml-2">Yorumlarım</v-list-item-title>
             </v-list-item>
           </v-hover>
 
           <v-hover v-slot="{ hover }">
-            <v-list-item :class="hover ? 'primary--text' : ''" href="/account/my-account">
+            <v-list-item :class="hover ? 'primary--text' : ''" to="/account/my-account">
               <v-icon :color="hover ? 'primary' : ''" left>manage_accounts</v-icon>
               <v-list-item-title class="ml-2">Hesabım</v-list-item-title>
             </v-list-item>
           </v-hover>
 
           <v-hover v-if="isSeller" v-slot="{ hover }">
-            <v-list-item :class="hover ? 'primary--text' : ''" href="/seller">
+            <v-list-item :class="hover ? 'primary--text' : ''" to="/seller">
               <v-icon :color="hover ? 'primary' : ''" left>store</v-icon>
               <v-list-item-title class="ml-2">Mağazam</v-list-item-title>
             </v-list-item>
