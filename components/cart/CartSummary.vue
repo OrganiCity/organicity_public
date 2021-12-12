@@ -23,7 +23,7 @@
       <span class="text-body-2 primary--text font-weight-medium">{{ totalPrice }} ₺</span>
     </div>
 
-    <v-btn elevation="0" color="primary" block>Siparişi Tamamla</v-btn>
+    <v-btn elevation="0" color="primary" block to="/complete-order">Siparişi Tamamla</v-btn>
   </v-card>
 </template>
 
