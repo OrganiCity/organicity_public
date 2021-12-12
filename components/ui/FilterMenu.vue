@@ -53,7 +53,8 @@
             :value="priceRange"
             inverse-label
             :hide-details="true"
-            @end="onPriceSelect"
+            @input="onPriceSelect"
+            @end="onPriceEnd"
           />
           <p class="mb-0">Aralık: {{ priceRange[0] }} ₺ - {{ priceRange[1] }} ₺</p>
         </v-list-item-content>
@@ -96,9 +97,11 @@ export default {
       this.selectedSeller = event
       this.$router.push({ name: "search", query: { ...this.$route.query, seller: event } })
     },
+    onPriceEnd(event){
+      this.$router.push({ name: "search", query: { ...this.$route.query, minPrice: event[0], maxPrice: event[1] } })
+    },
     onPriceSelect(event) {
       this.priceRange = event
-      this.$router.push({ name: "search", query: { ...this.$route.query, minPrice: event[0], maxPrice: event[1] } })
     }
   },
   mounted() {
