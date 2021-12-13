@@ -32,6 +32,7 @@
                 Devam Et
               </v-btn>
             </v-stepper-content>
+
             <v-stepper-content step="2">
               <PaymentSelector/>
               <p class="font-weight-bold">Fatura Adresi</p>
@@ -46,12 +47,16 @@
                 Geri
               </v-btn>
             </v-stepper-content>
+
             <v-stepper-content step="3">
-              <v-card
-                class="mb-12"
-                color="grey lighten-1"
-                height="200px"
-              ></v-card>
+              <CartProductPreview
+                v-for="(item, id) in $store.getters['cart/items']"
+                :key="id"
+                :productID="id"
+                :productInfo="JSON.parse(cartItemInfos)[id]"
+              />
+              <v-divider></v-divider>
+              <ShipmentSelector/>
               <v-btn
                 color="primary"
                 @click="e1 = 1"
@@ -77,12 +82,14 @@
 import AddressSelector from '~/components/order/AddressSelector.vue'
 import OrderSummary from '~/components/order/OrderSummary.vue'
 import PaymentSelector from '~/components/order/PaymentSelector.vue'
+import ShipmentSelector from '~/components/order/ShipmentSelector.vue'
 export default {
-  components: { AddressSelector, OrderSummary, PaymentSelector },
+  components: { AddressSelector, OrderSummary, PaymentSelector, ShipmentSelector },
   layout: "product",
   data () {
     return {
       e1: 1,
+      cartItemInfos: "{}",
       addresses:[
         {
           name: "Ev",
@@ -110,6 +117,36 @@ export default {
         },
       ],
     }
+  },
+  methods: {
+    getCartProducts() {
+      this.$api("getCartProducts", Object.keys(this.$store.state['cart'].items)).then(({ data }) => {
+        let obj = {}
+        data.forEach(e => {
+          obj[e.productID] = e
+        });
+        this.cartItemInfos = JSON.stringify(obj)
+      })
+    }
+  },
+  computed: {
+    totalPrice() {
+      return Math.round(
+        Object.entries(this.$store.getters["cart/items"]).reduce(
+          (p, c) => {
+            return p + JSON.parse(this.cartItemInfos)[c[0]]?.pricePerUnit * c[1]
+          },
+          0
+        ) * 100
+      ) / 100
+    },
+    numberOfItemsInCart() {
+      return Object.keys(this.$store.getters["cart/items"]).length
+    }
+  },
+  mounted() {
+    if (this.numberOfItemsInCart > 0)
+      this.getCartProducts()
   }
 }
 </script>

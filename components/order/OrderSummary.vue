@@ -23,7 +23,7 @@
       <span class="text-body-2 primary--text font-weight-medium">{{ totalPrice }} ₺</span>
     </div>
 
-    <v-btn elevation="0" color="primary" block>Sıradaki Adım</v-btn>
+    <!-- <v-btn elevation="0" color="primary" block>Sıradaki Adım</v-btn> -->
   </v-card>
 </template>
 
@@ -33,6 +33,9 @@ export default {
   computed: {
     totalPrice() {
       return this.totalCartPrice + 10
+    },
+    cartData() {
+      return this.$store.getters['cart/items']
     }
   }
 };
