@@ -22,6 +22,7 @@ export function getSearchResults(req, res) {
 
     let filterCats = false
     let sqlText = sqlQueries.none
+    let sqlSortText = ""
     let sqlVars = []
     if (isProvided(q)) {
         sqlText += sqlQueries.byQ
@@ -43,11 +44,11 @@ export function getSearchResults(req, res) {
         sqlVars.push(Number.parseFloat(maxPrice))
     }
     if (isProvided(sort)) {
-        if (sort === "sortByPriceAsc") sqlText += sqlQueries.sortByPriceAsc
-        else if (sort === "sortByPriceDesc") sqlText += sqlQueries.sortByPriceDesc
+        if (sort === "sortByPriceAsc") sqlSortText += sqlQueries.sortByPriceAsc
+        else if (sort === "sortByPriceDesc") sqlSortText += sqlQueries.sortByPriceDesc
     }
     if (!filterCats)
-        pool.query(sqlText, sqlVars, (err, data) => {
+        pool.query(sqlText + sqlSortText, sqlVars, (err, data) => {
             if (err) return res.status(500).send(err)
             return res.status(200).send(data.map(e => e.productID))
         })
@@ -74,7 +75,7 @@ export function getSearchResults(req, res) {
         let catArr = data.map(e => e.categoryID)
         sqlText += sqlQueries.byCat
         sqlVars.push(catArr)
-        pool.query(sqlText, sqlVars, (err, data) => {
+        pool.query(sqlText + sqlSortText, sqlVars, (err, data) => {
             if (err) return res.status(500).send(err)
             return res.status(200).send(data.map(e => e.productID))
         })
