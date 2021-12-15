@@ -21,13 +21,13 @@ export function getProductPreviewDetails(req, res) {
     LEFT JOIN productImages pi2 on pi2.productID=p.productID WHERE p.productID=?`
 
     pool.query(queryText, [req.body.productID], (err, data) => {
-        if (err) return res.status(500).send("Internal Server Error");
+        if (err) return res.status(500).send(err);
         data = data[0];
         pool.query(` SELECT c.cName, c.description, c.iconTag 
         FROM productCertificates pc, sellerCertificates sc, products p, certificates c 
         WHERE pc.productID = ? AND pc.productID = p.productID AND p.sellerID = sc.sellerID 
         AND sc.cID = pc.cID AND sc.cID = c.cID AND sc.approved = 'a' `, [req.body.productID], (err, cData) => {
-            if (err) return res.status(500).send("Internal Server Error");
+            if (err) return res.status(500).send(err);
             data.certificates = cData;
             return res.status(200).send(data);
 
