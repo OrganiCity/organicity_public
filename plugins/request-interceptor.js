@@ -9,6 +9,7 @@ import * as account from "~/api/account"
 import * as seller from "~/api/seller"
 import * as adminAdvanced from "~/api/admin-advanced"
 import * as order from "~/api/order"
+import * as search from "~/api/search"
 
 const apis = {
     ...example,
@@ -19,7 +20,8 @@ const apis = {
     ...account,
     ...seller,
     ...adminAdvanced,
-    ...order
+    ...order,
+    ...search
 }
 
 export default function ({ store }, inject) {
