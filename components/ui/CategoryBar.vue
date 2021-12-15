@@ -5,7 +5,7 @@
         <template v-slot:activator="{ on, attrs }">
           <v-hover v-slot="{ hover }">
             <v-list-item
-              @click="$router.push(`/search?cat=${category.categoryID}`)"
+              @click="$router.push(`/search?cat=${category.categoryID}&limitCats=${category.categoryID}`)"
               :class="{ secondary: hover || ifCategoryMenuOpen[index] }"
               v-on="on"
               v-bind="attrs"
@@ -23,7 +23,7 @@
             <template v-for="subCategory in category.children">
               <v-list-item
                 class="primary--text font-weight-medium"
-                @click="$router.push(`/search?cat=${subCategory.categoryID}`)"
+                @click="$router.push(`/search?cat=${subCategory.categoryID}&limitCats=${subCategory.categoryID}`)"
                 :key="subCategory.categoryID"
               >
                 <v-list-item-content>
@@ -37,7 +37,10 @@
                 v-for="subSubCategory in subCategory.children"
                 :key="`${subSubCategory.name}+${subCategory.name}`"
               >
-                <v-list-item :class="{ secondary: hover }" @click="$router.push(`/search?cat=${subSubCategory.categoryID}`)">
+                <v-list-item
+                  :class="{ secondary: hover }"
+                  @click="$router.push(`/search?cat=${subSubCategory.categoryID}&limitCats=${subSubCategory.categoryID}`)"
+                >
                   <v-list-item-content>
                     <v-list-item-subtitle>
                       {{ subSubCategory.name }}
