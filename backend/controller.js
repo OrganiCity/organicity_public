@@ -14,7 +14,7 @@ import { submitForm } from "./services/contact-us";
 import { updatePersonalInfo, updateContactInfo, getFavoriteProducts, newSeller } from "./services/account";
 import { addProductToStore, deleteCertificate, deleteMyProduct, editProductOfStore, getAvailableCertificatesBySellerID, getCertificates, getCertificatesBySellerID, getStoreProducts, getStoreProductsByID, sendCertificateApprovalRequest, updateCertificateDocument } from "./services/seller";
 import { addShipper, deleteOrder, deleteSeller, deleteShipper, deleteUser, getOrders, getSellerCertificates, getSellers, getShippers, getUsers, updateCertificateStatus } from "./services/admin-advanced";
-import { getOrderDetailsByOrderNumber, getOrderPreviewsByID } from "./services/order";
+import { createNewOrder, getOrderDetailsByOrderNumber, getOrderPreviewsByID } from "./services/order";
 import { translate } from "./services/translate";
 import { getAllChildCategories, getSearchResults } from "./services/search";
 
@@ -129,6 +129,7 @@ app.post("/services/update-certificate-document", updateCertificateDocument)
 *************/
 app.get('/order/get-order-previews/:id', getOrderPreviewsByID)
 app.get('/order/get-order-details/:id', getOrderDetailsByOrderNumber)
+app.post('/order/new-order', createNewOrder)
 
 /************
 ----SEARCH----

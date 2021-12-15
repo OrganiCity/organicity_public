@@ -27,7 +27,7 @@
           <v-stepper-items>
             <v-stepper-content step="1">
               <v-radio-group v-model="selectedDeliveryAddress">
-                <v-radio v-for="address in addresses" :key="address.name" :value="address.name">
+                <v-radio v-for="address in addresses" :key="address.ID" :value="address.ID">
                   <template v-slot:label>
                     <AddressSelectorCard :address="address"/>
                   </template>
@@ -55,8 +55,8 @@
                 </v-radio>
               </v-radio-group>
               <p class="font-weight-bold">Fatura Adresi</p>
-              <v-radio-group v-model="selectedDeliveryAddress">
-                  <v-radio v-for="address in addresses" :key="address.name" :value="address.name">
+              <v-radio-group v-model="selectedBillingAddress">
+                  <v-radio v-for="address in addresses" :key="address.ID" :value="address.ID">
                     <template v-slot:label>
                       <AddressSelectorCard :address="address"/>
                     </template>
@@ -77,13 +77,26 @@
                 v-for="(item, id) in $store.getters['cart/items']"
                 :key="id"
                 :productID="id"
-                :productInfo="JSON.parse(cartItemInfos)[id]"
+                :productInfo="cartItemInfos[id]"
               />
               <v-divider></v-divider>
-              <ShipmentSelector/>
+              <v-radio-group v-model="selectedFastShipment">
+                <v-radio>
+                  <template v-slot:label>
+                    Normal Kargo
+                  </template>
+                </v-radio>
+                <v-radio>
+                  <template v-slot:label>
+                    Hızlı Kargo (+10₺)
+                  </template>
+                </v-radio>
+              </v-radio-group>
+              <v-divider></v-divider>
+              <div class="my-3"><span>Toplam Tutar: </span><span class="font-weight-medium">{{this.totalPrice}} ₺</span></div>
               <v-btn
                 color="primary"
-                @click="currStep = 1"
+                @click="completeOrder"
               >
                 Siparişi Tamamla
               </v-btn>
@@ -96,7 +109,7 @@
       </v-col>
 
       <v-col cols="3">
-        <OrderSummary :total-cart-price="10" />
+        <OrderSummary :total-cart-price="totalPrice" :fast-shipment="selectedFastShipment" :number-of-items="numberOfItemsInCart"/>
       </v-col>
     </v-row>
   </v-container>
@@ -105,21 +118,21 @@
 <script>
 import AddressSelectorCard from '~/components/order/AddressSelectorCard.vue'
 import OrderSummary from '~/components/order/OrderSummary.vue'
-import PaymentSelector from '~/components/order/PaymentSelector.vue'
-import ShipmentSelector from '~/components/order/ShipmentSelector.vue'
 import CartProductPreview from '~/components/cart/CartProductPreview.vue'
 export default {
-  components: { AddressSelectorCard, OrderSummary, PaymentSelector, ShipmentSelector, CartProductPreview },
+  components: { AddressSelectorCard, OrderSummary, CartProductPreview },
   layout: "product",
   data () {
     return {
       currStep: 1,
-      selectedDeliveryAddress: "",
-      selectedBillingAddress: "",
+      selectedDeliveryAddress: 0,
+      selectedBillingAddress: 0,
       selectedPaymentMethod: 0,
+      selectedFastShipment: 0,
       cartItemInfos: "{}",
       addresses:[
         {
+          ID: 0,
           name: "Ev",
           toName: "Doğkan",
           toSurname: "Saraç",
@@ -132,6 +145,7 @@ export default {
           description: "Büyük sarı bina",
         },
         {
+          ID: 1,
           name:"İş",
           toName: "Doğkan",
           toSurname: "Saraç",
@@ -153,11 +167,21 @@ export default {
         data.forEach(e => {
           obj[e.productID] = e
         });
-        this.cartItemInfos = JSON.stringify(obj)
+        this.cartItemInfos = obj
       })
     },
     nextStep() {
       this.currStep += 1
+    },
+    completeOrder() {
+      this.$api("createNewOrder", 
+      {
+        items: this.$store.state['cart'].items, 
+        deliveryAddress: this.addresses.filter(v => this.selectedDeliveryAddress==v.ID)[0], 
+        billingAddress: this.addresses.filter(v => this.selectedBillingAddress==v.ID)[0], 
+        fastShipment: this.selectedFastShipment,
+        userID: this.$store.getters['auth/userInfo'].userID
+      }).then(()=>this.$toast.success("Order is successful!"))
     }
   },
   computed: {
@@ -165,7 +189,7 @@ export default {
       return Math.round(
         Object.entries(this.$store.getters["cart/items"]).reduce(
           (p, c) => {
-            return p + JSON.parse(this.cartItemInfos)[c[0]]?.pricePerUnit * c[1]
+            return p + this.cartItemInfos[c[0]]?.pricePerUnit * c[1]
           },
           0
         ) * 100
@@ -178,8 +202,8 @@ export default {
   mounted() {
     if (this.numberOfItemsInCart > 0)
       this.getCartProducts()
-    this.selectedDeliveryAddress = this.addresses[0].name
-    this.selectedBillingAddress = this.addresses[0].name
+    this.selectedDeliveryAddress = this.addresses[0].ID
+    this.selectedBillingAddress = this.addresses[0].ID
   }
 }
 </script>
