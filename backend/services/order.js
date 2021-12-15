@@ -72,3 +72,29 @@ export function getOrderDetailsByOrderNumber(req, res){
         return res.status(200).send(order);
     })
 }
+
+export function createNewOrder(req, res){
+    if (!isProvided(req.body.items, req.body.deliveryAddress, req.body.billingAddress, req.body.userID, req.body.fastShipment))
+        return res.status(400).send();
+    
+    pool.query("SELECT MAX(orderNumber) as maxOrderNumber FROM orders;", [], (err, data) => {
+        let orderNumber = data[0]?.maxOrderNumber + 1;
+        let pIDs = Object.keys(req.body.items)
+        pool.query("SELECT productID, pricePerUnit FROM products WHERE productID IN (?) ", [pIDs], (err, data) => {
+            console.log(data)
+
+            const queryText = `INSERT INTO organicity.orders
+            (productID, fastShipment, buyerID, orderNumber, quantity, pricePerUnit) VALUES ` + "(?,?,?,?,?,?), ".repeat(Object.keys(req.body.items).length - 1) + "(?,?,?,?,?,?);"
+            const queryValues = Object.keys(req.body.items).reduce(function (r, v) {r.push(Number.parseInt(v), req.body.fastShipment, req.body.userID, orderNumber, req.body.items[v], data.filter(e=>e.productID==v)[0].pricePerUnit); return r;}, []);
+            
+            pool.query(queryText, queryValues, (err, data) => {
+                console.log(err)
+                console.log(data)
+            })
+        })
+    })
+    let ppu = 10;
+
+    
+
+}
