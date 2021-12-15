@@ -174,14 +174,17 @@ export default {
       this.currStep += 1
     },
     completeOrder() {
-      this.$api("createNewOrder", 
-      {
+      this.$api("createNewOrder", {
         items: this.$store.state['cart'].items, 
         deliveryAddress: this.addresses.filter(v => this.selectedDeliveryAddress==v.ID)[0], 
         billingAddress: this.addresses.filter(v => this.selectedBillingAddress==v.ID)[0], 
         fastShipment: this.selectedFastShipment,
         userID: this.$store.getters['auth/userInfo'].userID
-      }).then(()=>this.$toast.success("Order is successful!"))
+      }).then((res) => {
+        this.$toast.success("Order is successful!");
+        this.$store.commit("cart/clearCart");
+        this.$router.push("/")
+        });
     }
   },
   computed: {
