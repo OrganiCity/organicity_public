@@ -23,7 +23,7 @@
         </v-responsive>
       </v-col>
       <v-col md="2" cols="7" class="d-flex justify-end">
-        <p class="primary--text mb-0 text-body-1 font-weight-medium">{{ productInfo.pricePerUnit }}</p>
+        <p class="primary--text mb-0 text-body-1 font-weight-medium">{{ productInfo.pricePerUnit }} ₺</p>
       </v-col>
     </v-row>
   </v-card>
