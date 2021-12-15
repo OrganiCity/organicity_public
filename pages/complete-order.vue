@@ -2,17 +2,18 @@
   <v-container>
     <v-row class="mt-5">
       <v-col cols="9">
-        <v-stepper v-model="e1">
+        <v-stepper v-model="currStep">
           <v-stepper-header>
             <v-stepper-step
-              :complete="e1 > 1"
+              :complete="currStep > 1"
+              :rules="[v => true]"
               step="1"
             >
               Teslimat Adresi
             </v-stepper-step>
             <v-divider></v-divider>
             <v-stepper-step
-              :complete="e1 > 2"
+              :complete="currStep > 2"
               step="2"
             >
               Ödeme Yöntemi
@@ -22,28 +23,51 @@
               Ürünler ve Teslimat
             </v-stepper-step>
           </v-stepper-header>
+          
           <v-stepper-items>
             <v-stepper-content step="1">
-              <AddressSelector :addresses="addresses"/>
+              <v-radio-group v-model="selectedDeliveryAddress">
+                <v-radio v-for="address in addresses" :key="address.name" :value="address.name">
+                  <template v-slot:label>
+                    <AddressSelectorCard :address="address"/>
+                  </template>
+                </v-radio>
+              </v-radio-group>
               <v-btn
                 color="primary"
-                @click="e1 = 2"
+                @click="nextStep()"
               >
                 Devam Et
               </v-btn>
             </v-stepper-content>
 
             <v-stepper-content step="2">
-              <PaymentSelector/>
+              <v-radio-group v-model="selectedPaymentMethod">
+                <v-radio>
+                  <template v-slot:label>
+                    Nakit
+                  </template>
+                </v-radio>
+                <v-radio>
+                  <template v-slot:label>
+                    Kredi Kartı
+                  </template>
+                </v-radio>
+              </v-radio-group>
               <p class="font-weight-bold">Fatura Adresi</p>
-              <AddressSelector :addresses="addresses"/>
-              <v-btn
+              <v-radio-group v-model="selectedDeliveryAddress">
+                  <v-radio v-for="address in addresses" :key="address.name" :value="address.name">
+                    <template v-slot:label>
+                      <AddressSelectorCard :address="address"/>
+                    </template>
+                  </v-radio>
+                </v-radio-group>              <v-btn
                 color="primary"
-                @click="e1 = 3"
+                @click="nextStep()"
               >
                 Devam Et
               </v-btn>
-              <v-btn text @click="e1 = 1">
+              <v-btn text @click="currStep = 1">
                 Geri
               </v-btn>
             </v-stepper-content>
@@ -59,11 +83,11 @@
               <ShipmentSelector/>
               <v-btn
                 color="primary"
-                @click="e1 = 1"
+                @click="currStep = 1"
               >
                 Siparişi Tamamla
               </v-btn>
-              <v-btn text @click="e1 = 2">
+              <v-btn text @click="currStep = 2">
                 Geri
               </v-btn>
             </v-stepper-content>
@@ -79,16 +103,20 @@
 </template>
 
 <script>
-import AddressSelector from '~/components/order/AddressSelector.vue'
+import AddressSelectorCard from '~/components/order/AddressSelectorCard.vue'
 import OrderSummary from '~/components/order/OrderSummary.vue'
 import PaymentSelector from '~/components/order/PaymentSelector.vue'
 import ShipmentSelector from '~/components/order/ShipmentSelector.vue'
+import CartProductPreview from '~/components/cart/CartProductPreview.vue'
 export default {
-  components: { AddressSelector, OrderSummary, PaymentSelector, ShipmentSelector },
+  components: { AddressSelectorCard, OrderSummary, PaymentSelector, ShipmentSelector, CartProductPreview },
   layout: "product",
   data () {
     return {
-      e1: 1,
+      currStep: 1,
+      selectedDeliveryAddress: "",
+      selectedBillingAddress: "",
+      selectedPaymentMethod: 0,
       cartItemInfos: "{}",
       addresses:[
         {
@@ -127,6 +155,9 @@ export default {
         });
         this.cartItemInfos = JSON.stringify(obj)
       })
+    },
+    nextStep() {
+      this.currStep += 1
     }
   },
   computed: {
@@ -147,6 +178,8 @@ export default {
   mounted() {
     if (this.numberOfItemsInCart > 0)
       this.getCartProducts()
+    this.selectedDeliveryAddress = this.addresses[0].name
+    this.selectedBillingAddress = this.addresses[0].name
   }
 }
 </script>
