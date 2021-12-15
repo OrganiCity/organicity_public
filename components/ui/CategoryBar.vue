@@ -4,8 +4,13 @@
       <v-menu @input="test($event, index)" v-for="(category, index) in categories" :key="index" open-on-hover offset-x>
         <template v-slot:activator="{ on, attrs }">
           <v-hover v-slot="{ hover }">
-            <v-list-item :class="{ secondary: hover || ifCategoryMenuOpen[index] }" v-on="on" v-bind="attrs">
-              <v-icon left>{{category.iconTag}}</v-icon>
+            <v-list-item
+              @click="$router.push(`/search?cat=${category.categoryID}`)"
+              :class="{ secondary: hover || ifCategoryMenuOpen[index] }"
+              v-on="on"
+              v-bind="attrs"
+            >
+              <v-icon left>{{ category.iconTag }}</v-icon>
               <v-list-item-content class="font-weight-regular">
                 {{ category.name }}
               </v-list-item-content>
@@ -13,10 +18,14 @@
             </v-list-item>
           </v-hover>
         </template>
-        <v-card v-if="category.children.length"> 
+        <v-card v-if="category.children.length">
           <v-list>
             <template v-for="subCategory in category.children">
-              <v-list-item class="primary--text font-weight-medium" to="featured/egri15" :key="subCategory.categoryID">
+              <v-list-item
+                class="primary--text font-weight-medium"
+                @click="$router.push(`/search?cat=${subCategory.categoryID}`)"
+                :key="subCategory.categoryID"
+              >
                 <v-list-item-content>
                   <v-list-item-title>
                     {{ subCategory.name }}
@@ -28,7 +37,7 @@
                 v-for="subSubCategory in subCategory.children"
                 :key="`${subSubCategory.name}+${subCategory.name}`"
               >
-                <v-list-item :class="{ secondary: hover }" to="featured/egri15">
+                <v-list-item :class="{ secondary: hover }" @click="$router.push(`/search?cat=${subSubCategory.categoryID}`)">
                   <v-list-item-content>
                     <v-list-item-subtitle>
                       {{ subSubCategory.name }}
