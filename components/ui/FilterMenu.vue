@@ -67,16 +67,30 @@
 export default {
   data() {
     return {
-      categories: [{ text: "Tümü", value: 0 }],
+      categories: [{ text: "Tümü", value: Number.parseInt(this.$route.query['limitCats']) || 0 }],
       selectedCategory: Number.parseInt(this.$route.query['cat']) || 0,
       sellers: [{ text: "Tümü", value: null }],
       selectedSeller: Number.parseInt(this.$route.query['seller']) || null,
       priceRange: [Number(this.$route.query['minPrice']) || 0, Number(this.$route.query['maxPrice']) || 200]
+
     }
   },
   methods: {
+    forceRerender() {
+      this.renderComponent = false;
+      this.$nextTick(() => {
+        this.renderComponent = true;
+      });
+    },
     fetchCategories() {
-      this.$api("getCategories").then(({ data }) => {
+      console.log(this.$route.query)
+      if (this.$route.query['limitCats'] !== undefined)
+        this.$api("getAllChildCategories", this.$route.query['limitCats']).then(({ data }) => {
+          data.forEach((e) => {
+            if (!(e.categoryID == this.$route.query['limitCats'])) this.categories.push({ text: e.name, value: e.categoryID })
+          })
+        })
+      else this.$api("getCategories").then(({ data }) => {
         data.forEach(e => {
           this.categories.push({ text: e.name, value: e.categoryID })
         })
@@ -97,7 +111,7 @@ export default {
       this.selectedSeller = event
       this.$router.push({ name: "search", query: { ...this.$route.query, seller: event } })
     },
-    onPriceEnd(event){
+    onPriceEnd(event) {
       this.$router.push({ name: "search", query: { ...this.$route.query, minPrice: event[0], maxPrice: event[1] } })
     },
     onPriceSelect(event) {
@@ -105,9 +119,10 @@ export default {
     }
   },
   mounted() {
+    console.log("denemee")
     this.fetchCategories()
     this.fetchSellers()
-  }
+  },
 }
 </script>
 

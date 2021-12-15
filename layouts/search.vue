@@ -8,12 +8,12 @@
         <v-row>
           <v-col class="mt-2" lg="3" md="4" v-if="$vuetify.breakpoint.mdAndUp">
             <CategoryBar />
-            <FilterSortBar class="mx-8 my-8" v-if="$vuetify.breakpoint.md" />
+            <FilterSortBar class="mx-8 my-8" v-if="$vuetify.breakpoint.md && renderFilterSortBar" />
           </v-col>
           <v-col lg="7" md="8" cols="12">
             <Nuxt />
           </v-col>
-          <v-col class="pt-5" cols="2" v-if="$vuetify.breakpoint.lgAndUp">
+          <v-col class="pt-5" cols="2" v-if="$vuetify.breakpoint.lgAndUp && renderFilterSortBar">
             <FilterSortBar />
           </v-col>
         </v-row>
@@ -50,7 +50,16 @@ export default {
   data() {
     return {
       sideBarActive: false,
+      renderFilterSortBar: true,
     }
   },
+  watch: {
+    "$route.query": function () {
+      this.renderFilterSortBar = false
+      this.$nextTick(() => {
+        this.renderFilterSortBar = true
+      })
+    }
+  }
 };
 </script>
