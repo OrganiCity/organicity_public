@@ -8,7 +8,7 @@
           <span>{{ address.street }}</span>
           <span>Bina ve Daire No: {{ address.buildingAndFlatNo }}</span>
           <span>{{ address.district }}</span>
-          <span>/ {{ address.city }} /</span>
+          <span> {{ address.city }} / </span>
           <span>{{ address.country }}</span>
         </p>
       </v-col>
