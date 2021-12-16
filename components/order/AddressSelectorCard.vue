@@ -1,7 +1,7 @@
 <template>
   <v-card elevation="0" class="pa-4" outlined>
     <v-row class="d-flex align-center">
-      <v-col cols="9">
+      <v-col cols="12">
         <p class="mb-0 font-weight-bold">{{ address.name }}</p>
         <p class="text-caption mx-2">
           <span>{{ address.ZIPorNeighbourhood }}</span>
