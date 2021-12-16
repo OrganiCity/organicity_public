@@ -19,7 +19,7 @@
           <span>{{ totalPrice }} ₺</span>
         </div>
 
-        <v-btn to="/my-cart" elevation="0" color="primary" class="text-capitalize">
+        <v-btn to="/my-cart" elevation="0" color="primary" class="text-capitalize" :disabled="numberOfItemsInCart<1">
           <v-icon left>shopping_cart_checkout</v-icon>
           Sepete Git
         </v-btn>

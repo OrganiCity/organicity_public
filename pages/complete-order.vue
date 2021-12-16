@@ -27,21 +27,27 @@
           <v-stepper-items>
             <v-stepper-content step="1">
               <v-radio-group v-model="selectedDeliveryAddress">
-                <v-radio v-for="address in addresses" :key="address.ID" :value="address.ID">
+                <v-radio v-for="address in deliveryAddresses" :key="address.ID" :value="address.ID">
                   <template v-slot:label>
                     <AddressSelectorCard :address="address"/>
                   </template>
                 </v-radio>
               </v-radio-group>
+              <div v-if="deliveryAddresses.length==0" class="mb-5">
+                <p>Teslimat adresi bulunamadı, lütfen adres ekleyin.</p>
+                <v-btn color="primary" elevation="0" to="/account/my-addresses">Adreslerim</v-btn>
+              </div>
               <v-btn
                 color="primary"
                 @click="nextStep()"
+                :disabled="deliveryAddresses.length==0"
               >
                 Devam Et
               </v-btn>
             </v-stepper-content>
 
             <v-stepper-content step="2">
+              <p class="font-weight-bold">Ödeme Yöntemi</p>
               <v-radio-group v-model="selectedPaymentMethod">
                 <v-radio>
                   <template v-slot:label>
@@ -56,14 +62,22 @@
               </v-radio-group>
               <p class="font-weight-bold">Fatura Adresi</p>
               <v-radio-group v-model="selectedBillingAddress">
-                  <v-radio v-for="address in addresses" :key="address.ID" :value="address.ID">
+                  <v-radio v-for="address in billingAddresses" :key="address.ID" :value="address.ID">
                     <template v-slot:label>
                       <AddressSelectorCard :address="address"/>
                     </template>
                   </v-radio>
-                </v-radio-group>              <v-btn
+                </v-radio-group>
+              
+              <div v-if="billingAddresses.length==0" class="mb-5">
+                <p>Teslimat adresi bulunamadı, lütfen adres ekleyin.</p>
+                <v-btn color="primary" elevation="0" to="/account/my-addresses">Adreslerim</v-btn>
+              </div>
+              
+              <v-btn
                 color="primary"
                 @click="nextStep()"
+                :disabled="billingAddresses.length==0"
               >
                 Devam Et
               </v-btn>
@@ -83,17 +97,17 @@
               <v-radio-group v-model="selectedFastShipment">
                 <v-radio>
                   <template v-slot:label>
-                    Normal Kargo
+                    Normal Kargo (10₺)
                   </template>
                 </v-radio>
                 <v-radio>
                   <template v-slot:label>
-                    Hızlı Kargo (+10₺)
+                    Hızlı Kargo (20₺)
                   </template>
                 </v-radio>
               </v-radio-group>
               <v-divider></v-divider>
-              <div class="my-3"><span>Toplam Tutar: </span><span class="font-weight-medium">{{this.totalPrice}} ₺</span></div>
+              <div class="my-3"><span>Toplam Tutar: </span><span class="font-weight-medium">{{this.totalPrice + 10 + this.selectedFastShipment*10}} ₺</span></div>
               <v-btn
                 color="primary"
                 @click="completeOrder"
@@ -130,34 +144,8 @@ export default {
       selectedPaymentMethod: 0,
       selectedFastShipment: 0,
       cartItemInfos: "{}",
-      addresses:[
-        {
-          ID: 0,
-          name: "Ev",
-          toName: "Doğkan",
-          toSurname: "Saraç",
-          country: "Turkey",
-          city: "İstanbul",
-          district: "Pendik",
-          ZIPorNeighbourhood: "Güllü Bağlar Mah.",
-          street: "Ulubat Sk.",
-          buildingAndFlatNo: "59/23",
-          description: "Büyük sarı bina",
-        },
-        {
-          ID: 1,
-          name:"İş",
-          toName: "Doğkan",
-          toSurname: "Saraç",
-          country: "Turkey",
-          city: "İstanbul",
-          district: "Pendik",
-          ZIPorNeighbourhood: "Güllü Bağlar Mah.",
-          street: "Ulubat Sk.",
-          buildingAndFlatNo: "59/23",
-          description: "Büyük sarı bina",
-        },
-      ],
+      deliveryAddresses:[],
+      billingAddresses:[],
     }
   },
   methods: {
@@ -176,8 +164,8 @@ export default {
     completeOrder() {
       this.$api("createNewOrder", {
         items: this.$store.state['cart'].items, 
-        deliveryAddress: this.addresses.filter(v => this.selectedDeliveryAddress==v.ID)[0], 
-        billingAddress: this.addresses.filter(v => this.selectedBillingAddress==v.ID)[0], 
+        deliveryAddress: this.deliveryAddresses.filter(v => this.selectedDeliveryAddress==v.ID)[0], 
+        billingAddress: this.billingAddresses.filter(v => this.selectedBillingAddress==v.ID)[0], 
         fastShipment: this.selectedFastShipment,
         userID: this.$store.getters['auth/userInfo'].userID
       }).then((res) => {
@@ -205,8 +193,14 @@ export default {
   mounted() {
     if (this.numberOfItemsInCart > 0)
       this.getCartProducts()
-    this.selectedDeliveryAddress = this.addresses[0].ID
-    this.selectedBillingAddress = this.addresses[0].ID
+    this.$api("getAddresses", {userID: this.$store.getters["auth/userInfo"].userID, type:'delivery'}).then(({ data }) => {
+      this.deliveryAddresses = data;
+      this.selectedDeliveryAddress = this.deliveryAddresses[0]?.ID
+    });
+    this.$api("getAddresses", {userID: this.$store.getters["auth/userInfo"].userID, type:'billing'}).then(({ data }) => {
+      this.billingAddresses = data;
+      this.selectedBillingAddress = this.billingAddresses[0]?.ID
+    });
   }
 }
 </script>
