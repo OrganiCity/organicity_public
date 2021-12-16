@@ -11,7 +11,7 @@ import { addCarouselSlide, removeCarouselSlide, addSpecialDeal, removeSpecialDea
 import { addToFavorites, deleteFromFavorites, getCartProductsByID, getProductByID, isFavorited } from "./services/product";
 import { getCarouselSlides, getSpecialDeals, getCategories, getMainPageItems, getProductPreviewDetails } from "./services/main-page";
 import { submitForm } from "./services/contact-us";
-import { updatePersonalInfo, updateContactInfo, getFavoriteProducts, newSeller } from "./services/account";
+import { updatePersonalInfo, updateContactInfo, getFavoriteProducts, newSeller, getAddresses, removeAddress, updateAddress, newAddress } from "./services/account";
 import { addProductToStore, deleteCertificate, deleteMyProduct, editProductOfStore, getAvailableCertificatesBySellerID, getCertificates, getCertificatesBySellerID, getStoreProducts, getStoreProductsByID, sendCertificateApprovalRequest, updateCertificateDocument } from "./services/seller";
 import { addShipper, deleteOrder, deleteSeller, deleteShipper, deleteUser, getOrders, getSellerCertificates, getSellers, getShippers, getUsers, updateCertificateStatus } from "./services/admin-advanced";
 import { createNewOrder, getOrderDetailsByOrderNumber, getOrderPreviewsByID } from "./services/order";
@@ -95,6 +95,10 @@ app.post('/getProductPreviewDetails', getProductPreviewDetails)
 app.put('/update-personal-info', updatePersonalInfo)
 app.put('/update-contact-info', updateContactInfo)
 app.post('/get-favorite-products', getFavoriteProducts)
+app.post('/get-addresses', getAddresses)
+app.put('/remove-address', removeAddress)
+app.put('/update-address', updateAddress)
+app.post('/new-address', newAddress)
 
 // Get Product by ID
 app.get('/services/product/:id', getProductByID)
