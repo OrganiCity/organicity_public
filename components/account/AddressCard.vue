@@ -4,12 +4,12 @@
 
     <v-card outlined class="mt-6">
       <v-card-title class="d-flex justify-space-between text-body-1 font-weight-bold pa-2 ma-0">
-        <span class="ma-2">ev</span>
+        <span class="ma-2">{{address.name}}</span>
         <div>
           <v-btn @click.stop="dialog = true" small class="pa-0 ma-0" icon>
             <v-icon size="20px">mdi-pencil-outline</v-icon>
           </v-btn>
-          <v-btn small class="pa-0 ma-0" icon>
+          <v-btn @click="removeAddress" class="pa-0 ma-0" icon>
             <v-icon size="20px">delete_outline</v-icon>
           </v-btn>
         </div>
@@ -26,7 +26,7 @@
 
     <!-- Address Dialog Menu -->
     <v-dialog v-model="dialog" overlay-color="secondary" max-width="700px">
-      <AddressDialogMenu :address="address" />
+      <AddressDialogMenu :address="address" @close="dialog=false" :updateMode="true"/>
     </v-dialog>
   </v-container>
 </template>
@@ -42,6 +42,14 @@ export default {
   },
   components: {
     AddressDialogMenu,
+  },
+  methods: {
+    removeAddress() {
+      this.$api("removeAddress", {ID: this.address.ID}).then((res)=>{
+        this.$toast.success("Address removed successfully!");
+        this.$emit("delete");
+      })
+    }
   },
 };
 </script>
