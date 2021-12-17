@@ -99,7 +99,7 @@
           size="18"
         ></v-rating>
         <span class="grey--text text--lighten text-caption mr-2">{{ rating }}/5</span>
-        <a class="text-caption" href="#tabs">Yorumları oku</a>
+        <!-- <a class="text-caption" href="#tabs">Yorumları oku</a> -->
         <span class="text-caption">(8)</span>
 
         <!-- Certificates -->
