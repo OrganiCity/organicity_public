@@ -1,7 +1,7 @@
 <template>
   <v-card class="pa-4">
     <p class="text-h5 ma-0">Sipariş Özeti</p>
-    <p class="text-body-2 mb-0">2 Ürün</p>
+    <p class="text-body-2 mb-0">{{itemCount}} Ürün</p>
     <v-divider class="my-4"></v-divider>
     <div class="d-flex justify-space-between">
       <span class="text-body-2">Sipariş Tutarı</span>
@@ -23,13 +23,13 @@
       <span class="text-body-2 primary--text font-weight-medium">{{ totalPrice }} ₺</span>
     </div>
 
-    <v-btn elevation="0" color="primary" block to="/complete-order">Siparişi Tamamla</v-btn>
+    <v-btn elevation="0" color="primary" block to="/complete-order" :disabled="itemCount<1">Siparişi Tamamla</v-btn>
   </v-card>
 </template>
 
 <script>
 export default {
-  props: ["total-cart-price"],
+  props: ["total-cart-price", "item-count"],
   computed: {
     totalPrice() {
       return this.totalCartPrice + 10

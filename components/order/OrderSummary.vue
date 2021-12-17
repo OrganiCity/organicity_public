@@ -10,7 +10,7 @@
 
     <div class="d-flex justify-space-between">
       <span class="text-body-2">Kargo Ücreti</span>
-      <span class="text-body-2 font-weight-medium">{{10+this.fastShipment*10}} TL</span>
+      <span class="text-body-2 font-weight-medium">{{10+this.fastShipment*10}} ₺</span>
     </div>
 
     <div class="d-flex justify-space-between mt-6">
