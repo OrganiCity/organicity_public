@@ -32,12 +32,12 @@
             </v-list-item>
           </v-hover>
 
-          <v-hover v-slot="{ hover }">
+          <!-- <v-hover v-slot="{ hover }">
             <v-list-item :class="hover ? 'primary--text' : ''" to="/account/my-reviews">
               <v-icon :color="hover ? 'primary' : ''" left>rate_review</v-icon>
               <v-list-item-title class="ml-2">Yorumlarım</v-list-item-title>
             </v-list-item>
-          </v-hover>
+          </v-hover> -->
 
           <v-hover v-slot="{ hover }">
             <v-list-item :class="hover ? 'primary--text' : ''" to="/account/my-account">
