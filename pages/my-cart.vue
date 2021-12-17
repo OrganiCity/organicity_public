@@ -23,7 +23,7 @@
         </v-card>
       </v-col>
       <v-col cols="12" md="3">
-        <CartSummary :total-cart-price="totalPrice" />
+        <CartSummary :total-cart-price="totalPrice" :item-count="numberOfItemsInCart"/>
       </v-col>
     </v-row>
   </v-container>

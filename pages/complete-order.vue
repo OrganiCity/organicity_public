@@ -1,7 +1,7 @@
 <template>
   <v-container>
     <v-row class="mt-5">
-      <v-col cols="9">
+      <v-col cols="12" md="9">
         <v-stepper v-model="currStep">
           <v-stepper-header>
             <v-stepper-step
@@ -20,12 +20,13 @@
             </v-stepper-step>
             <v-divider></v-divider>
             <v-stepper-step step="3">
-              Ürünler ve Teslimat
+              Ürünler ve Kargo
             </v-stepper-step>
           </v-stepper-header>
           
           <v-stepper-items>
             <v-stepper-content step="1">
+              <p class="font-weight-bold">Teslimat Adresi</p>
               <v-radio-group v-model="selectedDeliveryAddress">
                 <v-radio v-for="address in deliveryAddresses" :key="address.ID" :value="address.ID">
                   <template v-slot:label>
@@ -87,6 +88,7 @@
             </v-stepper-content>
 
             <v-stepper-content step="3">
+              <p class="font-weight-bold">Ürünler ve Kargo</p>
               <CartProductPreview
                 v-for="(item, id) in $store.getters['cart/items']"
                 :key="id"
@@ -122,7 +124,7 @@
         </v-stepper>
       </v-col>
 
-      <v-col cols="3">
+      <v-col cols="12" md="3" v-if="this.$vuetify.breakpoint.mdAndUp">
         <OrderSummary :total-cart-price="totalPrice" :fast-shipment="selectedFastShipment" :number-of-items="numberOfItemsInCart"/>
       </v-col>
     </v-row>
