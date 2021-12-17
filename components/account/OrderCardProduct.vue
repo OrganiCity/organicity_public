@@ -25,12 +25,12 @@
             Tekrar Al
           </v-btn>
         </v-sheet>
-        <nuxt-link :to="'/product/' + productID + '#tabs'">
+        <!-- <nuxt-link :to="'/product/' + productID + '#tabs'">
           <div class="text-body-2 mt-4">
             <v-icon color="warning" size="18px">mdi-comment-plus-outline</v-icon>
             <span class="text-body-2">Ürünü Değerlendir</span>
           </div>
-        </nuxt-link>
+        </nuxt-link> -->
       </div>
     </div>
   </div>
