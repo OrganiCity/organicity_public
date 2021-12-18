@@ -80,7 +80,6 @@ export function deleteMyProduct(req, res) {
 	                    WHERE productID = ?`;
   const queryValues = [req.body.productID];
   pool.query(queryText, queryValues, (err, data) => {
-    console.log(req.body.productID)
     if (err) return res.status(500).send(err)
     return res.status(200).send(data)
   })
@@ -101,7 +100,6 @@ export function editProductOfStore(req, res) {
   const certificates = req.body.certificates
   if (!isProvided(productID, name, categoryID, images, certificates, price, unitsInStock) || !images.length) return res.status(400).send("Required info not provided")
   var token = req.headers.authorization;
-  console.log(certificates)
   if (!(token && token.split(' ')[0] == 'Bearer')) return res.status(401).send('No token provided.');
   token = token.split(' ')[1]
   var userData;
@@ -158,7 +156,6 @@ export function getCertificates(req, res) {
 
   pool.query(queryText, (err, data) => {
     if (err) return res.status(500).send(err)
-    console.log("aa")
     return res.status(200).send(data)
   })
 }
@@ -250,5 +247,61 @@ export function getStoreProductsByID(req, res) {
         data.products = pData.map(e => e.productID)
         return res.status(200).send(data)
       })
+  })
+}
+
+export function getOrdersBySellerID(req, res) {
+  const id = req.body.userID
+  if (!isProvided(id)) return res.status(400).send("Id not defined")
+  
+  pool.query(`SELECT o.orderID, o.productID, o.orderNumber, o.orderDate, o.shippingStatus, o.quantity, o.pricePerUnit, p.productName, u.firstName, u.lastName FROM orders o, products p, users u
+              WHERE o.productID = p.productID AND p.sellerID = ? AND u.userID=o.buyerID`, [id], (err, data) => {
+                if(err) console.log(err);
+                if(err) return;
+      var groupBy = function(xs, key) {
+        return xs.reduce(function(rv, x) {
+          (rv[x[key]] = rv[x[key]] || []).push(x);
+          return rv;
+        }, {});
+      };
+                
+      return res.status(200).send(groupBy(data, 'orderNumber'))
+    })
+}
+
+export function approveOrder(req, res) {
+  const orderNumber = req.body.orderNumber;
+  if(!isProvided(orderNumber)) return res.status(400).send("Bad request!");
+
+  pool.query(`UPDATE orders SET shippingStatus='shipped' WHERE orderNumber=?;`, [orderNumber], (err, data) => {
+    if(err) console.log(err);
+    if(err) return;
+
+    return res.status(200).send();
+  })
+}
+
+export function cancelOrder(req, res) {
+  const orderNumber = req.body.orderNumber;
+  if(!isProvided(orderNumber)) return res.status(400).send("Bad request!");
+
+  pool.query(`DELETE FROM orders WHERE orderNumber=?;`, [orderNumber], (err, data) => {
+    if(err) console.log(err);
+    if(err) return;
+
+    return res.status(200).send();
+  })
+}
+
+
+export function getCompanyDetails(req, res) {
+  const id = req.body.id;
+  if(!isProvided(id)) return res.status(400).send("Bad request!");
+
+  pool.query(`SELECT * FROM sellers WHERE sellerID = ?;`, [id], (err, data) => {
+    if(err) console.log(err);
+    if(err) return;
+
+    return res.status(200).send(data);
   })
 }
