@@ -38,3 +38,19 @@ export async function updateCertificateDocument({ instance }, payload) {
 export async function getStoreProductsByID({ instance }, payload) {
   return await instance.get("/services/store/" + payload)
 }
+
+export async function getOrdersBySellerID({instance}, payload) {
+  return await instance.post("/seller/get-orders", payload)
+}
+
+export async function approveOrder({instance}, payload) {
+  return await instance.post("/seller/approve-order", payload)
+}
+
+export async function cancelOrder({instance}, payload) {
+  return await instance.post("/seller/cancel-order", payload)
+}
+
+export async function getCompanyDetails({instance}, payload) {
+  return await instance.post("/seller/get-datails", payload)
+}

@@ -8,7 +8,7 @@
             <v-icon size="60">account_circle</v-icon>
           </div>
           <p class="text-h6" style="text-align: center">
-            AhmetBerk AŞ
+            {{companyDetails.companyName}}
           </p>
           <v-divider></v-divider>
           <v-list flat>
@@ -38,14 +38,26 @@
       <v-col lg="9" md="8">
         <v-tabs-items v-model="tab">
           <v-tab-item>
-            tab1
+            <v-toolbar flat>
+              <v-toolbar-title>New Orders</v-toolbar-title>
+              <v-spacer></v-spacer>
+            </v-toolbar>
+            <OrdersTable :orders="newOrders" @change="getOrders" :isNewOrdersTable="true"/>
           </v-tab-item>
 
           <v-tab-item>
-            tab2
+            <v-toolbar flat>
+              <v-toolbar-title>Orders In Progress</v-toolbar-title>
+              <v-spacer></v-spacer>
+            </v-toolbar>
+            <OrdersTable :orders="ordersInProgress"/>
           </v-tab-item>
           <v-tab-item>
-            tab3 
+            <v-toolbar flat>
+              <v-toolbar-title>Orders Complete</v-toolbar-title>
+              <v-spacer></v-spacer>
+            </v-toolbar>
+            <OrdersTable :orders="ordersComplete"/>
           </v-tab-item>
         </v-tabs-items>
       </v-col>
@@ -54,11 +66,52 @@
 </template>
 
 <script>
+import OrdersTable from './OrdersTable.vue';
 export default {
+  components: { OrdersTable },
   data () {
      return {
-       tab: 0,
+        newOrders:[],
+        ordersInProgress:[],
+        ordersComplete:[],
+        tab: 0,
+        companyDetails: {},
      } 
+  },
+  methods: {
+    getOrders() {
+      this.newOrders=[]
+      this.ordersInProgress=[]
+      this.ordersComplete=[]
+      this.$api("getOrdersBySellerID", {userID: this.$store.getters["auth/userInfo"].userID}).then(({ data }) => {
+        for(var ord in data) {
+          switch (data[ord][0].shippingStatus) {
+            case 'preparing':
+              this.newOrders.push({orderNumber:ord, buyerName:data[ord][0].firstName+" "+data[ord][0].lastName, orderDate:data[ord][0].orderDate.split("T")[0], totalPrice:this.getOrderTotal(data[ord]), items:data[ord]})
+              break;
+            case 'shipped':
+              this.ordersInProgress.push({orderNumber:ord, buyerName:data[ord][0].firstName+" "+data[ord][0].lastName, orderDate:data[ord][0].orderDate.split("T")[0], totalPrice:this.getOrderTotal(data[ord]), items:data[ord]})
+              break;
+            case 'arrived':
+              this.ordersComplete.push({orderNumber:ord, buyerName:data[ord][0].firstName+" "+data[ord][0].lastName, orderDate:data[ord][0].orderDate.split("T")[0], totalPrice:this.getOrderTotal(data[ord]), items:data[ord]})
+              break;
+            default:
+              break;
+          }
+        }
+      });
+    },
+    getOrderTotal(ord) {
+      let sum = 0;
+      for(const o in ord) sum+=ord[o].pricePerUnit*ord[o].quantity;
+      return sum + "  ₺";
+    }
+  },
+  mounted() {
+    this.getOrders();
+    this.$api("getCompanyDetails", {id: this.$store.getters['auth/userInfo'].userID}).then((res)=>{
+      this.companyDetails = res.data[0];
+    })
   }
 }
 </script>
