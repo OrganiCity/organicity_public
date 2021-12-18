@@ -8,7 +8,7 @@
             <v-icon size="60">account_circle</v-icon>
           </div>
           <p class="text-h6" style="text-align: center">
-            AhmetBerk AŞ
+            {{companyDetails.companyName}}
           </p>
           <v-divider></v-divider>
           <v-list flat>
@@ -67,6 +67,7 @@ export default {
         ordersInProgress:[],
         ordersComplete:[],
         tab: 0,
+        companyDetails: {},
      } 
   },
   methods: {
@@ -100,6 +101,9 @@ export default {
   },
   mounted() {
     this.getOrders();
+    this.$api("getCompanyDetails", {id: this.$store.getters['auth/userInfo'].userID}).then((res)=>{
+      this.companyDetails = res.data[0];
+    })
   }
 }
 </script>
