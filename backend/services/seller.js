@@ -270,7 +270,6 @@ export function getOrdersBySellerID(req, res) {
 }
 
 export function approveOrder(req, res) {
-  console.log(req.body)
   const orderNumber = req.body.orderNumber;
   if(!isProvided(orderNumber)) return res.status(400).send("Bad request!");
 
@@ -279,5 +278,17 @@ export function approveOrder(req, res) {
     if(err) return;
 
     return res.status(200).send();
+  })
+}
+
+export function getCompanyDetails(req, res) {
+  const id = req.body.id;
+  if(!isProvided(id)) return res.status(400).send("Bad request!");
+
+  pool.query(`SELECT * FROM sellers WHERE sellerID = ?;`, [id], (err, data) => {
+    if(err) console.log(err);
+    if(err) return;
+
+    return res.status(200).send(data);
   })
 }
