@@ -80,7 +80,6 @@ export default {
   },
   mounted() {
     this.$api("getCertificatesBySellerID", this.$store.getters["auth/userInfo"]?.userID).then(({ data }) => {
-      console.log(data);
       data.forEach(element => {
           switch (element.approved){
             case "a": this.approved.push(element); break
