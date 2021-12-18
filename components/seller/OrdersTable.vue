@@ -13,7 +13,7 @@
         <p v-for="i in item.items" :key="i.productName">{{i.quantity}} x {{i.productName}}</p>
         <div class="my-3" v-if="isNewOrdersTable">
           <v-btn color="primary" @click="approveOrder(item.orderNumber)">Onayla</v-btn>
-          <v-btn color="error">İptal Et</v-btn>
+          <v-btn color="error" @click="cancelOrder(item.orderNumber)">İptal Et</v-btn>
         </div>
       </td>
     </template>
@@ -46,7 +46,13 @@
           this.$toast.success("Order is approved!");
           this.$emit('change');
           })
-      }
+      },
+      cancelOrder(orderNumber) {
+        this.$api("cancelOrder", {orderNumber: orderNumber}).then(()=>{
+          this.$toast.success("Order is cancelled!");
+          this.$emit('change');
+          })
+      },
     },
   }
 </script>

@@ -12,7 +12,7 @@ import { addToFavorites, deleteFromFavorites, getCartProductsByID, getProductByI
 import { getCarouselSlides, getSpecialDeals, getCategories, getMainPageItems, getProductPreviewDetails } from "./services/main-page";
 import { submitForm } from "./services/contact-us";
 import { updatePersonalInfo, updateContactInfo, getFavoriteProducts, newSeller, getAddresses, removeAddress, updateAddress, newAddress } from "./services/account";
-import { addProductToStore, approveOrder, deleteCertificate, deleteMyProduct, editProductOfStore, getAvailableCertificatesBySellerID, getCertificates, getCertificatesBySellerID, getCompanyDetails, getOrdersBySellerID, getStoreProducts, getStoreProductsByID, sendCertificateApprovalRequest, updateCertificateDocument } from "./services/seller";
+import { addProductToStore, approveOrder, cancelOrder, deleteCertificate, deleteMyProduct, editProductOfStore, getAvailableCertificatesBySellerID, getCertificates, getCertificatesBySellerID, getCompanyDetails, getOrdersBySellerID, getStoreProducts, getStoreProductsByID, sendCertificateApprovalRequest, updateCertificateDocument } from "./services/seller";
 import { addShipper, deleteOrder, deleteSeller, deleteShipper, deleteUser, getOrders, getSellerCertificates, getSellers, getShippers, getUsers, updateCertificateStatus } from "./services/admin-advanced";
 import { createNewOrder, getOrderDetailsByOrderNumber, getOrderPreviewsByID } from "./services/order";
 import { translate } from "./services/translate";
@@ -121,6 +121,7 @@ app.put('/edit-product-of-store', editProductOfStore)
 app.post('/seller/get-orders', getOrdersBySellerID)
 app.post('/seller/approve-order', approveOrder)
 app.post('/seller/get-datails', getCompanyDetails)
+app.post('/seller/cancel-order', cancelOrder)
 
 // Certificates
 app.get('/services/certificates', getCertificates)
