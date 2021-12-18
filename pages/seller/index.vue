@@ -36,7 +36,6 @@ export default {
   },
   mounted() {
     this.$api("getStoreProducts", { userID: this.$store.getters['auth/userInfo'].userID }).then(({ data }) => {
-      console.log(data);
       this.products = data;
     });
   },
