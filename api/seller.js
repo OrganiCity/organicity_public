@@ -47,6 +47,10 @@ export async function approveOrder({instance}, payload) {
   return await instance.post("/seller/approve-order", payload)
 }
 
+export async function cancelOrder({instance}, payload) {
+  return await instance.post("/seller/cancel-order", payload)
+}
+
 export async function getCompanyDetails({instance}, payload) {
   return await instance.post("/seller/get-datails", payload)
 }

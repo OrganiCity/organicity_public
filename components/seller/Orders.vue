@@ -46,9 +46,17 @@
           </v-tab-item>
 
           <v-tab-item>
+            <v-toolbar flat>
+              <v-toolbar-title>Orders In Progress</v-toolbar-title>
+              <v-spacer></v-spacer>
+            </v-toolbar>
             <OrdersTable :orders="ordersInProgress"/>
           </v-tab-item>
           <v-tab-item>
+            <v-toolbar flat>
+              <v-toolbar-title>Orders Complete</v-toolbar-title>
+              <v-spacer></v-spacer>
+            </v-toolbar>
             <OrdersTable :orders="ordersComplete"/>
           </v-tab-item>
         </v-tabs-items>
@@ -75,7 +83,7 @@ export default {
       this.newOrders=[]
       this.ordersInProgress=[]
       this.ordersComplete=[]
-      this.$api("getOrdersBySellerID", {userID: 6}).then(({ data }) => {//this.$store.getters["auth/userInfo"].userID}).then(({ data }) => {
+      this.$api("getOrdersBySellerID", {userID: this.$store.getters["auth/userInfo"].userID}).then(({ data }) => {
         for(var ord in data) {
           switch (data[ord][0].shippingStatus) {
             case 'preparing':
