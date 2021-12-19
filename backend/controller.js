@@ -13,7 +13,7 @@ import { getCarouselSlides, getSpecialDeals, getCategories, getMainPageItems, ge
 import { submitForm } from "./services/contact-us";
 import { updatePersonalInfo, updateContactInfo, getFavoriteProducts, newSeller, getAddresses, removeAddress, updateAddress, newAddress } from "./services/account";
 import { addProductToStore, approveOrder, cancelOrder, deleteCertificate, deleteMyProduct, editProductOfStore, getAvailableCertificatesBySellerID, getCertificates, getCertificatesBySellerID, getCompanyDetails, getOrdersBySellerID, getStoreProducts, getStoreProductsByID, sendCertificateApprovalRequest, updateCertificateDocument } from "./services/seller";
-import { addShipper, deleteOrder, deleteSeller, deleteShipper, deleteUser, getOrders, getSellerCertificates, getSellers, getShippers, getUsers, updateCertificateStatus } from "./services/admin-advanced";
+import { addShipper, deleteOrder, deleteSeller, deleteShipper, deleteUser, getOrders, getSellerCertificates, getSellers, getShippers, getUsers, updateCertificateStatus, updateOrderStatus } from "./services/admin-advanced";
 import { createNewOrder, getOrderDetailsByOrderNumber, getOrderPreviewsByID } from "./services/order";
 import { translate } from "./services/translate";
 import { getAllChildCategories, getSearchResults } from "./services/search";
@@ -83,6 +83,7 @@ app.delete("/admin/shippers/:id", deleteShipper)
 app.post("/admin/shippers", addShipper)
 app.get("/admin/seller-certificates", getSellerCertificates)
 app.post("/admin/update-certificate-status", updateCertificateStatus)
+app.post("/admin/update-order-status", updateOrderStatus)
 
 
 /***************
