@@ -5,6 +5,15 @@
         <v-toolbar-title>Order Management</v-toolbar-title>
         <v-divider class="mx-4" inset vertical></v-divider>
         <v-spacer></v-spacer>
+        <!-- Edit Dialog -->
+        <v-dialog v-model="dialogEdit" max-width="500px">
+          <v-card class="pa-6 pt-5 py-10">
+            <p class="primary--text text-h4 text-center mb-10">Edit Certificate</p>
+            <v-select :items="status" label="Status" v-model="editedItem.shippingStatus" outlined></v-select>
+            <v-btn @click="updateOrder" block color="primary">Update Status</v-btn>
+          </v-card>
+        </v-dialog>
+        <!-- Delete Dialog -->
         <v-dialog v-model="dialogDelete" max-width="500px">
           <v-card>
             <v-card-title class="text-h5">Are you sure you want to delete this item?</v-card-title>
@@ -20,6 +29,9 @@
     </template>
     <template v-slot:item.actions="{ item }">
       <v-icon small @click="deleteItem(item)">mdi-delete</v-icon>
+      <v-btn small icon>
+        <v-icon small @click="editItem(item)">mdi-pencil</v-icon>
+      </v-btn>
     </template>
     <template v-slot:no-data>
       <v-btn color="primary" @click="initialize">Reset</v-btn>
@@ -34,6 +46,8 @@ export default {
   data: () => ({
     dialog: false,
     dialogDelete: false,
+    dialogEdit: false,
+    status: ["arrived", "preparing", "shipped"],
     headers: [
       {
         text: 'ID',
@@ -85,9 +99,16 @@ export default {
       })
 
     },
-
-
-
+    editItem(item) {
+      this.editedItem = Object.assign({}, item);
+      this.dialogEdit = true;
+    },
+    updateOrder() {
+      this.$api("updateOrderStatus", {
+        shippingStatus: this.editedItem.shippingStatus,
+        orderID: this.editedItem.orderID,
+      }).then(() => { window.location.reload() });
+    },
     deleteItem(item) {
       this.editedIndex = this.orders.indexOf(item)
       this.editedItem = Object.assign({}, item)
@@ -96,7 +117,7 @@ export default {
 
     deleteItemConfirm() {
       this.orders.splice(this.editedIndex, 1)
-      this.$api("deleteOrder",this.editedItem.orderID).then(({ data }) => {
+      this.$api("deleteOrder", this.editedItem.orderID).then(({ data }) => {
         console.log(data)
       })
       this.closeDelete()
