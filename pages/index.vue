@@ -3,7 +3,7 @@
     <CarouselSlider />
     <v-row v-for="list in lists" :key="list[0].listID" class="mt-2">
       <v-col cols="12">
-        <p class="primary--text text-h5 text-center font-weight-medium mb-0">{{list[0].title}}</p>
+        <p class="primary--text text-h5 text-center font-weight-medium mb-0">{{$i18n(list[0].title)}}</p>
       </v-col>
       <v-col v-for="product in list" :key="product.productID" cols="6" sm="4">
         <ProductPreview :product-id="product.productID"/>

@@ -16,7 +16,9 @@
       prepend-inner-icon="search"
       @keydown.enter="search"
     />
-    <v-btn @click="search" large depressed :disabled="!focusedSearch && !searchString" class="rounded-l-0 primary">Ara</v-btn>
+    <v-btn @click="search" large depressed :disabled="!focusedSearch && !searchString" class="rounded-l-0 primary">
+      {{ $i18n("search") }}
+    </v-btn>
   </div>
 </template>
 
