@@ -48,4 +48,6 @@ export default {
     update: "Update",
     phone: "Phone Number",
     email: "E-Mail",
+    updatedPersonalInfo: "Updated personal info successfully",
+    updatedContactInfo: "Updated contact info successfully"
 }

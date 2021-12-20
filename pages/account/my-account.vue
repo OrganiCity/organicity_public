@@ -98,7 +98,7 @@
               class="primary--text"
               color="secondary"
             >
-              Update
+              {{ $i18n("update") }}
             </v-btn>
           </v-col>
         </v-row>
@@ -151,7 +151,7 @@ export default {
           this.$store.commit("auth/setUserToken", data);
           this.$api("userMe").then(({ data }) => {
             this.$store.commit("auth/setUserInfo", data);
-            this.$toast.success("Updated personal info successfully.")
+            this.$toast.success(this.$i18n("updatedPersonalInfo"))
           })
         })
       })
@@ -166,7 +166,7 @@ export default {
           this.$store.commit("auth/setUserToken", data);
           this.$api("userMe").then(({ data }) => {
             this.$store.commit("auth/setUserInfo", data);
-            this.$toast.success("Updated contact info successfully.")
+            this.$toast.success(this.$i18n("updatedContactInfo"))
             this.$router.push("/account/my-account")
           })
         })
