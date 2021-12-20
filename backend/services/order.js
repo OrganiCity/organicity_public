@@ -88,7 +88,8 @@ export function createNewOrder(req, res){
             pool.query(queryText, queryValues, (err, data) => {
                 const deliveryAddress =  req.body.deliveryAddress.ZIPorNeighbourhood + " " + req.body.deliveryAddress.street + " Bina ve Daire No:" +  req.body.deliveryAddress.buildingAndFlatNo + " " + req.body.deliveryAddress.district + " " + req.body.deliveryAddress.city + "/" + req.body.deliveryAddress.country;
                 const billingAddress =  req.body.billingAddress.ZIPorNeighbourhood + " " + req.body.billingAddress.street + " Bina ve Daire No:" +  req.body.billingAddress.buildingAndFlatNo + " " + req.body.billingAddress.district + " " + req.body.billingAddress.city + "/" + req.body.billingAddress.country;
-                pool.query('INSERT INTO orderData (orderNumber, deliveryAddress, billingAddress) VALUES (?, ?, ?)', [orderNumber, deliveryAddress, billingAddress], (err, data) => {
+                pool.query('INSERT INTO orderData (orderNumber, deliveryAddressName, deliveryAddress, deliveryPerson, billingAddressName, billingAddress, billingPerson) VALUES (?, ?, ?, ?, ?, ?, ?)', [orderNumber, req.body.deliveryAddress.name, deliveryAddress, req.body.deliveryAddress.toName+" "+req.body.deliveryAddress.toSurname, req.body.billingAddress.name, billingAddress, req.body.billingAddress.toName+" "+req.body.billingAddress.toSurname], (err, data) => {
+                    if(err) console.log(err)
                     if(err) return res.status(500).send()
                     return res.status(200).send();
                 })
