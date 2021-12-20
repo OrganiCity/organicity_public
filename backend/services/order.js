@@ -4,7 +4,7 @@ import { isProvided } from "../utils"
 export function getOrderPreviewsByID(req, res) {
     const id = req.params.id
     if (!isProvided(id)) return res.status(400).send("Id not defined")
-    const queryText = `SELECT o.orderNumber, pi2.imgURL, o.shippingStatus, o.orderDate, (o.pricePerUnit*o.quantity) AS productTotal 
+    const queryText = `SELECT o.orderNumber, o.fastShipment, pi2.imgURL, o.shippingStatus, o.orderDate, (o.pricePerUnit*o.quantity) AS productTotal 
                         FROM orders o,  productImages pi2 
                         WHERE  o.buyerID = ?  AND  o.productID = pi2.productID 
                         GROUP BY o.orderNumber, o.productID `
@@ -25,6 +25,7 @@ export function getOrderPreviewsByID(req, res) {
                 order[e.orderNumber].imgURLs = [e.imgURL]
                 order[e.orderNumber].orderTotal = e.productTotal
                 order[e.orderNumber].orderDate = e.orderDate
+                order[e.orderNumber].fastShipment = e.fastShipment
                 if(e.shippingStatus == "arrived") order[e.orderNumber].status = true;
                 else order[e.orderNumber].status = false
                 
