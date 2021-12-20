@@ -48,4 +48,6 @@ export default {
     update: "Güncelle",
     phone: "Telefon Numarası",
     email: "E-Posta Adresi",
+    updatedPersonalInfo: "Kişisel bilgiler başarıyla güncellendi",
+    updatedContactInfo: "İletişim bilgileri başarıyla güncellendi"
 }
