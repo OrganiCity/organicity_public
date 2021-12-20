@@ -87,18 +87,19 @@ export default {
         for(var ord in data) {
           switch (data[ord][0].shippingStatus) {
             case 'preparing':
-              this.newOrders.push({orderNumber:ord, buyerName:data[ord][0].firstName+" "+data[ord][0].lastName, orderDate:data[ord][0].orderDate.split("T")[0], totalPrice:this.getOrderTotal(data[ord]), items:data[ord]})
+              this.newOrders.push({orderNumber:ord, buyerName:data[ord][0].firstName+" "+data[ord][0].lastName, orderDate:data[ord][0].orderDate.split("T")[0], totalPrice:this.getOrderTotal(data[ord]), items:data[ord], address:data[ord][0].deliveryAddress})
               break;
             case 'shipped':
-              this.ordersInProgress.push({orderNumber:ord, buyerName:data[ord][0].firstName+" "+data[ord][0].lastName, orderDate:data[ord][0].orderDate.split("T")[0], totalPrice:this.getOrderTotal(data[ord]), items:data[ord]})
+              this.ordersInProgress.push({orderNumber:ord, buyerName:data[ord][0].firstName+" "+data[ord][0].lastName, orderDate:data[ord][0].orderDate.split("T")[0], totalPrice:this.getOrderTotal(data[ord]), items:data[ord], address:data[ord][0].deliveryAddress})
               break;
             case 'arrived':
-              this.ordersComplete.push({orderNumber:ord, buyerName:data[ord][0].firstName+" "+data[ord][0].lastName, orderDate:data[ord][0].orderDate.split("T")[0], totalPrice:this.getOrderTotal(data[ord]), items:data[ord]})
+              this.ordersComplete.push({orderNumber:ord, buyerName:data[ord][0].firstName+" "+data[ord][0].lastName, orderDate:data[ord][0].orderDate.split("T")[0], totalPrice:this.getOrderTotal(data[ord]), items:data[ord], address:data[ord][0].deliveryAddress})
               break;
             default:
               break;
           }
         }
+              console.log(this.newOrders)
       });
     },
     getOrderTotal(ord) {
