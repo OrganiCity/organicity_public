@@ -81,12 +81,17 @@ export function createNewOrder(req, res){
         let orderNumber = data[0]?.maxOrderNumber + 1;
         let pIDs = Object.keys(req.body.items)
         pool.query("SELECT productID, pricePerUnit FROM products WHERE productID IN (?) ", [pIDs], (err, data) => {
-            const queryText = `INSERT INTO organicity.orders
+            const queryText = `INSERT INTO orders
             (productID, fastShipment, buyerID, orderNumber, quantity, pricePerUnit) VALUES ` + "(?,?,?,?,?,?), ".repeat(Object.keys(req.body.items).length - 1) + "(?,?,?,?,?,?);"
             const queryValues = Object.keys(req.body.items).reduce(function (r, v) {r.push(Number.parseInt(v), req.body.fastShipment, req.body.userID, orderNumber, req.body.items[v], data.filter(e=>e.productID==v)[0].pricePerUnit); return r;}, []);
             
             pool.query(queryText, queryValues, (err, data) => {
-                return res.status(200).send();
+                const deliveryAddress =  req.body.deliveryAddress.ZIPorNeighbourhood + " " + req.body.deliveryAddress.street + " Bina ve Daire No:" +  req.body.deliveryAddress.buildingAndFlatNo + " " + req.body.deliveryAddress.district + " " + req.body.deliveryAddress.city + "/" + req.body.deliveryAddress.country;
+                const billingAddress =  req.body.billingAddress.ZIPorNeighbourhood + " " + req.body.billingAddress.street + " Bina ve Daire No:" +  req.body.billingAddress.buildingAndFlatNo + " " + req.body.billingAddress.district + " " + req.body.billingAddress.city + "/" + req.body.billingAddress.country;
+                pool.query('INSERT INTO orderData (orderNumber, deliveryAddress, billingAddress) VALUES (?, ?, ?)', [orderNumber, deliveryAddress, billingAddress], (err, data) => {
+                    if(err) return res.status(500).send()
+                    return res.status(200).send();
+                })
             })
         })
     })
