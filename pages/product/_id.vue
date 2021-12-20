@@ -140,7 +140,6 @@
         <div class="d-flex flex-wrap justify-space-around align-center">
           <span class="primary--text font-weight-medium text-h5">
             {{ product.pricePerUnit }} TL
-            <span class="grey--text text-h6">/{{ product.unitType }}</span>
           </span>
           <div>
             <v-btn @click="addToCart" width="190px" color="primary">
