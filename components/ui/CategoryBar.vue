@@ -12,7 +12,7 @@
             >
               <v-icon left>{{ category.iconTag }}</v-icon>
               <v-list-item-content class="font-weight-regular">
-                {{ category.name }}
+                {{ $i18n(category.name) == "no-translation-error" ? category.name : $i18n(category.name) }}
               </v-list-item-content>
               <v-icon v-if="category.children.length" right>navigate_next</v-icon>
             </v-list-item>
@@ -28,7 +28,7 @@
               >
                 <v-list-item-content>
                   <v-list-item-title>
-                    {{ subCategory.name }}
+                    {{ $i18n(subCategory.name) == "no-translation-error" ? subCategory.name : $i18n(subCategory.name) }}
                   </v-list-item-title>
                 </v-list-item-content>
               </v-list-item>
@@ -43,7 +43,7 @@
                 >
                   <v-list-item-content>
                     <v-list-item-subtitle>
-                      {{ subSubCategory.name }}
+                      {{ $i18n(subSubCategory.name) }}
                     </v-list-item-subtitle>
                   </v-list-item-content>
                 </v-list-item>

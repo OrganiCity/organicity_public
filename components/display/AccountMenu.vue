@@ -21,14 +21,14 @@
           <v-hover v-slot="{ hover }">
             <v-list-item :class="hover ? 'primary--text' : ''" to="/account/my-orders">
               <v-icon :color="hover ? 'primary' : ''" left>mdi-shopping-outline</v-icon>
-              <v-list-item-title class="ml-2">Siparişlerim</v-list-item-title>
+              <v-list-item-title class="ml-2">{{$i18n('my_orders')}}</v-list-item-title>
             </v-list-item>
           </v-hover>
 
           <v-hover v-slot="{ hover }">
             <v-list-item :class="hover ? 'primary--text' : ''" to="/account/my-favorites">
               <v-icon :color="hover ? 'primary' : ''" left>favorite</v-icon>
-              <v-list-item-title class="ml-2">Favorilerim</v-list-item-title>
+              <v-list-item-title class="ml-2">{{$i18n('favorites')}}</v-list-item-title>
             </v-list-item>
           </v-hover>
 
@@ -42,14 +42,14 @@
           <v-hover v-slot="{ hover }">
             <v-list-item :class="hover ? 'primary--text' : ''" to="/account/my-account">
               <v-icon :color="hover ? 'primary' : ''" left>manage_accounts</v-icon>
-              <v-list-item-title class="ml-2">Hesabım</v-list-item-title>
+              <v-list-item-title class="ml-2">{{$i18n('account')}}</v-list-item-title>
             </v-list-item>
           </v-hover>
 
           <v-hover v-if="isSeller" v-slot="{ hover }">
             <v-list-item :class="hover ? 'primary--text' : ''" to="/seller">
               <v-icon :color="hover ? 'primary' : ''" left>store</v-icon>
-              <v-list-item-title class="ml-2">Mağazam</v-list-item-title>
+              <v-list-item-title class="ml-2">{{$i18n('my_store')}}</v-list-item-title>
             </v-list-item>
           </v-hover>
 
@@ -58,12 +58,12 @@
               :class="hover ? 'primary--text' : ''"
               @click="
                 $store.commit('auth/logout');
-                $toast.info('Çıkış Yapıldı');
+                $toast.info($i18n('signed_out'));
                 $router.push('/');
               "
             >
               <v-icon :color="hover ? 'primary' : ''" left>mdi-logout</v-icon>
-              <v-list-item-title class="ml-2">Çıkış Yap</v-list-item-title>
+              <v-list-item-title class="ml-2">{{$i18n("sign_out")}}</v-list-item-title>
             </v-list-item>
           </v-hover>
         </v-list-item-group>
