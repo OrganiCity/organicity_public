@@ -1,25 +1,25 @@
 <template>
   <v-row class="my-4">
     <v-col class="d-flex justify-center">
-      <p class="text-h4 pa-0">Hesabım</p>
+      <p class="text-h4 pa-0">{{ $i18n("account") }}</p>
     </v-col>
 
     <!-- Personal Info -->
     <v-col cols="12" class="d-flex justify-center">
       <v-card elevation="0" outlined class="px-8 py-5" max-width="500px">
-        <v-card-title class="pa-0">Profil Bilgileri</v-card-title>
+        <v-card-title class="pa-0">{{ $i18n("profile-info") }}</v-card-title>
         <v-card-subtitle class="pa-0 mt-1 mb-10">
-          OrganiKent’deki deneyiminizi en iyi seviyede tutabilmemiz için gereken bilgilerinizi buradan düzenleyebilirsiniz.
+          {{ $i18n("account-motto") }}
         </v-card-subtitle>
         <v-row class="d-flex justify-center mt-2">
           <!-- Name -->
 
           <v-col class="pa-0 px-3" md="6" cols="12">
-            <p class="text-body-2 mb-1">Name</p>
+            <p class="text-body-2 mb-1">{{ $i18n("name") }}</p>
             <v-text-field v-model="name" outlined required :rules="rules.name"></v-text-field>
           </v-col>
           <v-col class="pa-0 px-3" md="6" cols="12">
-            <p class="text-body-2 mb-1">Surname</p>
+            <p class="text-body-2 mb-1">{{ $i18n("surname") }}</p>
             <v-text-field v-model="lastName" outlined required :rules="rules.name"></v-text-field>
           </v-col>
           <v-divider class="py-3 mx-3"></v-divider>
@@ -47,7 +47,7 @@
           </v-col>
           <v-divider class="py-3 mx-3"></v-divider> -->
           <v-col cols="12" class="py-0">
-            <p class="text-body-2 mb-1">Gender</p>
+            <p class="text-body-2 mb-1">{{ $i18n("gender") }}</p>
             <v-select :items="genders" v-model="gender" outlined required></v-select>
           </v-col>
           <v-col cols="12" class="d-flex justify-center pt-0">
@@ -60,7 +60,7 @@
               class="primary--text"
               color="secondary"
             >
-              Update
+              {{ $i18n("update") }}
             </v-btn>
           </v-col>
         </v-row>
@@ -70,21 +70,21 @@
     <!-- Contact Info -->
     <v-col class="d-flex justify-center mt-5">
       <v-card elevation="0" outlined class="px-8 py-5" max-width="500px">
-        <v-card-title class="pa-0">İletişim Bilgileri</v-card-title>
+        <v-card-title class="pa-0">{{ $i18n("contact-info") }}</v-card-title>
         <v-card-subtitle class="pa-0 mt-1 mb-10">
-          OrganiKent’deki deneyiminizi en iyi seviyede tutabilmemiz için gereken bilgilerinizi buradan düzenleyebilirsiniz.
+          {{ $i18n("account-motto") }}
         </v-card-subtitle>
         <v-row class="d-flex justify-center mt-2">
           <!-- Name -->
 
           <v-col class="pa-0 px-3" cols="12">
-            <p class="text-body-2 mb-1">Phone Number</p>
+            <p class="text-body-2 mb-1">{{ $i18n("phone") }}</p>
             <v-text-field v-model="phoneNumber" outlined required></v-text-field>
           </v-col>
           <v-divider class="py-3 ma-3"></v-divider>
 
           <v-col class="pa-0 px-3" cols="12">
-            <p class="text-body-2 mb-1">E-Mail Address</p>
+            <p class="text-body-2 mb-1">{{ $i18n("email") }}</p>
             <v-text-field v-model="email" :rules="rules.email" outlined required></v-text-field>
           </v-col>
 
@@ -114,7 +114,7 @@ export default {
   layout: "account",
   data() {
     return {
-      genders: ["Male", "Female", "Do not want to mention"],
+      genders: [{ text: this.$i18n("male"), value: "Male" }, { text: this.$i18n("female"), value: "Female" }, { text: this.$i18n("gender-other"), value: "Do not want to mention" }],
       menu: false,
       modal: false,
 
@@ -172,7 +172,7 @@ export default {
         })
       })
         .catch(({ response: { status } }) => {
-          if(status === 404) this.$toast.error("Bu e-posta ile kayıtlı zaten bir kullanıcı var")
+          if (status === 404) this.$toast.error("Bu e-posta ile kayıtlı zaten bir kullanıcı var")
           else this.$toast.error("Bilinmeyen bir hata oluştu")
         })
     },
