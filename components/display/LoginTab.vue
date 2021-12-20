@@ -5,7 +5,7 @@
       autocomplete="email"
       v-model="email"
       :rules="emailRules"
-      label="E-posta adresi"
+      :label="$i18n('email')"
       required
       outlined
     ></v-text-field>
@@ -15,7 +15,7 @@
       autocomplete="current-password"
       v-model="password"
       :rules="passwordRules"
-      label="Şifre"
+      :label="$i18n('password')"
       required
       outlined
       :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
@@ -25,24 +25,26 @@
       @keydown.enter="login"
     ></v-text-field>
 
-    <v-btn :loading="loading" :disabled="!valid" color="primary" class="mr-4" @click="login">Giriş Yap</v-btn>
+    <v-btn :loading="loading" :disabled="!valid" color="primary" class="mr-4" @click="login">{{ $i18n("sign_in") }}</v-btn>
   </v-form>
 </template>
 
 <script>
 export default {
-  data: () => ({
-    loading: false,
-    showPassword: false,
-    valid: true,
-    email: "",
-    emailRules: [
-      v => !!v || "Lütfen e-posta adresinizi giriniz!",
-      v => /.+@.+\..+/.test(v) || "Lütfen geçerli bir e-posta adresi giriniz!"
-    ],
-    password: "",
-    passwordRules: [v => !!v || "Lütfen parolanızı giriniz!"]
-  }),
+  data() {
+    return {
+      loading: false,
+      showPassword: false,
+      valid: true,
+      email: "",
+      emailRules: [
+        v => !!v || this.$i18n("enter-email"),
+        v => /.+@.+\..+/.test(v) || this.$i18n("enter-valid-email")
+      ],
+      password: "",
+      passwordRules: [v => !!v || "Lütfen parolanızı giriniz!"]
+    }
+  },
   methods: {
     validate() {
       return this.$refs.form.validate();
