@@ -42,7 +42,8 @@
 
       <div>
         <p class="primary--text text-body-1 font-weight-medium">{{ order.orderTotal }} TL</p>
-        <p class="grey--text text-caption mb-0">Standart Kargo: 10 TL</p>
+        <p v-if="order.fastShipment" class="grey--text text-caption mb-0">Hızlı Kargo: 20 TL&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+        <p v-else class="grey--text text-caption mb-0">Standart Kargo: 10 TL</p>
         <p class="grey--text text-caption mb-0">Kredi Kartı</p>
       </div>
     </v-col>
