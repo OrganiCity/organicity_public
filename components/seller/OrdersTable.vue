@@ -10,8 +10,20 @@
   >
     <template v-slot:expanded-item="{ headers, item }">
       <td :colspan="headers.length" class="pt-3">
-        <p v-for="i in item.items" :key="i.productName">{{i.quantity}} x {{i.productName}}</p>
-        <div class="my-3" v-if="isNewOrdersTable">
+        <v-container class="pa-0 ma-0">
+          <v-row>
+          <v-col cols="6">
+            <p v-for="i in item.items" :key="i.productName">{{i.quantity}} x {{i.productName}}</p>
+          </v-col>
+          <v-divider vertical />
+          <v-col cols="6">
+              <span>Delivery Address: </span>
+              <p>{{item.address}}</p>
+          </v-col>
+          </v-row>
+        </v-container>
+        <div class="my-2" v-if="isNewOrdersTable">
+          <v-divider></v-divider>
           <v-btn color="primary" @click="approveOrder(item.orderNumber)">Onayla</v-btn>
           <v-btn color="error" @click="cancelOrder(item.orderNumber)">İptal Et</v-btn>
         </div>
