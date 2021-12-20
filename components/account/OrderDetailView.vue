@@ -6,6 +6,7 @@
       </nuxt-link>
       <OrderCard
         :products="value.products"
+        :deliveryPerson="deliveryPerson"
         :status="value.status"
       />
     </v-col>
@@ -15,17 +16,15 @@
     </v-col>
     <v-col cols="12" sm="6">
       <p class="font-weight-medium text-body-1 ma-0 mb-2">Teslimat Adresi</p>
-      <p class="text-caption font-weight-bold ma-0">Evim</p>
-      <p class="text-caption ma-0">Xyz Caddesi, Abcd Sokak, No:99, İç Kapı: 11</p>
-      <p class="text-caption ma-0">Güllü Bağlar / Pendik / İstanbul</p>
-      <p class="text-caption font-weight-bold ma-0">Doğkan Saraç - 905*******84</p>
+      <p class="text-caption font-weight-bold ma-0">{{deliveryAddressName}}</p>
+      <p class="text-caption ma-0">{{deliveryAddress}}</p>
+      <p class="text-caption font-weight-bold ma-0">{{deliveryPerson}}</p>
     </v-col>
     <v-col cols="12" sm="6">
       <p class="font-weight-medium text-body-1 ma-0 mb-2">Fatura Adresi</p>
-      <p class="text-caption font-weight-bold ma-0">Evim</p>
-      <p class="text-caption ma-0">Xyz Caddesi, Abcd Sokak, No:11, İç Kapı: 11</p>
-      <p class="text-caption ma-0">Güllü Bağlar / Pendik / İstanbul</p>
-      <p class="text-caption font-weight-bold ma-0">Doğkan Saraç - 905*******84</p>
+      <p class="text-caption font-weight-bold ma-0">{{billingAddressName}}</p>
+      <p class="text-caption ma-0">{{billingAddress}}</p>
+      <p class="text-caption font-weight-bold ma-0">{{billingPerson}}</p>
     </v-col>
   </v-row>
 </template>
@@ -39,6 +38,12 @@ export default {
   data() {
     return {
       sellerProducts: {},
+      deliveryAddressName: "",
+      deliveryAddress: "",
+      deliveryPerson: "",
+      billingAddressName: "",
+      billingAddress: "",
+      billingPerson: "",
     };
   },
   props: {
@@ -46,7 +51,13 @@ export default {
   },
   mounted() {
     this.$api("getOrderDetailsByOrderNumber", this.orderNumber).then(({ data }) => {
-      this.sellerProducts = data;
+      this.sellerProducts = data.sellers;
+      this.deliveryAddressName = data.deliveryAddressName
+      this.deliveryAddress = data.deliveryAddress
+      this.deliveryPerson = data.deliveryPerson
+      this.billingAddressName = data.billingAddressName
+      this.billingAddress = data.billingAddress
+      this.billingPerson = data.billingPerson
     });
   },
 };
