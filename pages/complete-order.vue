@@ -166,7 +166,7 @@ export default {
     completeOrder() {
       this.$api("createNewOrder", {
         items: this.$store.state['cart'].items, 
-        deliveryAddress: this.deliveryAddresses.filter(v => this.selectedDeliveryAddress==v.ID)[0], 
+        deliveryAddress: this.deliveryAddresses.filter(v => this.selectedDeliveryAddress==v.ID)[0],
         billingAddress: this.billingAddresses.filter(v => this.selectedBillingAddress==v.ID)[0], 
         fastShipment: this.selectedFastShipment,
         userID: this.$store.getters['auth/userInfo'].userID

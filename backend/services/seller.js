@@ -254,8 +254,8 @@ export function getOrdersBySellerID(req, res) {
   const id = req.body.userID
   if (!isProvided(id)) return res.status(400).send("Id not defined")
   
-  pool.query(`SELECT o.orderID, o.productID, o.orderNumber, o.orderDate, o.shippingStatus, o.quantity, o.pricePerUnit, p.productName, u.firstName, u.lastName FROM orders o, products p, users u
-              WHERE o.productID = p.productID AND p.sellerID = ? AND u.userID=o.buyerID`, [id], (err, data) => {
+  pool.query(`SELECT o.orderID, o.productID, o.orderNumber, o.orderDate, o.shippingStatus, o.quantity, o.pricePerUnit, p.productName, u.firstName, u.lastName, od.deliveryAddress FROM orders o, products p, users u, orderData od
+              WHERE o.productID = p.productID AND p.sellerID = ? AND u.userID=o.buyerID AND od.orderNumber=o.orderNumber`, [id], (err, data) => {
                 if(err) console.log(err);
                 if(err) return;
       var groupBy = function(xs, key) {
