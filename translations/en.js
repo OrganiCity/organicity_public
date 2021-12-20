@@ -2,6 +2,7 @@ export default {
     test: 'test',
     sign_in: 'Log In',
     sign_up: 'Register',
+    sign_out: 'Log Out',
     close: 'Close',
     organicity: 'OrganiCity',
     home: 'Home',
@@ -49,5 +50,7 @@ export default {
     phone: "Phone Number",
     email: "E-Mail",
     updatedPersonalInfo: "Updated personal info successfully",
-    updatedContactInfo: "Updated contact info successfully"
+    updatedContactInfo: "Updated contact info successfully",
+    "my-addresses": "My Addresses",
+    "solution-center": "Solution Center"
 }

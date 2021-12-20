@@ -22,14 +22,14 @@
                   <v-hover v-slot="{ hover }">
                     <v-list-item :class="hover ? 'primary--text' : ''" to="/account/my-orders">
                       <v-icon :color="hover ? 'primary' : ''" left>mdi-shopping-outline</v-icon>
-                      <v-list-item-title class="ml-2">Siparişlerim</v-list-item-title>
+                      <v-list-item-title class="ml-2">{{$i18n("my_orders")}}</v-list-item-title>
                     </v-list-item>
                   </v-hover>
 
                   <v-hover v-slot="{ hover }">
                     <v-list-item :class="hover ? 'primary--text' : ''" to="/account/my-favorites">
                       <v-icon :color="hover ? 'primary' : ''" left>favorite</v-icon>
-                      <v-list-item-title class="ml-2">Favorilerim</v-list-item-title>
+                      <v-list-item-title class="ml-2">{{$i18n("favorites")}}</v-list-item-title>
                     </v-list-item>
                   </v-hover>
 
@@ -43,14 +43,14 @@
                   <v-hover v-slot="{ hover }">
                     <v-list-item :class="hover ? 'primary--text' : ''" to="/account/my-addresses">
                       <v-icon :color="hover ? 'primary' : ''" left>library_books</v-icon>
-                      <v-list-item-title class="ml-2">Adreslerim</v-list-item-title>
+                      <v-list-item-title class="ml-2">{{$i18n("my-addresses")}}</v-list-item-title>
                     </v-list-item>
                   </v-hover>
 
                   <v-hover v-slot="{ hover }">
                     <v-list-item :class="hover ? 'primary--text' : ''" to="/account/my-account">
                       <v-icon :color="hover ? 'primary' : ''" left>manage_accounts</v-icon>
-                      <v-list-item-title class="ml-2">Hesabım</v-list-item-title>
+                      <v-list-item-title class="ml-2">{{$i18n("account")}}</v-list-item-title>
                     </v-list-item>
                   </v-hover>
 
@@ -61,14 +61,14 @@
                     </v-list-item>
                     <v-list-item v-else :class="hover ? 'primary--text' : ''" to="/seller">
                       <v-icon :color="hover ? 'primary' : ''" left>store</v-icon>
-                      <v-list-item-title class="ml-2">Mağazam</v-list-item-title>
+                      <v-list-item-title class="ml-2">{{$i18n("my_store")}}</v-list-item-title>
                     </v-list-item>
                   </v-hover>
 
                   <v-hover v-slot="{ hover }">
                     <v-list-item :class="hover ? 'primary--text' : ''" to="/contact-us">
                       <v-icon :color="hover ? 'primary' : ''" left>contact_support</v-icon>
-                      <v-list-item-title class="ml-2">Çözüm Merkezi</v-list-item-title>
+                      <v-list-item-title class="ml-2">{{$i18n("solution-center")}}</v-list-item-title>
                     </v-list-item>
                   </v-hover>
                   <v-hover v-slot="{ hover }">
@@ -80,7 +80,7 @@
                       "
                     >
                       <v-icon :color="hover ? 'primary' : ''" left>mdi-logout</v-icon>
-                      <v-list-item-title class="ml-2">Çıkış Yap</v-list-item-title>
+                      <v-list-item-title class="ml-2">{{$i18n("sign_out")}}</v-list-item-title>
                     </v-list-item>
                   </v-hover>
                 </v-list-item-group>
