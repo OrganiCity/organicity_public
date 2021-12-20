@@ -2,7 +2,7 @@ export default {
     test: 'deneme',
     sign_in: 'Giriş Yap',
     sign_up: 'Üye Ol',
-    sign_out: 'Log Out',
+    sign_out: 'Çıkış Yap',
     password: 'Şifre',
     password_again: 'Yeniden Şifre',
     i_accept: 'Üyelik sözleşmesini kabul ediyorum',
