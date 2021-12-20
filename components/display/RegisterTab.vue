@@ -6,7 +6,7 @@
         autocomplete="given-name"
         v-model="name"
         :rules="nameRules"
-        label="Ad"
+        :label="$i18n('name')"
         required
         outlined
       ></v-text-field>
@@ -16,7 +16,7 @@
         autocomplete="family-name"
         v-model="surname"
         :rules="nameRules"
-        label="Soyad"
+        :label="$i18n('surname')"
         required
         outlined
       ></v-text-field>
@@ -26,7 +26,7 @@
       autocomplete="email"
       v-model="email"
       :rules="emailRules"
-      label="E-posta adresi"
+      :label="$i18n('email')"
       required
       outlined
     ></v-text-field>
@@ -35,7 +35,7 @@
       autocomplete="new-password"
       v-model="password"
       :rules="passwordRules"
-      label="Şifre"
+      :label="$i18n('password')"
       required
       outlined
       :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
@@ -48,7 +48,7 @@
       v-model="repassword"
       autocomplete="new-password"
       :rules="[...repasswordRules, passwordsMatch]"
-      label="Tekrardan şifre"
+      :label="$i18n('password_again')"
       required
       outlined
       :type="showPassword ? 'text' : 'password'"
@@ -58,11 +58,11 @@
     <v-checkbox
       v-model="checkbox"
       :rules="[(v) => !!v || 'Kayıt olmak için üyeli sözleşmesini kabul etmeniz lazım!!']"
-      label="Üyelik sözleşmesini kabul ediyorum."
+      :label="$i18n('i_accept')"
       required
     ></v-checkbox>
 
-    <v-btn :disabled="!valid" color="primary" class="mr-4" @click="register">Kayıt Ol</v-btn>
+    <v-btn :disabled="!valid" color="primary" class="mr-4" @click="register">{{$i18n('sign_up')}}</v-btn>
   </v-form>
 </template>
 
