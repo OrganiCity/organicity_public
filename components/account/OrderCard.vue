@@ -32,16 +32,16 @@
             </v-avatar>
             <div class="ml-3">
               <div>
-                <span class="text-body-1 font-weight-medium">Doğkan Saraç</span>
+                <span class="text-body-1 font-weight-medium">{{deliveryPerson}}</span>
                 <span v-if="status" class="text-body-2">adlı kişiye teslim edildi</span>
                 <span v-else class="text-body-2">adlı kişiye teslim edilecek</span>
 
               </div>
 
-              <div v-if="status" class="text-caption primary--text">
+              <!-- <div v-if="status" class="text-caption primary--text">
                 <span>Teslim tarihi</span>
                 <span class="font-weight-medium">3 Ağs Sal 2021, 13:11</span>
-              </div>
+              </div> -->
             </div>
           </div>
           <v-divider class="mb-2 mt-5"></v-divider>
@@ -87,6 +87,7 @@ export default {
   components: { OrderCardProduct },
   props: {
     products: {},
+    deliveryPerson: "",
     status: false
   },
  
