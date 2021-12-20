@@ -5,7 +5,7 @@
     <v-slide-group class="mb-5">
       <v-breadcrumbs :items="product.breadcrumbs" class="pa-1">
         <template v-slot:item="{ item }">
-          <v-breadcrumbs-item to="/">
+          <v-breadcrumbs-item :to="`/search?cat=${item.categoryID}&limitCats=${item.categoryID}`">
             <span
               :class="
                 product.breadcrumbs.indexOf(item) == product.breadcrumbs.length - 1
