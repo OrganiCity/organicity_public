@@ -2,6 +2,7 @@ export default {
     test: 'deneme',
     sign_in: 'Giriş Yap',
     sign_up: 'Üye Ol',
+    sign_out: 'Log Out',
     close: 'Kapat',
     organicity: 'OrganiKent',
     home: 'Ana Sayfa',
@@ -49,5 +50,8 @@ export default {
     phone: "Telefon Numarası",
     email: "E-Posta Adresi",
     updatedPersonalInfo: "Kişisel bilgiler başarıyla güncellendi",
-    updatedContactInfo: "İletişim bilgileri başarıyla güncellendi"
+    updatedContactInfo: "İletişim bilgileri başarıyla güncellendi",
+    "my-addresses": "Adreslerim",
+    "solution-center": "Çözüm Merkezi"
+
 }

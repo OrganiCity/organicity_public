@@ -63,7 +63,7 @@
               "
             >
               <v-icon :color="hover ? 'primary' : ''" left>mdi-logout</v-icon>
-              <v-list-item-title class="ml-2">Çıkış Yap</v-list-item-title>
+              <v-list-item-title class="ml-2">{{$i18n("sign_out")}}</v-list-item-title>
             </v-list-item>
           </v-hover>
         </v-list-item-group>
