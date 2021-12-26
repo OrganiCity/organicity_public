@@ -77,6 +77,7 @@
                       @click="
                         $store.commit('auth/logout');
                         $toast.info('Çıkış Yapıldı');
+                        $router.push('/')
                       "
                     >
                       <v-icon :color="hover ? 'primary' : ''" left>mdi-logout</v-icon>
