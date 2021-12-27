@@ -87,20 +87,22 @@
         </nuxt-link>
 
         <p class="text-h4">{{ product.productName }}</p>
-
-        <v-rating
-          class="d-inline"
-          v-model="rating"
-          color="yellow accent-4"
-          background-color="grey"
-          dense
-          half-increments
-          hover
-          size="18"
-        ></v-rating>
-        <span class="grey--text text--lighten text-caption mr-2">{{ rating }}/5</span>
-        <!-- <a class="text-caption" href="#tabs">Yorumları oku</a> -->
-        <span class="text-caption">(8)</span>
+        
+        <!-- 
+          <v-rating
+            class="d-inline"
+            v-model="rating"
+            color="yellow accent-4"
+            background-color="grey"
+            dense
+            half-increments
+            hover
+            size="18"
+          ></v-rating>
+          <span class="grey--text text--lighten text-caption mr-2">{{ rating }}/5</span>
+          <a class="text-caption" href="#tabs">Yorumları oku</a>
+          <span class="text-caption">(8)</span>
+        -->
 
         <!-- Certificates -->
         <div class="d-flex flex-wrap justify-space-around mb-5">
