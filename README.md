@@ -1,4 +1,14 @@
-# vuetify-nuxt-webpage
+# Organicity
+
+![image](https://user-images.githubusercontent.com/63806963/155090894-2efb4af6-29ac-43f0-832e-9084f2a928ef.png)
+![image](https://user-images.githubusercontent.com/63806963/155091071-5c692ca7-9660-47a3-845e-30f3e9b4efeb.png)
+![image](https://user-images.githubusercontent.com/63806963/155091227-ec0e9bc2-6616-4271-8844-5fdf0da6a8e3.png)
+![image](https://user-images.githubusercontent.com/63806963/155091346-41669d8a-2714-4f14-ba03-69496de354a5.png)
+![image](https://user-images.githubusercontent.com/63806963/155091393-823e20f0-22a8-469e-8162-6663453f08c7.png)
+![image](https://user-images.githubusercontent.com/63806963/155091456-2ca64b57-c08e-43e5-bc35-a6661e04dade.png)
+![image](https://user-images.githubusercontent.com/63806963/155091567-14c616a8-4dc1-4624-a219-042dbdf39046.png)
+![image](https://user-images.githubusercontent.com/63806963/155091651-9d9f4f1a-666a-4086-a97d-41e587345426.png)
+
 
 ## Table of Contents
 
